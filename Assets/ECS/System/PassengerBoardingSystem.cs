@@ -8,15 +8,15 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
 
     private List<Passenger> _passengers;
     private List<ParkingSlot> _parkingSlots;
-    private ParkingTriggerHandler _parkingTriggerHandler;
+    private CarToParkingTriggerHandler _carToParkingTriggerHandler;
 
     private List<Vehicle> _cars;
     private List<Vehicle> _carsToAdd;
 
-    public PassengerBoardingSystem(List<Passenger> passengers, ParkingTriggerHandler parkingTriggerHandler, List<ParkingSlot> parkingSlots)
+    public PassengerBoardingSystem(List<Passenger> passengers, CarToParkingTriggerHandler parkingTriggerHandler, List<ParkingSlot> parkingSlots)
     {
         _passengers = passengers;
-        _parkingTriggerHandler = parkingTriggerHandler;
+        _carToParkingTriggerHandler = parkingTriggerHandler;
         _parkingSlots = parkingSlots;
 
         _cars = new List<Vehicle>();
@@ -25,7 +25,7 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
 
     public void Init()
     {
-        _parkingTriggerHandler.CarEnterParking += AddCar;
+        _carToParkingTriggerHandler.CarEnterParking += AddCar;
     }
 
     private void AddCar(Vehicle car)
@@ -49,7 +49,7 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
 
     public void Destroy()
     {
-        _parkingTriggerHandler.CarEnterParking -= AddCar;
+        _carToParkingTriggerHandler.CarEnterParking -= AddCar;
     }
 
     public void Run()

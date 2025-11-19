@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class CarParkingSystem : IEcsInitSystem, IEcsDestroySystem
 {
-    private CarHandler _carHandler;
-    private ParkingTriggerHandler _parkingTriggerHandler;
+    private CarEnterHandler _carHandler;
+    private CarToParkingTriggerHandler _parkingTriggerHandler;
 
-    public CarParkingSystem(CarHandler carHandler, ParkingTriggerHandler parkingTriggerHandler)
+    public CarParkingSystem(CarEnterHandler carHandler, CarToParkingTriggerHandler parkingTriggerHandler)
     {
         _carHandler = carHandler;
         _parkingTriggerHandler = parkingTriggerHandler;

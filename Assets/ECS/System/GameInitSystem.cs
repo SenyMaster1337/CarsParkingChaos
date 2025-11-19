@@ -89,13 +89,13 @@ public class GameInitSystem : IEcsInitSystem
             passengerMovable.targetCarPosition = Vector3.zero;
             passengerMovable.startQueuePosition = Vector3.zero;
 
+            passengerMovable.isMoving = false;
+            passengerMovable.isNeedShiftQueue = false;
+
             if (i == 0)
                 passengerMovable.isPositionStartQueuePosition = true;
             else
                 passengerMovable.isPositionStartQueuePosition = false;
-
-            passengerMovable.isMoving = false;
-            passengerMovable.isNeedShiftQueue = false;
 
             ref var passengerAnimationComponent = ref passengerNewEntity.Get<PassengerAnimationComponent>();
             passengerAnimationComponent.animator = _passengers[i].GetComponentInChildren<Animator>();

@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
-public class ParkingTriggerHandler : MonoBehaviour
+public class BoxTriggerHandler : MonoBehaviour
 {
     private BoxCollider _boxCollider;
-
-    public event Action<Vehicle> CarEnterParking;
 
     private void Awake()
     {
@@ -20,12 +18,8 @@ public class ParkingTriggerHandler : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void DisableBoxCollider()
     {
-        if (other.gameObject.TryGetComponent(out Vehicle car))
-        {
-            Debug.Log($"ParkingTriggerHandler: Машина заехала на парквоку {car.name}");
-            CarEnterParking?.Invoke(car);
-        }
+        _boxCollider.enabled = false;
     }
 }

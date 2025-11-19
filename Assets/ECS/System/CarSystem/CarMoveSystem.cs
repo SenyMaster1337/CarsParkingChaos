@@ -50,10 +50,10 @@ public class CarMoveSystem : IEcsRunSystem
 
     private static void DisableCrashHandler(CarMovableComponent movable, CarComponent component)
     {
-        if (movable.currentTransform.position.SqrDistance(movable.spawnPosition) > DistanceToDisableCrashHandler && component.crashHandler.BoxCollider.enabled == true)
+        if (movable.currentTransform.position.SqrDistance(movable.spawnPosition) > DistanceToDisableCrashHandler && component.canCrashed == true)
         {
-            component.crashHandler.BoxCollider.enabled = false;
             component.crashHandler.enabled = false;
+            component.crashHandler.DisableBoxCollider();
             component.canCrashed = false;
         }
     }

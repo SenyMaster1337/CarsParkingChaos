@@ -11,10 +11,10 @@ public class EcsStartup : MonoBehaviour
     [SerializeField] private List<Passenger> _passengers;
 
     [SerializeField] private List<RotateTriggerHandler> _triggerHandlers;
-    [SerializeField] private CarHandler _carHandler;
+    [SerializeField] private CarEnterHandler _carHandler;
 
     [SerializeField] private List<ParkingSlot> _parkingSlots;
-    [SerializeField] private ParkingTriggerHandler _parkingTriggerHandler;
+    [SerializeField] private CarToParkingTriggerHandler _parkingTriggerHandler;
     [SerializeField] private StartQueuePoint _startQueuePoint;
 
     private EcsWorld _ecsWorld;
