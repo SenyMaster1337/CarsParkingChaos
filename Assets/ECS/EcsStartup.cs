@@ -1,6 +1,7 @@
 using Leopotam.Ecs;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class EcsStartup : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class EcsStartup : MonoBehaviour
     [SerializeField] private CarToParkingTriggerHandler _parkingTriggerHandler;
     [SerializeField] private StartQueuePoint _startQueuePoint;
 
+    [SerializeField] private RestartButtonClickReader _restartButtonClickReader;
+    [SerializeField] private MenuSettings _menuSettings;
+    //[SerializeField] private AudioMixer _audioMixer;
+
     private EcsWorld _ecsWorld;
     private EcsSystems _systems;
 
@@ -29,6 +34,7 @@ public class EcsStartup : MonoBehaviour
         var raycastReader = new RaycastReaderSystem(input);
 
         _systems
+            .Inject(_staticData)
             .Add(new GameInitSystem(_staticData, _cars, _passengers, _parkingSlots))
             .Add(input)
             .Add(raycastReader)
@@ -45,7 +51,8 @@ public class EcsStartup : MonoBehaviour
             .Add(new ShiftQueuePassengersSystem(_passengers, _startQueuePoint))
             .Add(new TimerSystem())
             .Add(new DisableUnitSystem())
-            .Inject(_staticData)
+            .Add(new LevelRestartSystem(_restartButtonClickReader))
+            .Add(new PlayerSettingButtonReaderSystem(_menuSettings))
             .Init();
 
 
