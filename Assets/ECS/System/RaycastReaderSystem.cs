@@ -19,6 +19,11 @@ public class RaycastReaderSystem : IEcsInitSystem, IEcsDestroySystem
         _inputSystem.RayShooting += ReadRaycast;
     }
 
+    public void Destroy()
+    {
+        _inputSystem.RayShooting -= ReadRaycast;
+    }
+
     public void ReadRaycast(Ray screenPoint)
     {
         if (Physics.Raycast(screenPoint, out RaycastHit hit))
@@ -30,10 +35,5 @@ public class RaycastReaderSystem : IEcsInitSystem, IEcsDestroySystem
 
             EntityDetected?.Invoke(hitEntity.Entity);
         }
-    }
-
-    public void Destroy()
-    {
-        _inputSystem.RayShooting -= ReadRaycast;
     }
 }

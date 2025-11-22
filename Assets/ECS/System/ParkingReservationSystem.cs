@@ -1,11 +1,11 @@
 using Leopotam.Ecs;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Principal;
 using UnityEngine;
 
-public class ParkingReservationSystem : IEcsInitSystem, IEcsDestroySystem
+public class ParkingReservationSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
 {
+    private EcsFilter<ParkingCancelReservationEvent> _cancelParkingReserve;
+
     private RaycastReaderSystem _raycastReaderSystem;
     private List<ParkingSlot> _parkingSlots;
 
@@ -27,9 +27,9 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsDestroySystem
 
     private void BrokeedParkingSlot(EcsEntity hitEntity)
     {
-        ref var component = ref hitEntity.Get<CarComponent>();
+        ref var carComponent = ref hitEntity.Get<CarComponent>();
 
-        if (component.canClickable == false)
+        if (carComponent.canClickable == false)
             return;
 
         for (int i = 0; i < _parkingSlots.Count; i++)
@@ -38,7 +38,7 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsDestroySystem
 
             if (parkingComponent.isReserved == false)
             {
-                ref var carComponent = ref hitEntity.Get<CarComponent>();
+                carComponent.canClickable = false;
                 carComponent.parkingReservedSlot = _parkingSlots[i];
 
                 ref var movable = ref hitEntity.Get<CarMovableComponent>();
@@ -49,5 +49,29 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsDestroySystem
             }
         }
 
+    }
+
+    public void Run()
+    {
+        foreach (var cancelEntity in _cancelParkingReserve)
+        {
+            Debug.Log(_cancelParkingReserve.GetEntitiesCount());
+
+            ref var cancelReservationEvent = ref _cancelParkingReserve.Get1(cancelEntity);
+
+            CancelParkingReserved(cancelReservationEvent);
+
+            var cancelEntityEvent = _cancelParkingReserve.GetEntity(cancelEntity);
+            cancelEntityEvent.Del<ParkingCancelReservationEvent>();
+        }
+    }
+
+    private void CancelParkingReserved(ParkingCancelReservationEvent cancelReservationEvent)
+    {
+        if (_parkingSlots.Contains(cancelReservationEvent.parkingSlot))
+        {
+            ref var parkingComponent = ref cancelReservationEvent.parkingSlot.Entity.Get<ParkingComponent>();
+            parkingComponent.isReserved = false;
+        }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class GameInitSystem : IEcsInitSystem
@@ -12,7 +13,6 @@ public class GameInitSystem : IEcsInitSystem
 
     private List<Vehicle> _cars;
     private List<Passenger> _passengers;
-
     private List<ParkingSlot> _parkingSlots;
 
     public GameInitSystem(StaticData staticData, List<Vehicle> defaultCars, List<Passenger> passengers, List<ParkingSlot> parkingSlots)
@@ -87,7 +87,7 @@ public class GameInitSystem : IEcsInitSystem
             passengerMovable.moveSpeed = _staticData.PassengerSpeed;
             passengerMovable.currentQueuePointPosition = _passengers[i].gameObject.transform.position;
             passengerMovable.targetCarPosition = Vector3.zero;
-            passengerMovable.startQueuePosition = Vector3.zero;
+            //passengerMovable.QueuePosition = Vector3.zero;
 
             passengerMovable.isMoving = false;
             passengerMovable.isNeedShiftQueue = false;

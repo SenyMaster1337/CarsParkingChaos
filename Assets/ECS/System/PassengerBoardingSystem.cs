@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
 {
+    private EcsWorld _ecsWorld;
     private Quaternion _rotationCarInParking = Quaternion.Euler(0, -30, 0);
 
     private List<Passenger> _passengers;
@@ -98,14 +99,26 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
             }
             else
             {
-                if (_parkingSlots.Contains(carComponent.parkingReservedSlot))
-                {
-                    ref var parkingComponent = ref carComponent.parkingReservedSlot.Entity.Get<ParkingComponent>();
-                    parkingComponent.isReserved = false;
+                //if (_parkingSlots.Contains(carComponent.parkingReservedSlot))
+                //{
+                //    ref var parkingComponent = ref carComponent.parkingReservedSlot.Entity.Get<ParkingComponent>();
+                //    parkingComponent.isReserved = false;
 
-                    _cars.Remove(carComponent.car);
-                }
+                //    _cars.Remove(carComponent.car);
+                //}
+
+                StartCancelParkingReserverEvent(carComponent.parkingReservedSlot);
+
+                _cars.Remove(carComponent.car);
             }
         }
+    }
+
+    private void StartCancelParkingReserverEvent(ParkingSlot slot)
+    {
+        _ecsWorld.NewEntity().Get<ParkingCancelReservationEvent>() = new ParkingCancelReservationEvent
+        {
+            parkingSlot = slot
+        };
     }
 }

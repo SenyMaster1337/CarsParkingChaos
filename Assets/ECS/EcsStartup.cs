@@ -19,7 +19,10 @@ public class EcsStartup : MonoBehaviour
     [SerializeField] private StartQueuePoint _startQueuePoint;
 
     [SerializeField] private RestartButtonClickReader _restartButtonClickReader;
-    [SerializeField] private MenuSettings _menuSettings;
+    [SerializeField] private MenuSettingsShower _menuSettingsShower;
+    [SerializeField] private LevelCompleteShower _levelCompleteShower;
+    [SerializeField] private LevelLossShower _levelLossShower;
+    
     //[SerializeField] private AudioMixer _audioMixer;
 
     private EcsWorld _ecsWorld;
@@ -34,8 +37,8 @@ public class EcsStartup : MonoBehaviour
         var raycastReader = new RaycastReaderSystem(input);
 
         _systems
-            .Inject(_staticData)
             .Add(new GameInitSystem(_staticData, _cars, _passengers, _parkingSlots))
+            .Add(new UIElemntInitSystem(_menuSettingsShower, _levelCompleteShower))
             .Add(input)
             .Add(raycastReader)
             .Add(new CarMoveSystem())
@@ -51,11 +54,12 @@ public class EcsStartup : MonoBehaviour
             .Add(new ShiftQueuePassengersSystem(_passengers, _startQueuePoint))
             .Add(new TimerSystem())
             .Add(new DisableUnitSystem())
-            .Add(new LevelRestartSystem(_restartButtonClickReader))
-            .Add(new PlayerSettingButtonReaderSystem(_menuSettings))
+            .Add(new PlayerButtonReaderSystem(_menuSettingsShower, _restartButtonClickReader, _levelCompleteShower, _levelLossShower))
+            .Add(new LevelRestartSystem())
+            .Add(new LevelProgressSystem(_passengers))
+            .Add(new SettingsSystem())
+            .Add(new LoadNextLevelSystem())
             .Init();
-
-
     }
 
     private void Update()

@@ -9,7 +9,7 @@ public class CrashHandler : BoxTriggerHandler
     {
         if (other.gameObject.TryGetComponent(out Vehicle car))
         {
-            Debug.Log("CrashHandler");
+            Debug.Log("CrashHandlerMonobehavior");
             OnCollisionCar?.Invoke(this.gameObject.GetComponentInParent<Vehicle>(), car);
         }
     }

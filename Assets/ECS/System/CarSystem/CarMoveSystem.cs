@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CarMoveSystem : IEcsRunSystem
 {
-    private const float DistanceToDisableCrashHandler = 18f;
+    private const float DistanceToDisableCrashHandler = 10f;
 
     private EcsFilter<CarMovableComponent, CarComponent> _filter;
 
@@ -16,11 +16,7 @@ public class CarMoveSystem : IEcsRunSystem
 
             if (movable.isMoving)
             {
-                if (movable.isReverseEnable == false)
-                {
-                    movable.currentTransform.Translate(Vector3.forward * movable.moveSpeed * Time.deltaTime);
-                }
-                else
+                if (movable.isReverseEnable == true)
                 {
                     movable.currentTransform.position = Vector3.MoveTowards(movable.currentTransform.position, movable.spawnPosition, movable.moveSpeed * Time.deltaTime);
 
@@ -28,7 +24,12 @@ public class CarMoveSystem : IEcsRunSystem
                     {
                         movable.isMoving = false;
                         movable.isReverseEnable = false;
+                        component.canClickable = true;
                     }
+                }
+                else
+                {
+                    movable.currentTransform.Translate(Vector3.forward * movable.moveSpeed * Time.deltaTime);
                 }
 
                 if (movable.targetPoint != Vector3.zero)
@@ -44,17 +45,18 @@ public class CarMoveSystem : IEcsRunSystem
                 component.isNotEmptySeats = true;
             }
 
-            DisableCrashHandler(movable, component);
+            TryDisableCrashHandler(movable, component);
         }
     }
 
-    private static void DisableCrashHandler(CarMovableComponent movable, CarComponent component)
+    private void TryDisableCrashHandler(CarMovableComponent movable, CarComponent component)
     {
-        if (movable.currentTransform.position.SqrDistance(movable.spawnPosition) > DistanceToDisableCrashHandler && component.canCrashed == true)
+        if (movable.currentTransform.position.SqrDistance(movable.spawnPosition) > DistanceToDisableCrashHandler && component.crashHandler.enabled == true)
         {
+            component.canCrashed = false;
             component.crashHandler.enabled = false;
             component.crashHandler.DisableBoxCollider();
-            component.canCrashed = false;
+            Debug.Log("CrashHanlderDisable");
         }
     }
 }

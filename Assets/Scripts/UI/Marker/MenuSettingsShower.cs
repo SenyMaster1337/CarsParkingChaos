@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuSettings : MonoBehaviour
+public class MenuSettingsShower : MonoBehaviour
 {
     [field: SerializeField] public CanvasGroup WindowGroup { get; private set; }
     [field: SerializeField] public SettingsOpenButtonClick SettingsOpenButtonClick { get; private set; }
