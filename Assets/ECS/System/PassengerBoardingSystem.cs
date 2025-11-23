@@ -5,20 +5,17 @@ using UnityEngine;
 public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
 {
     private EcsWorld _ecsWorld;
-    private Quaternion _rotationCarInParking = Quaternion.Euler(0, -30, 0);
 
     private List<Passenger> _passengers;
-    private List<ParkingSlot> _parkingSlots;
     private CarToParkingTriggerHandler _carToParkingTriggerHandler;
 
     private List<Vehicle> _cars;
     private List<Vehicle> _carsToAdd;
 
-    public PassengerBoardingSystem(List<Passenger> passengers, CarToParkingTriggerHandler parkingTriggerHandler, List<ParkingSlot> parkingSlots)
+    public PassengerBoardingSystem(List<Passenger> passengers, CarToParkingTriggerHandler parkingTriggerHandler)
     {
         _passengers = passengers;
         _carToParkingTriggerHandler = parkingTriggerHandler;
-        _parkingSlots = parkingSlots;
 
         _cars = new List<Vehicle>();
         _carsToAdd = new List<Vehicle>();
@@ -37,15 +34,7 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
 
     private void TeleportCarToReservedParkingSlot(Vehicle car)
     {
-        ref var carComponent = ref car.Entity.Get<CarComponent>();
-        ref var carMovable = ref car.Entity.Get<CarMovableComponent>();
-
-        carMovable.isMoving = false;
-        carMovable.targetPoint = Vector3.zero;
-        carMovable.currentTransform.position = carComponent.parkingReservedSlot.transform.position;
-        carMovable.currentTransform.rotation = _rotationCarInParking;
-
-        Debug.Log($"PassengerBoardingSystem - TeleportCarToReservedParkingSlot(Vehicle car): Телепортируем машину на ее зарезервированное место: {car.name}");
+        car.Entity.Get<CarParkingEvent>();
     }
 
     public void Destroy()
@@ -99,14 +88,6 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
             }
             else
             {
-                //if (_parkingSlots.Contains(carComponent.parkingReservedSlot))
-                //{
-                //    ref var parkingComponent = ref carComponent.parkingReservedSlot.Entity.Get<ParkingComponent>();
-                //    parkingComponent.isReserved = false;
-
-                //    _cars.Remove(carComponent.car);
-                //}
-
                 StartCancelParkingReserverEvent(carComponent.parkingReservedSlot);
 
                 _cars.Remove(carComponent.car);

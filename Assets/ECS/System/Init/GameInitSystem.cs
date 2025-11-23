@@ -14,13 +14,15 @@ public class GameInitSystem : IEcsInitSystem
     private List<Vehicle> _cars;
     private List<Passenger> _passengers;
     private List<ParkingSlot> _parkingSlots;
+    private StartQueuePoint _startQueuePoint;
 
-    public GameInitSystem(StaticData staticData, List<Vehicle> defaultCars, List<Passenger> passengers, List<ParkingSlot> parkingSlots)
+    public GameInitSystem(StaticData staticData, List<Vehicle> defaultCars, List<Passenger> passengers, List<ParkingSlot> parkingSlots, StartQueuePoint startQueuePoint)
     {
         _staticData = staticData;
         _cars = defaultCars;
         _parkingSlots = parkingSlots;
         _passengers = passengers;
+        _startQueuePoint = startQueuePoint; 
     }
 
     public void Init()
@@ -28,6 +30,7 @@ public class GameInitSystem : IEcsInitSystem
         InitCars();
         InitPassengers();
         InitParkingSlots();
+        InitParkingReservationComponent();
     }
 
     private void InitCars()
@@ -47,8 +50,11 @@ public class GameInitSystem : IEcsInitSystem
             carComponent.isNotEmptySeats = false;
             carComponent.isAllPassengersBoarded = false;
             carComponent.isCrashHandlerEnabled = true;
-            carComponent.canClickable = true; //
+            carComponent.canClickable = true; 
             carComponent.canCrashed = true;
+
+            carComponent.rorationCarInParking = _staticData.RotationCarInParking;
+            carComponent.distanceToDisableCrashHandler = _staticData.DistanceToDisableCrashHandler;
 
             if (_cars[i].TryGetComponent(out Minivan minivan))
                 carComponent.maxPassengersSlots = _staticData.MinivanCarSlots;
@@ -81,13 +87,13 @@ public class GameInitSystem : IEcsInitSystem
             ref var passengerComponent = ref passengerNewEntity.Get<PassengerComponent>();
             passengerComponent.passenger = _passengers[i];
             passengerComponent.renderer = _passengers[i].gameObject.GetComponentInChildren<Renderer>();
+            passengerComponent.startQueuePosition = _startQueuePoint.transform.position;
 
             ref var passengerMovable = ref passengerNewEntity.Get<PassengerMovableComponent>();
             passengerMovable.currentTransform = _passengers[i].gameObject.transform;
             passengerMovable.moveSpeed = _staticData.PassengerSpeed;
             passengerMovable.currentQueuePointPosition = _passengers[i].gameObject.transform.position;
             passengerMovable.targetCarPosition = Vector3.zero;
-            //passengerMovable.QueuePosition = Vector3.zero;
 
             passengerMovable.isMoving = false;
             passengerMovable.isNeedShiftQueue = false;
@@ -108,12 +114,21 @@ public class GameInitSystem : IEcsInitSystem
     {
         for (int i = 0; i < _parkingSlots.Count; i++)
         {
-            var parkingNewEntity = _ecsWorld.NewEntity();
+            var parkingSlotNewEntity = _ecsWorld.NewEntity();
 
-            ref var parkingComponent = ref parkingNewEntity.Get<ParkingComponent>();
+            ref var parkingComponent = ref parkingSlotNewEntity.Get<ParkingComponent>();
+            parkingComponent.car = null;
             parkingComponent.isReserved = false;
 
-            _parkingSlots[i].Entity = parkingNewEntity;
+            _parkingSlots[i].Entity = parkingSlotNewEntity;
         }
+    }
+
+    private void InitParkingReservationComponent()
+    {
+        var parkingReservationEntity = _ecsWorld.NewEntity();
+
+        ref var parkingReservationComponent = ref parkingReservationEntity.Get<ParkingReservationComponent>();
+        parkingReservationComponent.parkingSlots = _parkingSlots;
     }
 }

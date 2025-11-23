@@ -1,6 +1,4 @@
 using Leopotam.Ecs;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DisableUnitSystem : IEcsRunSystem
@@ -33,8 +31,8 @@ public class DisableUnitSystem : IEcsRunSystem
                     ref var passengerComponent = ref entityDisableComponent.Get<PassengerComponent>();
                     passenger = passengerComponent.passenger;
 
-                    entityDisableComponent.Del<PassengerMovableComponent>();
                     entityDisableComponent.Del<PassengerComponent>();
+                    entityDisableComponent.Del<PassengerMovableComponent>();
                     entityDisableComponent.Del<PassengerAnimationComponent>();
                 }
 
@@ -49,7 +47,7 @@ public class DisableUnitSystem : IEcsRunSystem
 
                 if (passenger != null)
                 {
-                    Debug.Log($"DisableUnitSystem: {passenger.name}");
+                    Debug.Log($"DisableUnitSystem: Удаляем {passenger.name}");
                     passenger.gameObject.SetActive(false);
                     passenger = null;
                 }

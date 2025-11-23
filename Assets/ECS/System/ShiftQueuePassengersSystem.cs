@@ -4,12 +4,10 @@ using System.Collections.Generic;
 public class ShiftQueuePassengersSystem : IEcsRunSystem
 {
     private List<Passenger> _passengers;
-    private StartQueuePoint _startQueuePoint;
 
-    public ShiftQueuePassengersSystem(List<Passenger> passengers, StartQueuePoint startQueuePoint)
+    public ShiftQueuePassengersSystem(List<Passenger> passengers)
     {
         _passengers = passengers;
-        _startQueuePoint = startQueuePoint;
     }
 
     public void Run()
@@ -23,11 +21,11 @@ public class ShiftQueuePassengersSystem : IEcsRunSystem
             return;
 
         ref var passengerMovable = ref _passengers[0].Entity.Get<PassengerMovableComponent>();
+        ref var passengerComponent = ref _passengers[0].Entity.Get<PassengerComponent>();
 
         if (passengerMovable.isPositionStartQueuePosition == false && passengerMovable.isMoving == false)
         {
-            passengerMovable.startQueuePosition = _startQueuePoint.transform.position;
-            passengerMovable.isMoving = true;
+            _passengers[0].Entity.Get<PassengerMoveStartQueuePointEvent>();
             ShiftQueue();
         }
     }
@@ -44,10 +42,15 @@ public class ShiftQueuePassengersSystem : IEcsRunSystem
             if (previousPassengerMovable.isPositionStartQueuePosition == true)
                 continue;
 
-            ref var passengerMovable = ref _passengers[j].Entity.Get<PassengerMovableComponent>();
-            passengerMovable.isMoving = true;
-            passengerMovable.isNeedShiftQueue = true;
-            passengerMovable.currentQueuePointPosition = previousPassengerMovable.currentTransform.position;
+            StartMoveQueuePointEvent(_passengers[j], previousPassengerMovable);
         }
+    }
+
+    private void StartMoveQueuePointEvent(Passenger passenger, PassengerMovableComponent previousPassengerMovable)
+    {
+        passenger.Entity.Get<PassengerMoveQueuePointEvent>() = new PassengerMoveQueuePointEvent
+        {
+            queuePointPosition = previousPassengerMovable.currentTransform.position
+        };
     }
 }

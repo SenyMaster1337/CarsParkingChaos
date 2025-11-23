@@ -22,7 +22,7 @@ public class EcsStartup : MonoBehaviour
     [SerializeField] private MenuSettingsShower _menuSettingsShower;
     [SerializeField] private LevelCompleteShower _levelCompleteShower;
     [SerializeField] private LevelLossShower _levelLossShower;
-    
+
     //[SerializeField] private AudioMixer _audioMixer;
 
     private EcsWorld _ecsWorld;
@@ -34,13 +34,13 @@ public class EcsStartup : MonoBehaviour
         _systems = new EcsSystems(_ecsWorld);
 
         var input = new InputSystem(_mainCamera);
-        var raycastReader = new RaycastReaderSystem(input);
 
         _systems
-            .Add(new GameInitSystem(_staticData, _cars, _passengers, _parkingSlots))
-            .Add(new UIElemntInitSystem(_menuSettingsShower, _levelCompleteShower))
+            .Add(new GameInitSystem(_staticData, _cars, _passengers, _parkingSlots, _startQueuePoint))
+            .Add(new UIElemntInitSystem(_menuSettingsShower, _levelCompleteShower, _levelLossShower))
+            .Add(new PlayerUIButtonReaderSystem(_menuSettingsShower, _restartButtonClickReader, _levelCompleteShower, _levelLossShower))
             .Add(input)
-            .Add(raycastReader)
+            .Add(new RaycastReaderSystem(input))
             .Add(new CarMoveSystem())
             .Add(new CarLockSystem())
             .Add(new AnimatedCarSystem())
@@ -49,16 +49,16 @@ public class EcsStartup : MonoBehaviour
             .Add(new CarRotatorSystem(_triggerHandlers))
             .Add(new CarCrashHandlerSystem(_cars))
             .Add(new CarParkingSystem(_carHandler, _parkingTriggerHandler))
-            .Add(new ParkingReservationSystem(_parkingSlots, raycastReader))
-            .Add(new PassengerBoardingSystem(_passengers, _parkingTriggerHandler, _parkingSlots))
-            .Add(new ShiftQueuePassengersSystem(_passengers, _startQueuePoint))
+            .Add(new ParkingReservationSystem())
+            .Add(new PassengerBoardingSystem(_passengers, _parkingTriggerHandler))
+            .Add(new ShiftQueuePassengersSystem(_passengers))
             .Add(new TimerSystem())
             .Add(new DisableUnitSystem())
-            .Add(new PlayerButtonReaderSystem(_menuSettingsShower, _restartButtonClickReader, _levelCompleteShower, _levelLossShower))
             .Add(new LevelRestartSystem())
             .Add(new LevelProgressSystem(_passengers))
             .Add(new SettingsSystem())
             .Add(new LoadNextLevelSystem())
+            .Add(new LevelLossSystem())
             .Init();
     }
 

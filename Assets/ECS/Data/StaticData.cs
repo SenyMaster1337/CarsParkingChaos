@@ -7,4 +7,6 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public float PassengerSpeed { get; private set; } = 4f;
     [field: SerializeField] public int DefaultCarSlots { get; private set; } = 4;
     [field: SerializeField] public int MinivanCarSlots { get; private set; } = 8;
+    [field: SerializeField] public Quaternion RotationCarInParking { get; private set; } = Quaternion.Euler(0, -30, 0);
+    [field: SerializeField] public  float DistanceToDisableCrashHandler { get; private set; } = 16f;
 }

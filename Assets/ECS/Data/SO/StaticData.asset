@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a42a26dc55d1cc42942f9a52d1dac47, type: 3}
   m_Name: StaticData
   m_EditorClassIdentifier: 
-  <CarSpeed>k__BackingField: 55
+  <CarSpeed>k__BackingField: 20
   <PassengerSpeed>k__BackingField: 20
   <DefaultCarSlots>k__BackingField: 4
   <MinivanCarSlots>k__BackingField: 8
+  <RotationCarInParking>k__BackingField: {x: 0, y: -0.25881904, z: 0, w: 0.9659258}
+  <DistanceToDisableCrashHandler>k__BackingField: 16

@@ -17,9 +17,4 @@ public class BoxTriggerHandler : MonoBehaviour
             _boxCollider.isTrigger = true;
         }
     }
-
-    public void DisableBoxCollider()
-    {
-        _boxCollider.enabled = false;
-    }
 }

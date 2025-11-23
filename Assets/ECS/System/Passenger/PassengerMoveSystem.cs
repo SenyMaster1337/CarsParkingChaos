@@ -1,6 +1,4 @@
 using Leopotam.Ecs;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PassengerMoveSystem : IEcsRunSystem
@@ -11,7 +9,12 @@ public class PassengerMoveSystem : IEcsRunSystem
     {
         foreach (var entity in _filter)
         {
+            ref var component = ref _filter.Get2(entity);
             ref var movable = ref _filter.Get1(entity);
+
+            var entityEvent = _filter.GetEntity(entity);
+            movable = TryMoveToStartPointQueue(component, movable, entityEvent);
+            movable = TryMoveToNewQueuePoint(movable, entityEvent);
 
             if (movable.isMoving)
             {
@@ -21,7 +24,6 @@ public class PassengerMoveSystem : IEcsRunSystem
 
                     if (movable.currentTransform.position.IsEnoughClose(movable.targetCarPosition, 6f))
                     {
-                        ref var component = ref _filter.Get2(entity);
                         component.carComponent.passengers.Add(component);
 
                         movable.isMoving = false;
@@ -55,7 +57,34 @@ public class PassengerMoveSystem : IEcsRunSystem
         }
     }
 
-    private static void MoveToPosition(PassengerMovableComponent movable, Vector3 targetPosition)
+    private PassengerMovableComponent TryMoveToNewQueuePoint(PassengerMovableComponent movable, EcsEntity entityEvent)
+    {
+        if (entityEvent.Has<PassengerMoveQueuePointEvent>())
+        {
+            ref var moveQueueEvent = ref entityEvent.Get<PassengerMoveQueuePointEvent>();
+
+            movable.isMoving = true;
+            movable.isNeedShiftQueue = true;
+            movable.currentQueuePointPosition = moveQueueEvent.queuePointPosition;
+            entityEvent.Del<PassengerMoveQueuePointEvent>();
+        }
+
+        return movable;
+    }
+
+    private PassengerMovableComponent TryMoveToStartPointQueue(PassengerComponent component, PassengerMovableComponent movable, EcsEntity entityEvent)
+    {
+        if (entityEvent.Has<PassengerMoveStartQueuePointEvent>())
+        {
+            movable.isMoving = true;
+            movable.startQueuePosition = component.startQueuePosition;
+            entityEvent.Del<PassengerMoveStartQueuePointEvent>();
+        }
+
+        return movable;
+    }
+
+    private void MoveToPosition(PassengerMovableComponent movable, Vector3 targetPosition)
     {
         movable.currentTransform.LookAt(targetPosition);
         movable.currentTransform.position = Vector3.MoveTowards(movable.currentTransform.position, targetPosition, movable.moveSpeed * Time.deltaTime);

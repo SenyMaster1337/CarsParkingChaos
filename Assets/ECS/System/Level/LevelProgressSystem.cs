@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LevelProgressSystem : IEcsRunSystem
 {
-    private EcsWorld _ecsWorld;
     private EcsFilter<LevelComponent, CompleteLevelComponent> _filter;
 
     private List<Passenger> _passengers;
@@ -24,7 +23,6 @@ public class LevelProgressSystem : IEcsRunSystem
             {
                 levelComponent.isLevelCompleted = true;
                 ShowWinWindow(entity);
-                StartCompleteLevelEvent(entity, levelComponent.currentLevel);
             }
         }
     }
@@ -35,15 +33,5 @@ public class LevelProgressSystem : IEcsRunSystem
         completeLevelComponent.windowGroup.alpha = 1.0f;
         completeLevelComponent.windowGroup.interactable = true;
         completeLevelComponent.windowGroup.blocksRaycasts = true;
-    }
-
-    private void StartCompleteLevelEvent(int entity, int index)
-    {
-        //_ecsWorld.NewEntity().Get<CompleteLevelEvent>() = new CompleteLevelEvent
-        //{
-        //    completedLevelIndex = index
-        //};
-
-        Debug.Log("спнбемэ гюбепьем");
     }
 }

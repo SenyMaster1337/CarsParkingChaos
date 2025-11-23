@@ -1,7 +1,7 @@
 using Leopotam.Ecs;
 using System;
 
-public class PlayerButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem
+public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem
 {
     private EcsWorld _ecsWorld;
 
@@ -10,7 +10,7 @@ public class PlayerButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem
     private LevelCompleteShower _levelCompleteShower;
     private LevelLossShower _levelLossShower;
 
-    public PlayerButtonReaderSystem(MenuSettingsShower menuSettings, RestartButtonClickReader restartButtonClickReader, LevelCompleteShower levelCompleteShower, LevelLossShower levelLossShower)
+    public PlayerUIButtonReaderSystem(MenuSettingsShower menuSettings, RestartButtonClickReader restartButtonClickReader, LevelCompleteShower levelCompleteShower, LevelLossShower levelLossShower)
     {
         _menuSettings = menuSettings;
         _restartButtonClickReader = restartButtonClickReader;

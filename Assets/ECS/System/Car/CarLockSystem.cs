@@ -4,6 +4,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class CarLockSystem : IEcsRunSystem
 {
+    private readonly float _timeLeftToTimer = 2f;
     private EcsFilter<CarComponent> _filter;
 
     public void Run()
@@ -16,7 +17,7 @@ public class CarLockSystem : IEcsRunSystem
             {
                 Debug.Log($"CarAnimationSystem: Все пассажиры сели в машину, закрываем двери {carComponent.car.name}");
                 carComponent.isAllPassengersBoarded = true;
-                StartTimer(entity, 2f);
+                StartTimer(entity, _timeLeftToTimer);
             }
         }
     }
@@ -29,6 +30,6 @@ public class CarLockSystem : IEcsRunSystem
             IsActive = true
         };
 
-        Debug.Log($"CarAnimationSystem - StartTimer(): Запущен таймер на {duration} секунд");
+        Debug.Log($"CarLockSystem - StartTimer(): Запущен таймер на {duration} секунд");
     }
 }

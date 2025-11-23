@@ -65,39 +65,39 @@ public class SettingsSystem : IEcsRunSystem
 
     private static void MuteSound(SettingsComponent settingsComponent)
     {
-        settingsComponent.soundMuteToggle.MuteSoundButtonClickReader.gameObject.SetActive(false);
-        settingsComponent.soundMuteToggle.UnmuteSoundButtonClickReader.gameObject.SetActive(true);
+        settingsComponent.menuSettingsShower.SoundMuteToggle.MuteSoundButtonClickReader.gameObject.SetActive(false);
+        settingsComponent.menuSettingsShower.SoundMuteToggle.UnmuteSoundButtonClickReader.gameObject.SetActive(true);
     }
 
     private static void UnmuteSound(SettingsComponent settingsComponent)
     {
-        settingsComponent.soundMuteToggle.MuteSoundButtonClickReader.gameObject.SetActive(true);
-        settingsComponent.soundMuteToggle.UnmuteSoundButtonClickReader.gameObject.SetActive(false);
+        settingsComponent.menuSettingsShower.SoundMuteToggle.MuteSoundButtonClickReader.gameObject.SetActive(true);
+        settingsComponent.menuSettingsShower.SoundMuteToggle.UnmuteSoundButtonClickReader.gameObject.SetActive(false);
     }
 
     private static void MuteMusic(SettingsComponent settingsComponent)
     {
-        settingsComponent.musicMuteToggle.MuteMusicButtonClickReader.gameObject.SetActive(false);
-        settingsComponent.musicMuteToggle.UnmuteMusicButtonClickReader.gameObject.SetActive(true);
+        settingsComponent.menuSettingsShower.MusicMuteToggle.MuteMusicButtonClickReader.gameObject.SetActive(false);
+        settingsComponent.menuSettingsShower.MusicMuteToggle.UnmuteMusicButtonClickReader.gameObject.SetActive(true);
     }
 
     private static void UnmuteMusic(SettingsComponent settingsComponent)
     {
-        settingsComponent.musicMuteToggle.MuteMusicButtonClickReader.gameObject.SetActive(true);
-        settingsComponent.musicMuteToggle.UnmuteMusicButtonClickReader.gameObject.SetActive(false);
+        settingsComponent.menuSettingsShower.MusicMuteToggle.MuteMusicButtonClickReader.gameObject.SetActive(true);
+        settingsComponent.menuSettingsShower.MusicMuteToggle.UnmuteMusicButtonClickReader.gameObject.SetActive(false);
     }
 
     private void OpenSettings(SettingsComponent settingsComponent)
     {
-        settingsComponent.windowGroup.alpha = 1.0f;
-        settingsComponent.windowGroup.interactable = true;
-        settingsComponent.windowGroup.blocksRaycasts = true;
+        settingsComponent.menuSettingsShower.WindowGroup.alpha = 1.0f;
+        settingsComponent.menuSettingsShower.WindowGroup.interactable = true;
+        settingsComponent.menuSettingsShower.WindowGroup.blocksRaycasts = true;
     }
 
     private void CloseSettings(SettingsComponent settingsComponent)
     {
-        settingsComponent.windowGroup.alpha = 0f;
-        settingsComponent.windowGroup.interactable = false;
-        settingsComponent.windowGroup.blocksRaycasts = false;
+        settingsComponent.menuSettingsShower.WindowGroup.alpha = 0f;
+        settingsComponent.menuSettingsShower.WindowGroup.interactable = false;
+        settingsComponent.menuSettingsShower.WindowGroup.blocksRaycasts = false;
     }
 }
