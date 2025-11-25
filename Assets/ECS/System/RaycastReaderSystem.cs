@@ -1,34 +1,29 @@
 using Leopotam.Ecs;
-using System;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class RaycastReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
+public class RaycastReaderSystem : IEcsRunSystem
 {
+    private EcsFilter<InputEvent> _input;
     private EcsFilter<RaycastReaderEnableEvent> _raycastEnable;
     private EcsFilter<RaycastReaderDisableEvent> _raycastDisable;
 
     private bool _isActiveSystem;
-    private InputSystem _inputSystem;
 
-    public RaycastReaderSystem(InputSystem inputSystem)
+    public RaycastReaderSystem()
     {
         _isActiveSystem = true;
-        _inputSystem = inputSystem;
-    }
-
-    public void Init()
-    {
-        _inputSystem.RayShooting += ReadRaycast;
-    }
-
-    public void Destroy()
-    {
-        _inputSystem.RayShooting -= ReadRaycast;
     }
 
     public void Run()
     {
+        foreach (var entityInput in _input)
+        {
+            var entityInputEvent = _input.GetEntity(entityInput);
+            ReadRaycast(entityInputEvent);
+            entityInputEvent.Del<InputEvent>();
+        }
+
         foreach (var entityDisable in _raycastEnable)
         {
             var entityDisableEvent = _raycastEnable.GetEntity(entityDisable);
@@ -44,12 +39,14 @@ public class RaycastReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSys
         }
     }
 
-    public void ReadRaycast(Ray screenPoint)
+    public void ReadRaycast(EcsEntity ecsEntity)
     {
+        ref var inputEvent = ref ecsEntity.Get<InputEvent>();
+
         if (_isActiveSystem == false)
             return;
 
-        if (Physics.Raycast(screenPoint, out RaycastHit hit))
+        if (Physics.Raycast(inputEvent.ray, out RaycastHit hit))
         {
             var hitEntity = hit.collider.GetComponent<Vehicle>();
 

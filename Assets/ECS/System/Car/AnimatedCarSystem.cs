@@ -4,6 +4,7 @@ using UnityEngine;
 public class AnimatedCarSystem : IEcsRunSystem
 {
     private static readonly int IsLeaving = Animator.StringToHash(nameof(IsLeaving));
+    private static readonly int IsCrashed = Animator.StringToHash(nameof(IsCrashed));
 
     private EcsFilter<CarComponent, CarAnimationComponent> _filter;
 
@@ -15,6 +16,7 @@ public class AnimatedCarSystem : IEcsRunSystem
             ref var animationComponent = ref _filter.Get2(entity);
 
             animationComponent.animator.SetBool(IsLeaving, carComponent.isAllPassengersBoarded);
+            animationComponent.animator.SetBool(IsCrashed, carComponent.isCrashed);
         }
     }
 }

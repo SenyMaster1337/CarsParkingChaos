@@ -19,6 +19,7 @@ public struct CarComponent
     public bool isCrashHandlerEnabled;
     public bool canClickable;
     public bool canCrashed;
+    public bool isCrashed;
 
     public Quaternion rorationCarInParking;
     public float distanceToDisableCrashHandler;

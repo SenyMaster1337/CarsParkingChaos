@@ -34,14 +34,15 @@ public class CarCrashHandlerSystem : IEcsInitSystem, IEcsDestroySystem
 
     private void ComeBack(Vehicle crashHandlerCar, Vehicle carCrashed)
     {
+        ref var componentcrashHandlerCar = ref crashHandlerCar.Entity.Get<CarComponent>();
         ref var componentCarCrashed = ref carCrashed.Entity.Get<CarComponent>();
 
-        if (componentCarCrashed.canCrashed == true)
+        if (componentCarCrashed.canCrashed == true && componentcrashHandlerCar.canCrashed == true)
         {
             ref var movableCrashHandlerCar = ref crashHandlerCar.Entity.Get<CarMovableComponent>();
             movableCrashHandlerCar.isReverseEnable = true;
 
-            ref var componentcrashHandlerCar = ref crashHandlerCar.Entity.Get<CarComponent>();
+            componentcrashHandlerCar.isCrashed = true;
             StartCancelParkingReserverEvent(componentcrashHandlerCar.parkingReservedSlot);
         }
     }

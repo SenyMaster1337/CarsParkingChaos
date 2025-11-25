@@ -1,11 +1,9 @@
 ﻿using Leopotam.Ecs;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LoadNextLevelSystem : IEcsRunSystem
 {
+    private EcsWorld _ecsWorld;
     private EcsFilter<LevelComponent> _filter;
     private EcsFilter<LoadNextLevelEvent> _nextLevelEvent;
 
@@ -25,21 +23,12 @@ public class LoadNextLevelSystem : IEcsRunSystem
         {
             ref var levelComponent = ref _filter.Get1(entity);
 
-            //UnityEngine.SceneManagement.SceneManager.LoadScene(levelComponent.currentLevel + 1);
-
             int nextSceneIndex = levelComponent.currentLevel + 1;
 
-            // Проверяем существует ли сцена с таким индексом
+            _ecsWorld.NewEntity().Get<InterstitialAdvShowEvent>();
+
             if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
-            {
                 SceneManager.LoadScene(nextSceneIndex);
-                Debug.Log($"<color=green>✅ Загружаем сцену {nextSceneIndex}</color>");
-            }
-            else
-            {
-                Debug.LogWarning($"<color=orange>⚠️ Сцены с индексом {nextSceneIndex} не существует!</color>");
-                // Дополнительные действия при отсутствии сцены
-            }
         }
     }
 }

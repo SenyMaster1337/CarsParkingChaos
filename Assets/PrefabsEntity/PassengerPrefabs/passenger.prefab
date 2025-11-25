@@ -1,0 +1,158 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3872027303744702461
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6740869452171169740}
+  - component: {fileID: 88778552035374762}
+  m_Layer: 0
+  m_Name: passenger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6740869452171169740
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3872027303744702461}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: -0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 2.1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 5138289405135300059}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
+--- !u!114 &88778552035374762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3872027303744702461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 794075188ac85f7499ee3331ea9af1ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &8901965851499517494
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6740869452171169740}
+    m_Modifications:
+    - target: {fileID: 1485061586127833438, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: edc2b15e86600e94bb70197105ba80e2, type: 2}
+    - target: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074903539913032603, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      propertyPath: m_Name
+      value: Stickman_sphere_Police (3)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3656344088546448434, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6839791065361642169}
+  m_SourcePrefab: {fileID: 100100000, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+--- !u!4 &5138289405135300059 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+  m_PrefabInstance: {fileID: 8901965851499517494}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5275917852445000196 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3656344088546448434, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
+  m_PrefabInstance: {fileID: 8901965851499517494}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6839791065361642169
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5275917852445000196}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b9d45172aed071d4e9fc2a7d8e22c12d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

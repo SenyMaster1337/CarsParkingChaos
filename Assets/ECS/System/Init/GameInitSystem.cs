@@ -16,9 +16,8 @@ public class GameInitSystem : IEcsInitSystem
     private List<ParkingSlot> _parkingSlots;
     private StartQueuePoint _startQueuePoint;
 
-    public GameInitSystem(StaticData staticData, List<Vehicle> defaultCars, List<Passenger> passengers, List<ParkingSlot> parkingSlots, StartQueuePoint startQueuePoint)
+    public GameInitSystem(List<Vehicle> defaultCars, List<Passenger> passengers, List<ParkingSlot> parkingSlots, StartQueuePoint startQueuePoint)
     {
-        _staticData = staticData;
         _cars = defaultCars;
         _parkingSlots = parkingSlots;
         _passengers = passengers;
@@ -52,6 +51,7 @@ public class GameInitSystem : IEcsInitSystem
             carComponent.isCrashHandlerEnabled = true;
             carComponent.canClickable = true; 
             carComponent.canCrashed = true;
+            carComponent.isCrashed = false;
 
             carComponent.rorationCarInParking = _staticData.RotationCarInParking;
             carComponent.distanceToDisableCrashHandler = _staticData.DistanceToDisableCrashHandler;

@@ -23,7 +23,6 @@ public class CrashHandler : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out Vehicle car))
         {
-            Debug.Log("CrashHandlerMonobehavior");
             OnCollisionCar?.Invoke(_currentCar, car);
         }
     }

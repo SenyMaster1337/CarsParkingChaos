@@ -19,11 +19,22 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "223196f3-f779-4bee-9a18-82496140d794",
+                    "id": "1e63b513-1648-499d-b1c8-a37ce1d2d63c",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Desktop",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "38279b14-4eb0-496a-b3d2-2f0b1d9dea98",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Mobile",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -33,14 +44,20 @@
     ],
     "controlSchemes": [
         {
-            "name": "New Control Scheme",
-            "bindingGroup": "New Control Scheme",
+            "name": "Desktop",
+            "bindingGroup": "Desktop",
             "devices": [
                 {
                     "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
-                },
+                }
+            ]
+        },
+        {
+            "name": "Mobile",
+            "bindingGroup": "Mobile",
+            "devices": [
                 {
                     "devicePath": "<Touchscreen>",
                     "isOptional": false,

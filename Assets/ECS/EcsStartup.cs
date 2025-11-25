@@ -1,5 +1,6 @@
 using Leopotam.Ecs;
 using System.Collections.Generic;
+using YG;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -33,14 +34,17 @@ public class EcsStartup : MonoBehaviour
         _ecsWorld = new EcsWorld();
         _systems = new EcsSystems(_ecsWorld);
 
-        var input = new InputSystem(_mainCamera);
+        if (YG2.envir.isDesktop)
+            _systems.Add(new DesktopInputSystem());
+        else
+            _systems.Add(new MobileInputSystem());
 
         _systems
-            .Add(new GameInitSystem(_staticData, _cars, _passengers, _parkingSlots, _startQueuePoint))
+            .Add(new YGInitPlayerSystem())
+            .Add(new GameInitSystem(_cars, _passengers, _parkingSlots, _startQueuePoint))
             .Add(new UIElemntInitSystem(_menuSettingsShower, _levelCompleteShower, _levelLossShower))
             .Add(new PlayerUIButtonReaderSystem(_menuSettingsShower, _restartButtonClickReader, _levelCompleteShower, _levelLossShower))
-            .Add(input)
-            .Add(new RaycastReaderSystem(input))
+            .Add(new RaycastReaderSystem())
             .Add(new CarMoveSystem())
             .Add(new CarLockSystem())
             .Add(new AnimatedCarSystem())
@@ -58,8 +62,13 @@ public class EcsStartup : MonoBehaviour
             .Add(new LevelProgressSystem(_passengers))
             .Add(new SettingsSystem())
             .Add(new LoadNextLevelSystem())
-            .Add(new LevelLossSystem())
-            .Init();
+            .Add(new LevelLossSystem());
+
+        _systems
+            .Inject(_staticData)
+            .Inject(_mainCamera);
+
+        _systems.Init();
     }
 
     private void Update()

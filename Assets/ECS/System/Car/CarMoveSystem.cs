@@ -26,6 +26,7 @@ public class CarMoveSystem : IEcsRunSystem
                     {
                         movable.isMoving = false;
                         movable.isReverseEnable = false;
+                        component.isCrashed = false;
                     }
                 }
                 else
