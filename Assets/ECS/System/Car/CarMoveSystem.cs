@@ -6,6 +6,8 @@ public class CarMoveSystem : IEcsRunSystem
     private EcsWorld _ecsWorld;
     private EcsFilter<CarMovableComponent, CarComponent> _filter;
 
+    private StaticData _staticData;
+
     public void Run()
     {
         foreach (var entity in _filter)
@@ -14,19 +16,20 @@ public class CarMoveSystem : IEcsRunSystem
             ref var component = ref _filter.Get2(entity);
 
             movable = TryPark(entity, movable, component);
-            movable = TryMovableAcritvated(entity, movable);
+            movable = TryMovableActivated(entity, movable, component);
 
             if (movable.isMoving)
             {
-                if (movable.isReverseEnable == true)
+                if (movable.isReverseDirectionEnable == true)
                 {
                     MoveToPosition(movable, movable.spawnPosition);
 
                     if (movable.currentTransform.position == movable.spawnPosition)
                     {
                         movable.isMoving = false;
-                        movable.isReverseEnable = false;
+                        movable.isReverseDirectionEnable = false;
                         component.isCrashed = false;
+                        component.canClickable = true;
                     }
                 }
                 else
@@ -44,16 +47,20 @@ public class CarMoveSystem : IEcsRunSystem
             }
 
             if (component.reservedSeats.Count == component.maxPassengersSlots && component.isNotEmptySeats == false)
+            {
                 component.isNotEmptySeats = true;
+                StartCancelParkingReserverEvent(component.parkingReservedSlot);
+            }
         }
     }
 
-    private CarMovableComponent TryMovableAcritvated(int entity, CarMovableComponent movable)
+    private CarMovableComponent TryMovableActivated(int entity, CarMovableComponent movable, CarComponent carComponent)
     {
         var entityMovableEvent = _filter.GetEntity(entity);
 
         if (entityMovableEvent.Has<CarActivatedMovableEvent>())
         {
+            carComponent.canClickable = false;
             movable.isMoving = true;
             entityMovableEvent.Del<CarActivatedMovableEvent>();
         }
@@ -84,10 +91,10 @@ public class CarMoveSystem : IEcsRunSystem
 
     private CarMovableComponent TrySpeedUp(CarMovableComponent movable, CarComponent component)
     {
-        if (movable.moveSpeed < 100f && component.canCrashed == false)
+        if (movable.moveSpeed < _staticData.MaxLinerCarSpeed && component.canCrashed == false)
         {
-            movable.moveSpeed += 100f * Time.deltaTime;
-            movable.moveSpeed = Mathf.Min(movable.moveSpeed, 100f);
+            movable.moveSpeed += _staticData.MaxLinerCarSpeed * Time.deltaTime;
+            movable.moveSpeed = Mathf.Min(movable.moveSpeed, _staticData.MaxLinerCarSpeed);
         }
 
         return movable;
@@ -100,15 +107,16 @@ public class CarMoveSystem : IEcsRunSystem
             component.canCrashed = false;
             component.crashHandler.enabled = false;
             component.crashHandler.DisableBoxCollider();
-
-            _ecsWorld.NewEntity().Get<ReservedParkingSlotEvent>() = new ReservedParkingSlotEvent
-            {
-                carEntity = component.car.Entity
-            };
-
-            Debug.Log($"{component.car} CrashHanlderDisable");
         }
 
         return component;
+    }
+
+    private void StartCancelParkingReserverEvent(ParkingSlot slot)
+    {
+        _ecsWorld.NewEntity().Get<ParkingCancelReservationEvent>() = new ParkingCancelReservationEvent
+        {
+            parkingSlot = slot
+        };
     }
 }

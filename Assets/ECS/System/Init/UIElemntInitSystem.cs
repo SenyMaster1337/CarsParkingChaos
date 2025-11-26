@@ -1,4 +1,5 @@
 using Leopotam.Ecs;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,12 +9,14 @@ public class UIElemntInitSystem : IEcsInitSystem
     private MenuSettingsShower _menuSettingsShower;
     private LevelCompleteShower _levelCompleteShower;
     private LevelLossShower _levelLossShower;
+    private LeaderboradShower _leaderboradShower;
 
-    public UIElemntInitSystem(MenuSettingsShower menuSettingsShower, LevelCompleteShower levelCompleteShower, LevelLossShower levelLossShower)
+    public UIElemntInitSystem(MenuSettingsShower menuSettingsShower, LevelCompleteShower levelCompleteShower, LevelLossShower levelLossShower, LeaderboradShower leaderboradShower)
     {
         _menuSettingsShower = menuSettingsShower;
         _levelCompleteShower = levelCompleteShower;
         _levelLossShower = levelLossShower;
+        _leaderboradShower = leaderboradShower;
     }
 
     public void Init()
@@ -21,18 +24,19 @@ public class UIElemntInitSystem : IEcsInitSystem
         InitSettings();
         InitLevel();
         InitLevelLoss();
+        InitLeaderboard();
     }
 
     private void InitSettings()
     {
         var settingsNewEntity = _ecsWorld.NewEntity();
 
-        ref var completeLevelComponent = ref settingsNewEntity.Get<SettingsComponent>();
+        ref var settingComponent = ref settingsNewEntity.Get<SettingsComponent>();
 
-        completeLevelComponent.menuSettingsShower = _menuSettingsShower;
-        completeLevelComponent.menuSettingsShower.WindowGroup.alpha = 0f;
-        completeLevelComponent.menuSettingsShower.WindowGroup.interactable = false;
-        completeLevelComponent.menuSettingsShower.WindowGroup.blocksRaycasts = false;
+        settingComponent.menuSettingsShower = _menuSettingsShower;
+        settingComponent.menuSettingsShower.WindowGroup.alpha = 0f;
+        settingComponent.menuSettingsShower.WindowGroup.interactable = false;
+        settingComponent.menuSettingsShower.WindowGroup.blocksRaycasts = false;
     }
 
     private void InitLevel()
@@ -61,5 +65,17 @@ public class UIElemntInitSystem : IEcsInitSystem
         levelLossComponent.levelLossShower.WindowGroup.alpha = 0f;
         levelLossComponent.levelLossShower.WindowGroup.interactable = false;
         levelLossComponent.levelLossShower.WindowGroup.blocksRaycasts = false;
+    }
+
+    private void InitLeaderboard()
+    {
+        var leaderboardEntity = _ecsWorld.NewEntity();
+
+        ref var leaderboradComponent = ref leaderboardEntity.Get<LeaderboardComponent>();
+
+        leaderboradComponent.leaderboardShower = _leaderboradShower;
+        leaderboradComponent.leaderboardShower.WindowGroup.alpha = 0f;
+        leaderboradComponent.leaderboardShower.WindowGroup.interactable = false;
+        leaderboradComponent.leaderboardShower.WindowGroup.blocksRaycasts = false;
     }
 }

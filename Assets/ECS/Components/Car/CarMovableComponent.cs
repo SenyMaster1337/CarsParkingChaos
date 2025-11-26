@@ -10,5 +10,5 @@ public struct CarMovableComponent
     public float moveSpeed;
 
     public bool isMoving;
-    public bool isReverseEnable;
+    public bool isReverseDirectionEnable;
 }

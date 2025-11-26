@@ -88,18 +88,8 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
             }
             else
             {
-                StartCancelParkingReserverEvent(carComponent.parkingReservedSlot);
-
                 _cars.Remove(carComponent.car);
             }
         }
-    }
-
-    private void StartCancelParkingReserverEvent(ParkingSlot slot)
-    {
-        _ecsWorld.NewEntity().Get<ParkingCancelReservationEvent>() = new ParkingCancelReservationEvent
-        {
-            parkingSlot = slot
-        };
     }
 }

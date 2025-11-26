@@ -6,16 +6,19 @@ public class YGInitPlayerSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSyst
 {
     private EcsFilter<InterstitialAdvShowEvent> _interstitialAdv;
     private Camera _mainCamera;
+    private StaticData _staticData;
 
     public void Init()
     {
+        YG2.SetLeaderboard("LeaderboradYG2", 100);
+
         if (YG2.envir.isDesktop)
         {
-            _mainCamera.orthographicSize = 35;
+            _mainCamera.orthographicSize = _staticData.DesktopCameraOrtograpgicSize;
         }
         else
         {
-            _mainCamera.orthographicSize = 55;
+            _mainCamera.orthographicSize = _staticData.MobileCameraOrtograpgicSize;
         }
     }
 

@@ -1,9 +1,5 @@
 using Leopotam.Ecs;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Principal;
-using UnityEngine;
 
 public class CarCrashHandlerSystem : IEcsInitSystem, IEcsDestroySystem
 {
@@ -39,11 +35,12 @@ public class CarCrashHandlerSystem : IEcsInitSystem, IEcsDestroySystem
 
         if (componentCarCrashed.canCrashed == true && componentcrashHandlerCar.canCrashed == true)
         {
+            StartCancelParkingReserverEvent(componentcrashHandlerCar.parkingReservedSlot);
+
             ref var movableCrashHandlerCar = ref crashHandlerCar.Entity.Get<CarMovableComponent>();
-            movableCrashHandlerCar.isReverseEnable = true;
+            movableCrashHandlerCar.isReverseDirectionEnable = true;
 
             componentcrashHandlerCar.isCrashed = true;
-            StartCancelParkingReserverEvent(componentcrashHandlerCar.parkingReservedSlot);
         }
     }
 

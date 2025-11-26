@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
 {
-    private readonly float _timeLeftInTimer = 4f;
+    private readonly float _timeLeftInTimerToVerifyCarsInParking = 4f;
 
     private EcsWorld _ecsWorld;
     private EcsFilter<ParkingReservationComponent> _filter;
@@ -26,7 +26,7 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
     }
 
     public void Run()
-    {
+    { 
         foreach (var entity in _filter)
         {
             ref var parkingReservationComponent = ref _filter.Get1(entity);
@@ -78,25 +78,29 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
     {
         int count = 0;
 
+        if (_reservedParkingSlots == null || _reservedParkingSlots.Count < parkingSlots.Count)
+        {
+            _isParkingFull = false;
+            return;
+        }
+
         for (int i = 0; i < parkingSlots.Count; i++)
         {
             ref var parkingComponent = ref parkingSlots[i].Entity.Get<ParkingComponent>();
-            ref var ReservedparkingComponent = ref parkingSlots[i].Entity.Get<ParkingComponent>();
-
-            if (parkingComponent.car == null)
-                return;
+            ref var ReservedparkingComponent = ref _reservedParkingSlots[i].Entity.Get<ParkingComponent>();
 
             if (parkingComponent.car == ReservedparkingComponent.car)
             {
                 count++;
-
-                if (count == parkingSlots.Count)
-                    _ecsWorld.NewEntity().Get<ShowLossWindowEvent>();
             }
             else
             {
                 _isParkingFull = false;
+                return;
             }
+
+            if (count == parkingSlots.Count)
+                _ecsWorld.NewEntity().Get<ShowLossWindowEvent>();
         }
     }
 
@@ -107,14 +111,14 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
             for (int i = 0; i < parkingSlots.Count; i++)
             {
                 ref var parkingComponent = ref parkingSlots[i].Entity.Get<ParkingComponent>();
-                ref var ReservedparkingComponent = ref parkingSlots[i].Entity.Get<ParkingComponent>();
+                ref var ReservedparkingComponent = ref _reservedParkingSlots[i].Entity.Get<ParkingComponent>();
 
                 ReservedparkingComponent.car = parkingComponent.car;
             }
 
             _filter.GetEntity(entity).Get<TimerComponent>() = new TimerComponent
             {
-                TimeLeft = _timeLeftInTimer,
+                TimeLeft = _timeLeftInTimerToVerifyCarsInParking,
                 IsActive = true
             };
 
@@ -122,9 +126,9 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
         }
     }
 
-    private void ReserveParkingSlot(EcsEntity hitEntity, List<ParkingSlot> parkingSlots)
+    private void ReserveParkingSlot(EcsEntity carEcsEntity, List<ParkingSlot> parkingSlots)
     {
-        ref var carComponent = ref hitEntity.Get<CarComponent>();
+        ref var carComponent = ref carEcsEntity.Get<CarComponent>();
 
         for (int i = 0; i < parkingSlots.Count; i++)
         {
@@ -138,6 +142,9 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
                 parkingComponent.car = carComponent.car;
                 parkingComponent.isReserved = true;
                 _reservedParkingSlots.Add(parkingSlots[i]);
+
+                carEcsEntity.Get<CarActivatedMovableEvent>();
+
                 return;
             }
         }
@@ -148,9 +155,12 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
     {
         if (parkingSlots.Contains(cancelReservationEvent.parkingSlot))
         {
-            ref var parkingComponent = ref cancelReservationEvent.parkingSlot.Entity.Get<ParkingComponent>();
-            parkingComponent.car = null;
-            parkingComponent.isReserved = false;
+            int slotIndex = parkingSlots.IndexOf(cancelReservationEvent.parkingSlot);
+
+            ref var parkingComponent1 = ref parkingSlots[slotIndex].Entity.Get<ParkingComponent>();
+            parkingComponent1.car = null;
+            parkingComponent1.isReserved = false;
+
             _reservedParkingSlots.Remove(cancelReservationEvent.parkingSlot);
         }
     }
@@ -163,7 +173,7 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
         {
             ref var parkingComponent = ref parkingSlots[i].Entity.Get<ParkingComponent>();
 
-            if(parkingComponent.isReserved)
+            if (parkingComponent.isReserved)
             {
                 maxReservedParkingSlot++;
             }
@@ -176,6 +186,7 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
             if (maxReservedParkingSlot == parkingSlots.Count)
             {
                 _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
+                return;
             }
         }
     }

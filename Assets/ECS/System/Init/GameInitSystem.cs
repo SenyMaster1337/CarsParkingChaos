@@ -69,7 +69,7 @@ public class GameInitSystem : IEcsInitSystem
             carMovable.moveSpeed = _staticData.CarSpeed;
 
             carMovable.isMoving = false;
-            carMovable.isReverseEnable = false;
+            carMovable.isReverseDirectionEnable = false;
 
             ref var carAnimationComponent = ref carNewEntity.Get<CarAnimationComponent>();
             carAnimationComponent.animator = _cars[i].GetComponentInChildren<Animator>();

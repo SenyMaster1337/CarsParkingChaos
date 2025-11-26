@@ -23,6 +23,7 @@ public class EcsStartup : MonoBehaviour
     [SerializeField] private MenuSettingsShower _menuSettingsShower;
     [SerializeField] private LevelCompleteShower _levelCompleteShower;
     [SerializeField] private LevelLossShower _levelLossShower;
+    [SerializeField] private LeaderboradShower _leaderboradShower;
 
     //[SerializeField] private AudioMixer _audioMixer;
 
@@ -42,8 +43,8 @@ public class EcsStartup : MonoBehaviour
         _systems
             .Add(new YGInitPlayerSystem())
             .Add(new GameInitSystem(_cars, _passengers, _parkingSlots, _startQueuePoint))
-            .Add(new UIElemntInitSystem(_menuSettingsShower, _levelCompleteShower, _levelLossShower))
-            .Add(new PlayerUIButtonReaderSystem(_menuSettingsShower, _restartButtonClickReader, _levelCompleteShower, _levelLossShower))
+            .Add(new UIElemntInitSystem(_menuSettingsShower, _levelCompleteShower, _levelLossShower, _leaderboradShower))
+            .Add(new PlayerUIButtonReaderSystem(_menuSettingsShower, _restartButtonClickReader, _levelCompleteShower, _levelLossShower, _leaderboradShower))
             .Add(new RaycastReaderSystem())
             .Add(new CarMoveSystem())
             .Add(new CarLockSystem())
@@ -52,7 +53,7 @@ public class EcsStartup : MonoBehaviour
             .Add(new AnimatedPassengerSystem())
             .Add(new CarRotatorSystem(_triggerHandlers))
             .Add(new CarCrashHandlerSystem(_cars))
-            .Add(new CarParkingSystem(_carHandler, _parkingTriggerHandler))
+            .Add(new CarParkingSystem(_carHandler))
             .Add(new ParkingReservationSystem())
             .Add(new PassengerBoardingSystem(_passengers, _parkingTriggerHandler))
             .Add(new ShiftQueuePassengersSystem(_passengers))
@@ -61,8 +62,10 @@ public class EcsStartup : MonoBehaviour
             .Add(new LevelRestartSystem())
             .Add(new LevelProgressSystem(_passengers))
             .Add(new SettingsSystem())
+            .Add(new LeaderboardSystem())
             .Add(new LoadNextLevelSystem())
-            .Add(new LevelLossSystem());
+            .Add(new LevelLossSystem())
+            .Add(new CooldownSystem());
 
         _systems
             .Inject(_staticData)

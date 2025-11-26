@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine.SceneManagement;
+using UnityEngine;
 
 public class LoadNextLevelSystem : IEcsRunSystem
 {
@@ -29,6 +30,8 @@ public class LoadNextLevelSystem : IEcsRunSystem
 
             if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
                 SceneManager.LoadScene(nextSceneIndex);
+
+            Debug.Log("некст");
         }
     }
 }
