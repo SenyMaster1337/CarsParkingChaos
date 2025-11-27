@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LoadNextLevelSystem : IEcsRunSystem
 {
+    private readonly int _valueToNextLevelIndex = 1;
+    private readonly int _coinsAddToWin = 25;
     private EcsWorld _ecsWorld;
     private EcsFilter<LevelComponent> _filter;
     private EcsFilter<LoadNextLevelEvent> _nextLevelEvent;
@@ -24,14 +26,21 @@ public class LoadNextLevelSystem : IEcsRunSystem
         {
             ref var levelComponent = ref _filter.Get1(entity);
 
-            int nextSceneIndex = levelComponent.currentLevel + 1;
+            int nextSceneIndex = levelComponent.currentLevel + _valueToNextLevelIndex;
 
-            _ecsWorld.NewEntity().Get<InterstitialAdvShowEvent>();
+            _ecsWorld.NewEntity().Get<YGInterstitialAdvShowEvent>();
 
             if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
                 SceneManager.LoadScene(nextSceneIndex);
-
-            Debug.Log("некст");
         }
+    }
+
+    private void StartYGEvents(int nextSceneIndex)
+    {
+        _ecsWorld.NewEntity().Get<YGSaveProgressEvent>() = new YGSaveProgressEvent
+        {
+            levelIndex = nextSceneIndex,
+            coinsWinner = _coinsAddToWin
+        };
     }
 }

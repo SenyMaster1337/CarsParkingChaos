@@ -1,6 +1,4 @@
 using Leopotam.Ecs;
-using System;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class UIElemntInitSystem : IEcsInitSystem

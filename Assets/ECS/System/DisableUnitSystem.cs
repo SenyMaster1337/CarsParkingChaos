@@ -40,14 +40,12 @@ public class DisableUnitSystem : IEcsRunSystem
 
                 if (car != null)
                 {
-                    Debug.Log($"DisableUnitSystem: Отключаем {car.name}");
                     car.gameObject.SetActive(false);
                     car = null;
                 }
 
                 if (passenger != null)
                 {
-                    Debug.Log($"DisableUnitSystem: Отключаем {passenger.name}");
                     passenger.gameObject.SetActive(false);
                     passenger = null;
                 }

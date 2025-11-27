@@ -41,7 +41,9 @@ public class EcsStartup : MonoBehaviour
             _systems.Add(new MobileInputSystem());
 
         _systems
-            .Add(new YGInitPlayerSystem())
+            .Add(new YGPlayerInitSystem())
+            .Add(new YGPlayerSaveProgressSystem())
+            .Add(new YGAdvShowSystem())
             .Add(new GameInitSystem(_cars, _passengers, _parkingSlots, _startQueuePoint))
             .Add(new UIElemntInitSystem(_menuSettingsShower, _levelCompleteShower, _levelLossShower, _leaderboradShower))
             .Add(new PlayerUIButtonReaderSystem(_menuSettingsShower, _restartButtonClickReader, _levelCompleteShower, _levelLossShower, _leaderboradShower))
@@ -67,7 +69,7 @@ public class EcsStartup : MonoBehaviour
             .Add(new LevelLossSystem())
             .Add(new CooldownSystem());
 
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 0)
+        if (YG2.saves.level == 1)
         {
             _systems
                 .Add(new TutorialInitSystem(_cars))

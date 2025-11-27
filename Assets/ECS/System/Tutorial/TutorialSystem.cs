@@ -33,7 +33,7 @@ public class TutorialSystem : IEcsRunSystem
 
         foreach (var car in _cars)
         {
-            if (car.Entity.Has<TutorialComponent>())
+            if (car.Entity.IsAlive() && car.Entity.Has<TutorialComponent>())
             {
                 ref var tutorialComponent = ref car.Entity.Get<TutorialComponent>();
                 tutorialComponent.windowGroup.alpha = 1f;

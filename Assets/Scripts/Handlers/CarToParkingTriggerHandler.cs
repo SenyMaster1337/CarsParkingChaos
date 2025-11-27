@@ -9,7 +9,6 @@ public class CarToParkingTriggerHandler : BoxTriggerHandler
     {
         if (other.gameObject.TryGetComponent(out Vehicle car))
         {
-            Debug.Log($"ParkingTriggerHandler: Машина заехала на парквоку {car.name}");
             CarEnterParking?.Invoke(car);
         }
     }

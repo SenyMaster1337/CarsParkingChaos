@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
 {
-    private EcsWorld _ecsWorld;
-
     private List<Passenger> _passengers;
     private CarToParkingTriggerHandler _carToParkingTriggerHandler;
 
@@ -80,8 +78,6 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
                         firstPassengerMovable.targetCarPosition = carMovable.currentTransform.position;
                         carComponent.reservedSeats.Add(firstPassengerComponent);
                         _passengers.RemoveAt(0);
-
-                        Debug.Log($"PassengerBoardingSystem - MovePassengerToCar(): садим {firstPassengerComponent.passenger.name} в машину");
                         return;
                     }
                 }
