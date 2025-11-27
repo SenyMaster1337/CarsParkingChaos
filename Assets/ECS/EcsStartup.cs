@@ -67,6 +67,13 @@ public class EcsStartup : MonoBehaviour
             .Add(new LevelLossSystem())
             .Add(new CooldownSystem());
 
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            _systems
+                .Add(new TutorialInitSystem(_cars))
+                .Add(new TutorialSystem(_cars));
+        }
+
         _systems
             .Inject(_staticData)
             .Inject(_mainCamera);

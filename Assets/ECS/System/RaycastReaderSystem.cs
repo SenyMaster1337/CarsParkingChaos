@@ -65,11 +65,14 @@ public class RaycastReaderSystem : IEcsRunSystem
             if (carComponent.canClickable == false)
                 return;
 
-            _ecsWorld.NewEntity().Get<CooldownEvent>() = new CooldownEvent { remainingTime = _staticData.CooldownInputReaderToCar };
-
             StartParkingReservedEvent(carComponent);
+
+            StartCooldownEvent();
+
+            TryStartHandTutorialHideEvent(carComponent);
         }
     }
+
 
     private void StartParkingReservedEvent(CarComponent component)
     {
@@ -77,5 +80,18 @@ public class RaycastReaderSystem : IEcsRunSystem
         {
             carEntity = component.car.Entity
         };
+    }
+
+    private void TryStartHandTutorialHideEvent(CarComponent component)
+    {
+        _ecsWorld.NewEntity().Get<HandTutorialHideEvent>() = new HandTutorialHideEvent
+        {
+            ecsEntity = component.car.Entity
+        };
+    }
+
+    private void StartCooldownEvent()
+    {
+        _ecsWorld.NewEntity().Get<CooldownEvent>() = new CooldownEvent { remainingTime = _staticData.CooldownInputReaderToCar };
     }
 }
