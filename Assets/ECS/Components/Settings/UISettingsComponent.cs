@@ -1,5 +1,5 @@
 
-public struct SettingsComponent
+public struct UISettingsComponent
 {
     public MenuSettingsShower menuSettingsShower;
 }

@@ -15,8 +15,8 @@ public class CarMoveSystem : IEcsRunSystem
             ref var movable = ref _filter.Get1(entity);
             ref var component = ref _filter.Get2(entity);
 
-            movable = TryPark(entity, movable, component);
-            movable = TryMovableActivated(entity, movable, component);
+            TryPark(entity, ref movable, ref component);
+            TryMovableActivated(entity, ref movable, ref component);
 
             if (movable.isMoving)
             {
@@ -35,8 +35,8 @@ public class CarMoveSystem : IEcsRunSystem
                 else
                 {
                     movable.currentTransform.Translate(Vector3.forward * movable.moveSpeed * Time.deltaTime);
-                    component = TryDisableCrashHandler(movable, component);
-                    movable = TrySpeedUp(movable, component);
+                    TryDisableCrashHandler(ref movable, ref component);
+                    TrySpeedUp(ref movable, ref component);
                 }
 
                 if (movable.targetPoint != Vector3.zero)
@@ -54,7 +54,7 @@ public class CarMoveSystem : IEcsRunSystem
         }
     }
 
-    private CarMovableComponent TryMovableActivated(int entity, CarMovableComponent movable, CarComponent carComponent)
+    private void TryMovableActivated(int entity, ref CarMovableComponent movable, ref CarComponent carComponent)
     {
         var entityMovableEvent = _filter.GetEntity(entity);
 
@@ -64,11 +64,9 @@ public class CarMoveSystem : IEcsRunSystem
             movable.isMoving = true;
             entityMovableEvent.Del<CarActivatedMovableEvent>();
         }
-
-        return movable;
     }
 
-    private CarMovableComponent TryPark(int entity, CarMovableComponent movable, CarComponent component)
+    private void TryPark(int entity, ref CarMovableComponent movable, ref CarComponent component)
     {
         var entityParkingEvent = _filter.GetEntity(entity);
 
@@ -78,10 +76,9 @@ public class CarMoveSystem : IEcsRunSystem
             movable.targetPoint = Vector3.zero;
             movable.currentTransform.position = component.parkingReservedSlot.transform.position;
             movable.currentTransform.rotation = component.rorationCarInParking;
+            component.isParked = true;
             entityParkingEvent.Del<CarParkingEvent>();
         }
-
-        return movable;
     }
 
     private void MoveToPosition(CarMovableComponent movable, Vector3 targetPosition)
@@ -89,27 +86,24 @@ public class CarMoveSystem : IEcsRunSystem
         movable.currentTransform.position = Vector3.MoveTowards(movable.currentTransform.position, targetPosition, movable.moveSpeed * Time.deltaTime);
     }
 
-    private CarMovableComponent TrySpeedUp(CarMovableComponent movable, CarComponent component)
+    private void TrySpeedUp(ref CarMovableComponent movable, ref CarComponent component)
     {
         if (movable.moveSpeed < _staticData.MaxLinerCarSpeed && component.canCrashed == false)
         {
             movable.moveSpeed += _staticData.MaxLinerCarSpeed * Time.deltaTime;
             movable.moveSpeed = Mathf.Min(movable.moveSpeed, _staticData.MaxLinerCarSpeed);
         }
-
-        return movable;
     }
 
-    private CarComponent TryDisableCrashHandler(CarMovableComponent movable, CarComponent component)
+    private void TryDisableCrashHandler(ref CarMovableComponent movable, ref CarComponent component)
     {
         if (movable.currentTransform.position.SqrDistance(movable.spawnPosition) > component.distanceToDisableCrashHandler && component.canCrashed == true)
         {
             component.canCrashed = false;
             component.crashHandler.enabled = false;
             component.crashHandler.DisableBoxCollider();
+            component.isParked = false;
         }
-
-        return component;
     }
 
     private void StartCancelParkingReserverEvent(ParkingSlot slot)

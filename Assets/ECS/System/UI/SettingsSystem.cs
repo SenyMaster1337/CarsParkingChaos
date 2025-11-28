@@ -2,7 +2,10 @@ using Leopotam.Ecs;
 
 public class SettingsSystem : IEcsRunSystem
 {
-    private EcsFilter<SettingsComponent> _filter;
+    private const string MasterVolume = "MasterVolume";
+    private const string MusicVolume = "MusicVolume";
+
+    private EcsFilter<UISettingsComponent> _filter;
     private EcsFilter<OpenSettingsEvent> _openSettings;
     private EcsFilter<CloseSettingsEvent> _closeSettings;
     private EcsFilter<MuteSoundEvent> _muteSound;
@@ -33,7 +36,7 @@ public class SettingsSystem : IEcsRunSystem
             foreach (var soundMuteEntity in _muteSound)
             {
                 var eventMuteSoundEntity = _muteSound.GetEntity(soundMuteEntity);
-                MuteSound(settingsComponent);
+                MuteMasterSound(settingsComponent);
                 eventMuteSoundEntity.Del<MuteSoundEvent>();
             }
 
@@ -60,38 +63,42 @@ public class SettingsSystem : IEcsRunSystem
         }
     }
 
-    private static void MuteSound(SettingsComponent settingsComponent)
+    private static void MuteMasterSound(UISettingsComponent settingsComponent)
     {
         settingsComponent.menuSettingsShower.SoundMuteToggle.MuteSoundButtonClickReader.gameObject.SetActive(false);
         settingsComponent.menuSettingsShower.SoundMuteToggle.UnmuteSoundButtonClickReader.gameObject.SetActive(true);
+        settingsComponent.menuSettingsShower.SoundMuteToggle.AudioMixer.SetFloat(MasterVolume, -80);
     }
 
-    private static void UnmuteSound(SettingsComponent settingsComponent)
+    private static void UnmuteSound(UISettingsComponent settingsComponent)
     {
         settingsComponent.menuSettingsShower.SoundMuteToggle.MuteSoundButtonClickReader.gameObject.SetActive(true);
         settingsComponent.menuSettingsShower.SoundMuteToggle.UnmuteSoundButtonClickReader.gameObject.SetActive(false);
+        settingsComponent.menuSettingsShower.SoundMuteToggle.AudioMixer.SetFloat(MasterVolume, 0);
     }
 
-    private static void MuteMusic(SettingsComponent settingsComponent)
+    private static void MuteMusic(UISettingsComponent settingsComponent)
     {
         settingsComponent.menuSettingsShower.MusicMuteToggle.MuteMusicButtonClickReader.gameObject.SetActive(false);
         settingsComponent.menuSettingsShower.MusicMuteToggle.UnmuteMusicButtonClickReader.gameObject.SetActive(true);
+        settingsComponent.menuSettingsShower.MusicMuteToggle.AudioMixer.SetFloat(MusicVolume, -80);
     }
 
-    private static void UnmuteMusic(SettingsComponent settingsComponent)
+    private static void UnmuteMusic(UISettingsComponent settingsComponent)
     {
         settingsComponent.menuSettingsShower.MusicMuteToggle.MuteMusicButtonClickReader.gameObject.SetActive(true);
         settingsComponent.menuSettingsShower.MusicMuteToggle.UnmuteMusicButtonClickReader.gameObject.SetActive(false);
+        settingsComponent.menuSettingsShower.MusicMuteToggle.AudioMixer.SetFloat(MusicVolume, 0);
     }
 
-    private void OpenSettings(SettingsComponent settingsComponent)
+    private void OpenSettings(UISettingsComponent settingsComponent)
     {
         settingsComponent.menuSettingsShower.WindowGroup.alpha = 1.0f;
         settingsComponent.menuSettingsShower.WindowGroup.interactable = true;
         settingsComponent.menuSettingsShower.WindowGroup.blocksRaycasts = true;
     }
 
-    private void CloseSettings(SettingsComponent settingsComponent)
+    private void CloseSettings(UISettingsComponent settingsComponent)
     {
         settingsComponent.menuSettingsShower.WindowGroup.alpha = 0f;
         settingsComponent.menuSettingsShower.WindowGroup.interactable = false;

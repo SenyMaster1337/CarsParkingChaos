@@ -15,7 +15,7 @@ public class CarLockSystem : IEcsRunSystem
 
             if (carComponent.passengers.Count == carComponent.maxPassengersSlots && carComponent.isAllPassengersBoarded == false)
             {
-                Debug.Log($"CarAnimationSystem: Все пассажиры сели в машину, закрываем двери {carComponent.car.name}");
+
                 carComponent.isAllPassengersBoarded = true;
                 StartTimer(entity, _timeLeftToTimer);
             }
@@ -29,7 +29,5 @@ public class CarLockSystem : IEcsRunSystem
             TimeLeft = duration,
             IsActive = true
         };
-
-        Debug.Log($"CarLockSystem - StartTimer(): Запущен таймер на {duration} секунд");
     }
 }

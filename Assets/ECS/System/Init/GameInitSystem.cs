@@ -1,9 +1,6 @@
 using Leopotam.Ecs;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class GameInitSystem : IEcsInitSystem
@@ -21,7 +18,7 @@ public class GameInitSystem : IEcsInitSystem
         _cars = defaultCars;
         _parkingSlots = parkingSlots;
         _passengers = passengers;
-        _startQueuePoint = startQueuePoint; 
+        _startQueuePoint = startQueuePoint;
     }
 
     public void Init()
@@ -49,9 +46,10 @@ public class GameInitSystem : IEcsInitSystem
             carComponent.isNotEmptySeats = false;
             carComponent.isAllPassengersBoarded = false;
             carComponent.isCrashHandlerEnabled = true;
-            carComponent.canClickable = true; 
+            carComponent.canClickable = true;
             carComponent.canCrashed = true;
             carComponent.isCrashed = false;
+            carComponent.isParked = true;
 
             carComponent.rorationCarInParking = _staticData.RotationCarInParking;
             carComponent.distanceToDisableCrashHandler = _staticData.DistanceToDisableCrashHandler;
@@ -73,6 +71,15 @@ public class GameInitSystem : IEcsInitSystem
 
             ref var carAnimationComponent = ref carNewEntity.Get<CarAnimationComponent>();
             carAnimationComponent.animator = _cars[i].GetComponentInChildren<Animator>();
+
+            ref var carAudioComponent = ref carNewEntity.Get<CarAudioComponent>();
+            carAudioComponent.driveSound = _cars[i].GetComponentInChildren<CarDriveSound>();
+            carAudioComponent.crashSound = _cars[i].GetComponentInChildren<CarCrashSound>();
+            carAudioComponent.leavingSound = _cars[i].GetComponentInChildren<CarLeavingSound>();
+
+            carAudioComponent.isDriveSoundEnable = false;
+            carAudioComponent.isCrashSoundEnable = false;
+            carAudioComponent.isLeavingCarSoundEnable = false;
 
             _cars[i].Entity = carNewEntity;
         }

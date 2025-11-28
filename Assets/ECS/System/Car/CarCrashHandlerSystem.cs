@@ -35,12 +35,12 @@ public class CarCrashHandlerSystem : IEcsInitSystem, IEcsDestroySystem
 
         if (componentCarCrashed.canCrashed == true && componentcrashHandlerCar.canCrashed == true)
         {
+            componentcrashHandlerCar.isCrashed = true;
+
             StartCancelParkingReserverEvent(componentcrashHandlerCar.parkingReservedSlot);
 
             ref var movableCrashHandlerCar = ref crashHandlerCar.Entity.Get<CarMovableComponent>();
             movableCrashHandlerCar.isReverseDirectionEnable = true;
-
-            componentcrashHandlerCar.isCrashed = true;
         }
     }
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class LevelLossSystem : IEcsRunSystem
 {
-    private EcsFilter<LevelLossComponent> _filter;
+    private EcsFilter<UILevelLossComponent> _filter;
     private EcsFilter<ShowLossWindowEvent> _showLoss;
 
     public void Run()

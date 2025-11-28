@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public struct CompleteLevelComponent
+public struct UICompleteLevelComponent
 {
     public CanvasGroup windowGroup;
 }

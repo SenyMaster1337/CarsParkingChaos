@@ -1,12 +1,10 @@
 using Leopotam.Ecs;
 using System.Collections.Generic;
-using UnityEngine;
-
 
 public class LevelProgressSystem : IEcsRunSystem
 {
     private EcsWorld _ecsWorld;
-    private EcsFilter<LevelComponent, CompleteLevelComponent> _filter;
+    private EcsFilter<LevelComponent, UICompleteLevelComponent> _filter;
 
     private List<Passenger> _passengers;
 

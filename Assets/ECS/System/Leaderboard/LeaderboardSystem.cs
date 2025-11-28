@@ -2,7 +2,7 @@ using Leopotam.Ecs;
 
 public class LeaderboardSystem : IEcsRunSystem
 {
-    private EcsFilter<LeaderboardComponent> _filter;
+    private EcsFilter<UILeaderboardComponent> _filter;
     private EcsFilter<OpenLeaderboardEvent> _openLeaderboard;
     private EcsFilter<CloseLeaderboardEvent> _closeLeaderboard;
 
@@ -28,14 +28,14 @@ public class LeaderboardSystem : IEcsRunSystem
         }
     }
 
-    private void OpenSettings(LeaderboardComponent leaderboardComponent)
+    private void OpenSettings(UILeaderboardComponent leaderboardComponent)
     {
         leaderboardComponent.leaderboardShower.WindowGroup.alpha = 1.0f;
         leaderboardComponent.leaderboardShower.WindowGroup.interactable = true;
         leaderboardComponent.leaderboardShower.WindowGroup.blocksRaycasts = true;
     }
 
-    private void CloseSettings(LeaderboardComponent leaderboardComponent)
+    private void CloseSettings(UILeaderboardComponent leaderboardComponent)
     {
         leaderboardComponent.leaderboardShower.WindowGroup.alpha = 0f;
         leaderboardComponent.leaderboardShower.WindowGroup.interactable = false;

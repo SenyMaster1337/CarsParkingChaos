@@ -21,7 +21,7 @@ public class UIElemntInitSystem : IEcsInitSystem
     {
         InitSettings();
         InitLevel();
-        InitLevelLoss();
+        //InitLevelLoss();
         InitLeaderboard();
     }
 
@@ -29,7 +29,7 @@ public class UIElemntInitSystem : IEcsInitSystem
     {
         var settingsNewEntity = _ecsWorld.NewEntity();
 
-        ref var settingComponent = ref settingsNewEntity.Get<SettingsComponent>();
+        ref var settingComponent = ref settingsNewEntity.Get<UISettingsComponent>();
 
         settingComponent.menuSettingsShower = _menuSettingsShower;
         settingComponent.menuSettingsShower.WindowGroup.alpha = 0f;
@@ -45,31 +45,36 @@ public class UIElemntInitSystem : IEcsInitSystem
         levelComponent.isLevelCompleted = false;
         levelComponent.currentLevel = SceneManager.GetActiveScene().buildIndex;
 
-        ref var completeLevelComponent = ref currentLevelEntity.Get<CompleteLevelComponent>();
-
+        ref var completeLevelComponent = ref currentLevelEntity.Get<UICompleteLevelComponent>();
         completeLevelComponent.windowGroup = _levelCompleteShower.WindowGroup;
         completeLevelComponent.windowGroup.alpha = 0f;
         completeLevelComponent.windowGroup.interactable = false;
         completeLevelComponent.windowGroup.blocksRaycasts = false;
-    }
 
-    private void InitLevelLoss()
-    {
-        var levelLossNewEntity = _ecsWorld.NewEntity();
-
-        ref var levelLossComponent = ref levelLossNewEntity.Get<LevelLossComponent>();
-
+        ref var levelLossComponent = ref currentLevelEntity.Get<UILevelLossComponent>();
         levelLossComponent.levelLossShower = _levelLossShower;
         levelLossComponent.levelLossShower.WindowGroup.alpha = 0f;
         levelLossComponent.levelLossShower.WindowGroup.interactable = false;
         levelLossComponent.levelLossShower.WindowGroup.blocksRaycasts = false;
     }
 
+    //private void InitLevelLoss()
+    //{
+    //    var levelLossNewEntity = _ecsWorld.NewEntity();
+
+    //    ref var levelLossComponent = ref levelLossNewEntity.Get<UILevelLossComponent>();
+
+    //    levelLossComponent.levelLossShower = _levelLossShower;
+    //    levelLossComponent.levelLossShower.WindowGroup.alpha = 0f;
+    //    levelLossComponent.levelLossShower.WindowGroup.interactable = false;
+    //    levelLossComponent.levelLossShower.WindowGroup.blocksRaycasts = false;
+    //}
+
     private void InitLeaderboard()
     {
         var leaderboardEntity = _ecsWorld.NewEntity();
 
-        ref var leaderboradComponent = ref leaderboardEntity.Get<LeaderboardComponent>();
+        ref var leaderboradComponent = ref leaderboardEntity.Get<UILeaderboardComponent>();
 
         leaderboradComponent.leaderboardShower = _leaderboradShower;
         leaderboradComponent.leaderboardShower.WindowGroup.alpha = 0f;

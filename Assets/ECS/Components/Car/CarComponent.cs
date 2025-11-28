@@ -16,6 +16,7 @@ public struct CarComponent
     public bool isNotEmptySeats;
     public bool isAllPassengersBoarded;
 
+    public bool isParked;
     public bool isCrashHandlerEnabled;
     public bool canClickable;
     public bool canCrashed;

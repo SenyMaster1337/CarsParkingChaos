@@ -1,5 +1,5 @@
 
-public struct LeaderboardComponent
+public struct UILeaderboardComponent
 {
     public LeaderboradShower leaderboardShower;
 }
