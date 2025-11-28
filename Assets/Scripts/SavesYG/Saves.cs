@@ -9,4 +9,10 @@ namespace YG
     {
         public int coins = 0;
     }
+
+    public partial class SavesYG
+    {
+        public float musicSoundValue;
+        public float masterSoundValue;
+    }
 }

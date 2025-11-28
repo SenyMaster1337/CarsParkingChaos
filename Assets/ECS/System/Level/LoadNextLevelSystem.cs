@@ -5,7 +5,6 @@ using UnityEngine;
 public class LoadNextLevelSystem : IEcsRunSystem
 {
     private readonly int _valueToNextLevelIndex = 1;
-    private readonly int _coinsAddToWin = 25;
     private EcsWorld _ecsWorld;
     private EcsFilter<LevelComponent> _filter;
     private EcsFilter<LoadNextLevelEvent> _nextLevelEvent;
@@ -28,19 +27,15 @@ public class LoadNextLevelSystem : IEcsRunSystem
 
             int nextSceneIndex = levelComponent.currentLevel + _valueToNextLevelIndex;
 
+            if (nextSceneIndex < 0 || nextSceneIndex >= SceneManager.sceneCountInBuildSettings)
+                return;
+
+            Debug.Log("Загружаем");
+
             _ecsWorld.NewEntity().Get<YGInterstitialAdvShowEvent>();
 
             if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
                 SceneManager.LoadScene(nextSceneIndex);
         }
-    }
-
-    private void StartYGEvents(int nextSceneIndex)
-    {
-        _ecsWorld.NewEntity().Get<YGSaveProgressEvent>() = new YGSaveProgressEvent
-        {
-            levelIndex = nextSceneIndex,
-            coinsWinner = _coinsAddToWin
-        };
     }
 }

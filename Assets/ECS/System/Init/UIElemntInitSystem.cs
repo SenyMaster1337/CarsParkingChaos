@@ -1,13 +1,20 @@
 using Leopotam.Ecs;
 using UnityEngine.SceneManagement;
+using UnityEngine;
+using YG;
 
 public class UIElemntInitSystem : IEcsInitSystem
 {
+    private const string MasterVolume = "MasterVolume";
+    private const string MusicVolume = "MusicVolume";
+
     private EcsWorld _ecsWorld;
     private MenuSettingsShower _menuSettingsShower;
     private LevelCompleteShower _levelCompleteShower;
     private LevelLossShower _levelLossShower;
     private LeaderboradShower _leaderboradShower;
+
+    private StaticData _staticData;
 
     public UIElemntInitSystem(MenuSettingsShower menuSettingsShower, LevelCompleteShower levelCompleteShower, LevelLossShower levelLossShower, LeaderboradShower leaderboradShower)
     {
@@ -21,7 +28,6 @@ public class UIElemntInitSystem : IEcsInitSystem
     {
         InitSettings();
         InitLevel();
-        //InitLevelLoss();
         InitLeaderboard();
     }
 
@@ -29,12 +35,22 @@ public class UIElemntInitSystem : IEcsInitSystem
     {
         var settingsNewEntity = _ecsWorld.NewEntity();
 
-        ref var settingComponent = ref settingsNewEntity.Get<UISettingsComponent>();
+        ref var settingsComponent = ref settingsNewEntity.Get<UISettingsComponent>();
 
-        settingComponent.menuSettingsShower = _menuSettingsShower;
-        settingComponent.menuSettingsShower.WindowGroup.alpha = 0f;
-        settingComponent.menuSettingsShower.WindowGroup.interactable = false;
-        settingComponent.menuSettingsShower.WindowGroup.blocksRaycasts = false;
+        settingsComponent.menuSettingsShower = _menuSettingsShower;
+        settingsComponent.menuSettingsShower.WindowGroup.alpha = 0f;
+        settingsComponent.menuSettingsShower.WindowGroup.interactable = false;
+        settingsComponent.menuSettingsShower.WindowGroup.blocksRaycasts = false;
+
+        if (YG2.saves.musicSoundValue == 0 || YG2.saves.musicSoundValue == _staticData.MaxMusicSoundValue)
+            settingsComponent.menuSettingsShower.MusicMuteToggle.AudioMixer.SetFloat(MusicVolume, _staticData.MaxMusicSoundValue);
+        else
+            settingsComponent.menuSettingsShower.MusicMuteToggle.AudioMixer.SetFloat(MusicVolume, _staticData.MinMusicSoundValue);
+
+        if (YG2.saves.masterSoundValue == 0 || YG2.saves.masterSoundValue == _staticData.MaxMusicSoundValue)
+            settingsComponent.menuSettingsShower.SoundMuteToggle.AudioMixer.SetFloat(MasterVolume, _staticData.MaxMasterSoundValue);
+        else
+            settingsComponent.menuSettingsShower.SoundMuteToggle.AudioMixer.SetFloat(MasterVolume, _staticData.MinMasterSoundValue);
     }
 
     private void InitLevel()
@@ -57,18 +73,6 @@ public class UIElemntInitSystem : IEcsInitSystem
         levelLossComponent.levelLossShower.WindowGroup.interactable = false;
         levelLossComponent.levelLossShower.WindowGroup.blocksRaycasts = false;
     }
-
-    //private void InitLevelLoss()
-    //{
-    //    var levelLossNewEntity = _ecsWorld.NewEntity();
-
-    //    ref var levelLossComponent = ref levelLossNewEntity.Get<UILevelLossComponent>();
-
-    //    levelLossComponent.levelLossShower = _levelLossShower;
-    //    levelLossComponent.levelLossShower.WindowGroup.alpha = 0f;
-    //    levelLossComponent.levelLossShower.WindowGroup.interactable = false;
-    //    levelLossComponent.levelLossShower.WindowGroup.blocksRaycasts = false;
-    //}
 
     private void InitLeaderboard()
     {

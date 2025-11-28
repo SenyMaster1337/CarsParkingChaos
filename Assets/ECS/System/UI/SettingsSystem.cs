@@ -1,4 +1,5 @@
 using Leopotam.Ecs;
+using YG;
 
 public class SettingsSystem : IEcsRunSystem
 {
@@ -12,6 +13,8 @@ public class SettingsSystem : IEcsRunSystem
     private EcsFilter<UnmuteSoundEvent> _unmuteSound;
     private EcsFilter<MuteMusicEvent> _muteMusic;
     private EcsFilter<UnmuteMusicEvent> _unmuteMusic;
+
+    private StaticData _staticData;
 
     public void Run()
     {
@@ -36,59 +39,63 @@ public class SettingsSystem : IEcsRunSystem
             foreach (var soundMuteEntity in _muteSound)
             {
                 var eventMuteSoundEntity = _muteSound.GetEntity(soundMuteEntity);
-                MuteMasterSound(settingsComponent);
+                MuteMasterVolume(settingsComponent);
                 eventMuteSoundEntity.Del<MuteSoundEvent>();
             }
 
             foreach (var soundUnmuteEntity in _unmuteSound)
             {
                 var eventUnmuteSoundEntity = _unmuteSound.GetEntity(soundUnmuteEntity);
-                UnmuteSound(settingsComponent);
+                UnmuteMasterVolume(settingsComponent);
                 eventUnmuteSoundEntity.Del<UnmuteSoundEvent>();
             }
 
             foreach (var musicMuteEntity in _muteMusic)
             {
                 var eventMuteMusicEntity = _muteMusic.GetEntity(musicMuteEntity);
-                MuteMusic(settingsComponent);
+                MuteMusicVolume(settingsComponent);
                 eventMuteMusicEntity.Del<MuteMusicEvent>();
             }
 
             foreach (var musicUnmuteEntity in _unmuteMusic)
             {
                 var eventUnmuteMusicEntity = _unmuteMusic.GetEntity(musicUnmuteEntity);
-                UnmuteMusic(settingsComponent);
+                UnmuteMusicVolume(settingsComponent);
                 eventUnmuteMusicEntity.Del<UnmuteMusicEvent>();
             }
         }
     }
 
-    private static void MuteMasterSound(UISettingsComponent settingsComponent)
+    private void MuteMasterVolume(UISettingsComponent settingsComponent)
     {
         settingsComponent.menuSettingsShower.SoundMuteToggle.MuteSoundButtonClickReader.gameObject.SetActive(false);
         settingsComponent.menuSettingsShower.SoundMuteToggle.UnmuteSoundButtonClickReader.gameObject.SetActive(true);
-        settingsComponent.menuSettingsShower.SoundMuteToggle.AudioMixer.SetFloat(MasterVolume, -80);
+        settingsComponent.menuSettingsShower.SoundMuteToggle.AudioMixer.SetFloat(MasterVolume, _staticData.MinMasterSoundValue);
+        YG2.saves.masterSoundValue = _staticData.MaxMasterSoundValue;
     }
 
-    private static void UnmuteSound(UISettingsComponent settingsComponent)
+    private void UnmuteMasterVolume(UISettingsComponent settingsComponent)
     {
         settingsComponent.menuSettingsShower.SoundMuteToggle.MuteSoundButtonClickReader.gameObject.SetActive(true);
         settingsComponent.menuSettingsShower.SoundMuteToggle.UnmuteSoundButtonClickReader.gameObject.SetActive(false);
-        settingsComponent.menuSettingsShower.SoundMuteToggle.AudioMixer.SetFloat(MasterVolume, 0);
+        settingsComponent.menuSettingsShower.SoundMuteToggle.AudioMixer.SetFloat(MasterVolume, _staticData.MaxMasterSoundValue);
+        YG2.saves.masterSoundValue = _staticData.MaxMasterSoundValue;
     }
 
-    private static void MuteMusic(UISettingsComponent settingsComponent)
+    private void MuteMusicVolume(UISettingsComponent settingsComponent)
     {
         settingsComponent.menuSettingsShower.MusicMuteToggle.MuteMusicButtonClickReader.gameObject.SetActive(false);
         settingsComponent.menuSettingsShower.MusicMuteToggle.UnmuteMusicButtonClickReader.gameObject.SetActive(true);
-        settingsComponent.menuSettingsShower.MusicMuteToggle.AudioMixer.SetFloat(MusicVolume, -80);
+        settingsComponent.menuSettingsShower.MusicMuteToggle.AudioMixer.SetFloat(MusicVolume, _staticData.MinMusicSoundValue);
+        YG2.saves.musicSoundValue = _staticData.MinMusicSoundValue;
     }
 
-    private static void UnmuteMusic(UISettingsComponent settingsComponent)
+    private void UnmuteMusicVolume(UISettingsComponent settingsComponent)
     {
         settingsComponent.menuSettingsShower.MusicMuteToggle.MuteMusicButtonClickReader.gameObject.SetActive(true);
         settingsComponent.menuSettingsShower.MusicMuteToggle.UnmuteMusicButtonClickReader.gameObject.SetActive(false);
-        settingsComponent.menuSettingsShower.MusicMuteToggle.AudioMixer.SetFloat(MusicVolume, 0);
+        settingsComponent.menuSettingsShower.MusicMuteToggle.AudioMixer.SetFloat(MusicVolume, _staticData.MaxMusicSoundValue);
+        YG2.saves.musicSoundValue = _staticData.MaxMusicSoundValue;
     }
 
     private void OpenSettings(UISettingsComponent settingsComponent)

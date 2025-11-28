@@ -13,4 +13,12 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public float DesktopCameraOrtograpgicSize { get; private set; } = 35;
     [field: SerializeField] public float MobileCameraOrtograpgicSize { get; private set; } = 45;
     [field: SerializeField] public float CooldownInputReaderToCar { get; private set; } = 0.7f;
+    [field: SerializeField] public float MinMusicSoundValue { get; private set; } = -80;
+    [field: SerializeField] public float MaxMusicSoundValue { get; private set; } = -25;
+    [field: SerializeField] public float MinMasterSoundValue { get; private set; } = -80;
+    [field: SerializeField] public float MaxMasterSoundValue { get; private set; } = -20;
+    [field: SerializeField] public float DriveVolume { get; private set; }
+    [field: SerializeField] public float CrashVolume { get; private set; }
+    [field: SerializeField] public float LeavingVolume { get; private set; }
+    [field: SerializeField] public float WinVolume { get; private set; }
 }

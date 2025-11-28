@@ -4234,7 +4234,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7bd6b897eb5ca4b7d88a205c4a51640c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.1
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5047,9 +5047,9 @@ MonoBehaviour:
       de: 
       hi: 
   text: 
-  ru: "\u0423\u0440\u043E\u0432\u0435\u043D\u044C 2"
-  en: Level 2
-  tr: Seviye 2
+  ru: "\u0423\u0440\u043E\u0432\u0435\u043D\u044C 3"
+  en: Level 3
+  tr: Seviye 3
   az: 
   be: 
   he: 
@@ -16979,7 +16979,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 209041746838544708, guid: 0585d0ada55a13841b7681fb68f3486a, type: 2}
   m_audioClip: {fileID: 8300000, guid: b7da48c15e710a741842583fac3307c7, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0

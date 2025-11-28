@@ -7,7 +7,9 @@
         false,
         false
     ],
-    "idSave": 6,
+    "idSave": 12,
     "level": 2,
-    "coins": 150
+    "coins": 300,
+    "musicSoundValue": 0.0,
+    "masterSoundValue": 0.0
 }

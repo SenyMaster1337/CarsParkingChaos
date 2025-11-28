@@ -13,8 +13,20 @@ MonoBehaviour:
   m_Name: StaticData
   m_EditorClassIdentifier: 
   <CarSpeed>k__BackingField: 10
+  <MaxLinerCarSpeed>k__BackingField: 100
   <PassengerSpeed>k__BackingField: 20
   <DefaultCarSlots>k__BackingField: 4
   <MinivanCarSlots>k__BackingField: 8
   <RotationCarInParking>k__BackingField: {x: 0, y: -0.25881904, z: 0, w: 0.9659258}
   <DistanceToDisableCrashHandler>k__BackingField: 16
+  <DesktopCameraOrtograpgicSize>k__BackingField: 35
+  <MobileCameraOrtograpgicSize>k__BackingField: 45
+  <CooldownInputReaderToCar>k__BackingField: 0.7
+  <MinMusicSoundValue>k__BackingField: -80
+  <MaxMusicSoundValue>k__BackingField: -10
+  <MinMasterSoundValue>k__BackingField: -80
+  <MaxMasterSoundValue>k__BackingField: -10
+  <DriveVolume>k__BackingField: 0
+  <CrashVolume>k__BackingField: 0
+  <LeavingVolume>k__BackingField: 0
+  <WinVolume>k__BackingField: 0.1
