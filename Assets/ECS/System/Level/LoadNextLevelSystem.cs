@@ -27,10 +27,8 @@ public class LoadNextLevelSystem : IEcsRunSystem
 
             int nextSceneIndex = levelComponent.currentLevel + _valueToNextLevelIndex;
 
-            if (nextSceneIndex < 0 || nextSceneIndex >= SceneManager.sceneCountInBuildSettings)
+            if (nextSceneIndex < 0 || nextSceneIndex > SceneManager.sceneCountInBuildSettings)
                 return;
-
-            Debug.Log("Загружаем");
 
             _ecsWorld.NewEntity().Get<YGInterstitialAdvShowEvent>();
 

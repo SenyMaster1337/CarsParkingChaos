@@ -43,11 +43,11 @@ public class PassengerMoveSystem : IEcsRunSystem
                     }
                 }
 
-                if (movable.currentQueuePointPosition != Vector3.zero && movable.isNeedShiftQueue == true)
+                if (movable.queuePointPosition != Vector3.zero && movable.isNeedShiftQueue == true)
                 {
-                    MoveToPosition(movable, movable.currentQueuePointPosition);
+                    MoveToPosition(movable, movable.queuePointPosition);
 
-                    if (movable.currentTransform.position == movable.currentQueuePointPosition)
+                    if (movable.currentTransform.position == movable.queuePointPosition)
                     {
                         movable.isNeedShiftQueue = false;
                         movable.isMoving = false;
@@ -65,7 +65,7 @@ public class PassengerMoveSystem : IEcsRunSystem
 
             movable.isMoving = true;
             movable.isNeedShiftQueue = true;
-            movable.currentQueuePointPosition = moveQueueEvent.queuePointPosition;
+            movable.queuePointPosition = moveQueueEvent.queuePointPosition;
             entityEvent.Del<PassengerMoveQueuePointEvent>();
         }
 

@@ -17,8 +17,5 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public float MaxMusicSoundValue { get; private set; } = -25;
     [field: SerializeField] public float MinMasterSoundValue { get; private set; } = -80;
     [field: SerializeField] public float MaxMasterSoundValue { get; private set; } = -20;
-    [field: SerializeField] public float DriveVolume { get; private set; }
-    [field: SerializeField] public float CrashVolume { get; private set; }
-    [field: SerializeField] public float LeavingVolume { get; private set; }
-    [field: SerializeField] public float WinVolume { get; private set; }
+    [field: SerializeField] public float TimeToLevelShowLevelComplete { get; private set; } = 1.5f;
 }

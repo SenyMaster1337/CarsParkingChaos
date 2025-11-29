@@ -14,7 +14,6 @@ public class YGPlayerSaveProgressSystem : IEcsRunSystem
             YG2.saves.level = saveProgressEvent.levelIndex + 1;
             YG2.saves.coins += saveProgressEvent.coinsWinner;
             YG2.SaveProgress();
-            Debug.Log($"хцпнбни опнцпеяя янупюмем: спнбемэ: {YG2.saves.level} /// лнмерш: {YG2.saves.coins}");
 
             _saveProgress.GetEntity(levelEntity).Del<YGSaveProgressEvent>();
         }

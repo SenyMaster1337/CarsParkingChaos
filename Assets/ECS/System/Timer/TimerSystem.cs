@@ -25,7 +25,6 @@ public class TimerSystem : IEcsRunSystem
 
                 entityComponent.Get<NoTimeLeftEvent>();
                 entityComponent.Del<TimerComponent>();
-                Debug.Log("TimerSystem: Таймер завершен!");
             }
         }
 
@@ -34,7 +33,16 @@ public class TimerSystem : IEcsRunSystem
             var entityNoTimeLeftEvent = _noTimeLeft.GetEntity(entityEvent);
             TryAddDisableComponentToCar(entityNoTimeLeftEvent);
             TryAddRestartWindow(entityNoTimeLeftEvent);
+            TryCompleteLevel(entityNoTimeLeftEvent);
             entityNoTimeLeftEvent.Del<NoTimeLeftEvent>();
+        }
+    }
+
+    private void TryCompleteLevel(EcsEntity entityNoTimeLeftEvent)
+    {
+        if (entityNoTimeLeftEvent.Has<LevelComponent>())
+        {
+            entityNoTimeLeftEvent.Get<LevelCompleteEvent>();
         }
     }
 

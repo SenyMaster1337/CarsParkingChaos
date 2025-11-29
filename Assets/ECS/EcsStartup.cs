@@ -8,6 +8,7 @@ public class EcsStartup : MonoBehaviour
 {
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private StaticData _staticData;
+    [SerializeField] private SceneData _sceneData;
 
     [SerializeField] private List<Vehicle> _cars;
     [SerializeField] private List<Passenger> _passengers;
@@ -43,10 +44,12 @@ public class EcsStartup : MonoBehaviour
         AddGameSoundSystems();
         AddLevelSystems();
         AddUISystems();
-        TryAddTutorial();
+
+        //TryAddTutorial();
 
         _systems
             .Inject(_staticData)
+            .Inject(_sceneData)
             .Inject(_mainCamera);
 
         _systems.Init();

@@ -347,6 +347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MuteMusicButtonClickReader>k__BackingField: {fileID: 1559169711}
   <UnmuteMusicButtonClickReader>k__BackingField: {fileID: 1485779431}
+  <AudioMixer>k__BackingField: {fileID: 0}
 --- !u!4 &51622787 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6740869452171169740, guid: 204b9db44dcf84c48b077eb94485a21a, type: 3}
@@ -3100,6 +3101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MuteSoundButtonClickReader>k__BackingField: {fileID: 317943432}
   <UnmuteSoundButtonClickReader>k__BackingField: {fileID: 1327158608}
+  <AudioMixer>k__BackingField: {fileID: 0}
 --- !u!1001 &314424503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16969,6 +16971,8 @@ MonoBehaviour:
   _menuSettingsShower: {fileID: 1692392721}
   _levelCompleteShower: {fileID: 1448007310}
   _levelLossShower: {fileID: 690930088}
+  _leaderboradShower: {fileID: 0}
+  _gameSounds: {fileID: 0}
 --- !u!4 &1793089060 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 2d5fb229ae2945742b900a405a5e7a0b, type: 3}

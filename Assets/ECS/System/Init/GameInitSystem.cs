@@ -7,6 +7,7 @@ public class GameInitSystem : IEcsInitSystem
 {
     private EcsWorld _ecsWorld;
     private StaticData _staticData;
+    private SceneData _sceneData;
 
     private List<Vehicle> _cars;
     private List<Passenger> _passengers;
@@ -98,8 +99,22 @@ public class GameInitSystem : IEcsInitSystem
 
             ref var passengerMovable = ref passengerNewEntity.Get<PassengerMovableComponent>();
             passengerMovable.currentTransform = _passengers[i].gameObject.transform;
+
+            if (i < _sceneData.QueuePositions.Count)
+            {
+                passengerMovable.currentTransform.position = _sceneData.QueuePositions[i].position;
+                passengerMovable.currentTransform.rotation = _sceneData.QueuePositions[i].rotation;
+                passengerMovable.queuePointPosition = _sceneData.QueuePositions[i].position;
+            }
+            else
+            {
+                int lastIndex = _sceneData.QueuePositions.Count - 1;
+                passengerMovable.currentTransform.position = _sceneData.QueuePositions[lastIndex].position;
+                passengerMovable.currentTransform.rotation = _sceneData.QueuePositions[lastIndex].rotation;
+                passengerMovable.queuePointPosition = _sceneData.QueuePositions[lastIndex].position;
+            }
+
             passengerMovable.moveSpeed = _staticData.PassengerSpeed;
-            passengerMovable.currentQueuePointPosition = _passengers[i].gameObject.transform.position;
             passengerMovable.targetCarPosition = Vector3.zero;
 
             passengerMovable.isMoving = false;
