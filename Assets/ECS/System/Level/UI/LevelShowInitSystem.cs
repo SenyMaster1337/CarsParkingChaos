@@ -6,6 +6,7 @@ public class LevelShowInitSystem : IEcsInitSystem
 
     private LevelCompleteShower _levelCompleteShower;
     private LevelLossShower _levelLossShower;
+    private StaticData _staticData;
 
     public LevelShowInitSystem(LevelCompleteShower levelCompleteShower, LevelLossShower levelLossShower)
     {
@@ -25,10 +26,12 @@ public class LevelShowInitSystem : IEcsInitSystem
             ref var levelComponent = ref _filter.Get1(entity);
 
             ref var completeLevelComponent = ref levelComponent.entity.Get<UICompleteLevelComponent>();
-            completeLevelComponent.windowGroup = _levelCompleteShower.WindowGroup;
-            completeLevelComponent.windowGroup.alpha = 0f;
-            completeLevelComponent.windowGroup.interactable = false;
-            completeLevelComponent.windowGroup.blocksRaycasts = false;
+            completeLevelComponent.levelCompleteShower = _levelCompleteShower;
+            completeLevelComponent.levelCompleteShower.WindowGroup.alpha = 0f;
+            completeLevelComponent.levelCompleteShower.WindowGroup.interactable = false;
+            completeLevelComponent.levelCompleteShower.WindowGroup.blocksRaycasts = false;
+            completeLevelComponent.levelCompleteShower.CoinsNumberToWinText.Value.SetText($"{_staticData.NumberCointAddedPerWin}");
+            completeLevelComponent.levelCompleteShower.CurrentLevelNumberText.Value.SetText($"{levelComponent.currentLevel}");
 
             ref var levelLossComponent = ref levelComponent.entity.Get<UILevelLossComponent>();
             levelLossComponent.levelLossShower = _levelLossShower;

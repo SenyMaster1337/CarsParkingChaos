@@ -65,8 +65,8 @@ public class LevelProgressSystem : IEcsRunSystem
     private void ShowWinWindow(int entity)
     {
         ref var completeLevelComponent = ref _UIfilter.Get1(entity);
-        completeLevelComponent.windowGroup.alpha = 1.0f;
-        completeLevelComponent.windowGroup.interactable = true;
-        completeLevelComponent.windowGroup.blocksRaycasts = true;
+        completeLevelComponent.levelCompleteShower.WindowGroup.alpha = 1.0f;
+        completeLevelComponent.levelCompleteShower.WindowGroup.interactable = true;
+        completeLevelComponent.levelCompleteShower.WindowGroup.blocksRaycasts = true;
     }
 }

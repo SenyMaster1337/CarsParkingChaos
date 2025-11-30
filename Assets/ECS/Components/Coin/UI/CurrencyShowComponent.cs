@@ -1,5 +1,5 @@
 
 public struct CurrencyShowComponent
 {
-    public CoinCountText coinCountText;
+    public CurrentCoinCountText coinCountText;
 }

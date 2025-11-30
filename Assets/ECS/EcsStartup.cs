@@ -25,7 +25,7 @@ public class EcsStartup : MonoBehaviour
     [SerializeField] private LevelCompleteShower _levelCompleteShower;
     [SerializeField] private LevelLossShower _levelLossShower;
     [SerializeField] private LeaderboradShower _leaderboradShower;
-    [SerializeField] private CoinCountText _coinCountText;
+    [SerializeField] private CurrentCoinCountText _coinCountText;
 
     [SerializeField] private GameSounds _gameSounds;
 

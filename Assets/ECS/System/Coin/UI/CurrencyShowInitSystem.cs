@@ -3,9 +3,9 @@ using Leopotam.Ecs;
 public class CurrencyShowInitSystem : IEcsInitSystem
 {
     private EcsWorld _ecsWorld;
-    private CoinCountText _coinCountText;
+    private CurrentCoinCountText _coinCountText;
 
-    public CurrencyShowInitSystem(CoinCountText coinCountText)
+    public CurrencyShowInitSystem(CurrentCoinCountText coinCountText)
     {
         _coinCountText = coinCountText;
     }
