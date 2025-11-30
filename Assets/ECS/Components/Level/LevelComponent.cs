@@ -1,6 +1,10 @@
 
+using Leopotam.Ecs;
+
 public struct LevelComponent
 {
+    public EcsEntity entity;
+
     public int currentLevel;
     public int totalLevels;
 

@@ -37,23 +37,24 @@ public class EcsStartup : MonoBehaviour
         _ecsWorld = new EcsWorld();
         _systems = new EcsSystems(_ecsWorld);
 
+        AddYGSystems();
+
         AddInputSystem();
         AddGameSystems();
-        AddYGSystems();
+
         AddCarSystems();
         AddPassengerSystems();
+        AddParkingSystems();
+
         AddGameSoundSystems();
         AddLevelSystems();
-        AddUISystems();
 
-        _systems
-            .Add(new CurrencyInitSystem())
-            .Add(new CurrencySystem());
+        AddCurrencySystems();
+        AddShowCurrencySystems();
 
-        _systems
-            .Add(new CurrencyShowInitSystem(_coinCountText))
-            .Add(new CurrencyShowSystem());
-        
+        AddSettingSystems();
+        AddButtonsUISystems();
+
         TryAddTutorial();
 
         _systems
@@ -88,10 +89,7 @@ public class EcsStartup : MonoBehaviour
     private void AddGameSystems()
     {
         _systems
-            .Add(new GameInitSystem(_cars, _passengers, _parkingSlots, _startQueuePoint))
             .Add(new RaycastReaderSystem())
-            .Add(new CarParkingSystem(_carHandler))
-            .Add(new ParkingReservationSystem())
             .Add(new PassengerBoardingSystem(_passengers, _parkingTriggerHandler))
             .Add(new ShiftQueuePassengersSystem(_passengers))
             .Add(new TimerSystem())
@@ -104,12 +102,15 @@ public class EcsStartup : MonoBehaviour
         _systems
             .Add(new YGPlayerInitSystem())
             .Add(new YGPlayerSaveProgressSystem())
-            .Add(new YGAdvShowSystem());
+            .Add(new YGAdvShowSystem())
+            .Add(new YGLeaderBoardInitSystem(_leaderboradShower))
+            .Add(new LeaderboardSystem());
     }
 
     private void AddCarSystems()
     {
         _systems
+            .Add(new CarsInitSystem(_cars))
             .Add(new CarMoveSystem())
             .Add(new CarCrashHandlerSystem(_cars))
             .Add(new CarLockSystem())
@@ -121,8 +122,17 @@ public class EcsStartup : MonoBehaviour
     private void AddPassengerSystems()
     {
         _systems
+            .Add(new PassengersInitSystem(_passengers, _startQueuePoint))
             .Add(new PassengerMoveSystem())
             .Add(new AnimatedPassengerSystem());
+    }
+
+    private void AddParkingSystems()
+    {
+        _systems
+            .Add(new ParkingInitSystem(_parkingSlots))
+            .Add(new CarParkingSystem(_carHandler))
+            .Add(new ParkingReservationSystem());
     }
 
     private void AddGameSoundSystems()
@@ -135,19 +145,39 @@ public class EcsStartup : MonoBehaviour
     private void AddLevelSystems()
     {
         _systems
+            .Add(new LevelInitSystem())
+            .Add(new LevelShowInitSystem(_levelCompleteShower, _levelLossShower))
             .Add(new LevelProgressSystem(_passengers))
             .Add(new LoadNextLevelSystem())
             .Add(new LevelLossSystem())
             .Add(new LevelRestartSystem());
     }
 
-    private void AddUISystems()
+    private void AddButtonsUISystems()
     {
         _systems
-            .Add(new UIElemntInitSystem(_menuSettingsShower, _levelCompleteShower, _levelLossShower, _leaderboradShower))
-            .Add(new PlayerUIButtonReaderSystem(_menuSettingsShower, _restartButtonClickReader, _levelCompleteShower, _levelLossShower, _leaderboradShower))
-            .Add(new SettingsSystem())
-            .Add(new LeaderboardSystem());
+            .Add(new PlayerUIButtonReaderSystem(_menuSettingsShower, _restartButtonClickReader, _levelCompleteShower, _levelLossShower, _leaderboradShower));
+    }
+
+    private void AddSettingSystems()
+    {
+        _systems
+            .Add(new SettingsInitSystem(_menuSettingsShower))
+            .Add(new SettingsSystem());
+    }
+
+    private void AddShowCurrencySystems()
+    {
+        _systems
+            .Add(new CurrencyShowInitSystem(_coinCountText))
+            .Add(new CurrencyShowSystem());
+    }
+
+    private void AddCurrencySystems()
+    {
+        _systems
+            .Add(new CurrencyInitSystem())
+            .Add(new CurrencySystem());
     }
 
     private void TryAddTutorial()
