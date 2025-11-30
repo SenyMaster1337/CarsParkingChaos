@@ -1,10 +1,8 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine.SceneManagement;
-using UnityEngine;
 
 public class LoadNextLevelSystem : IEcsRunSystem
 {
-    private readonly int _valueToNextLevelIndex = 1;
     private EcsWorld _ecsWorld;
     private EcsFilter<LevelComponent> _filter;
     private EcsFilter<LoadNextLevelEvent> _nextLevelEvent;
@@ -25,15 +23,13 @@ public class LoadNextLevelSystem : IEcsRunSystem
         {
             ref var levelComponent = ref _filter.Get1(entity);
 
-            int nextSceneIndex = levelComponent.currentLevel + _valueToNextLevelIndex;
-
-            if (nextSceneIndex < 0 || nextSceneIndex > SceneManager.sceneCountInBuildSettings)
+            if (levelComponent.currentLevel < 0 || levelComponent.currentLevel > SceneManager.sceneCountInBuildSettings)
                 return;
 
             _ecsWorld.NewEntity().Get<YGInterstitialAdvShowEvent>();
 
-            if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
-                SceneManager.LoadScene(nextSceneIndex);
+            if (levelComponent.currentLevel < SceneManager.sceneCountInBuildSettings)
+                SceneManager.LoadScene(levelComponent.currentLevel);
         }
     }
 }

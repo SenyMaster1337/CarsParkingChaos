@@ -1,5 +1,7 @@
 using Leopotam.Ecs;
 using System.Collections.Generic;
+using UnityEngine;
+
 
 public class LevelProgressSystem : IEcsRunSystem
 {
@@ -32,7 +34,7 @@ public class LevelProgressSystem : IEcsRunSystem
 
             if (levelEntity.Has<LevelCompleteEvent>())
             {
-                CompleteLevel(entity, levelComponent);
+                CompleteLevel(entity, ref levelComponent);
                 levelComponent.isLevelCompleted = true;
                 levelEntity.Del<LevelCompleteEvent>();
             }
@@ -48,10 +50,15 @@ public class LevelProgressSystem : IEcsRunSystem
         };
     }
 
-    private void CompleteLevel(int entity, LevelComponent levelComponent)
+    private void CompleteLevel(int entity, ref LevelComponent levelComponent)
     {
         levelComponent.isLevelCompleted = true;
-        StartYGEvents(levelComponent.currentLevel);
+        levelComponent.currentLevel++;
+        Debug.Log(levelComponent.currentLevel);
+
+        _ecsWorld.NewEntity().Get<AddCoinsWinningEvent>();
+        _ecsWorld.NewEntity().Get<YGSaveProgressEvent>();
+
         ShowWinWindow(entity);
     }
 
@@ -61,14 +68,5 @@ public class LevelProgressSystem : IEcsRunSystem
         completeLevelComponent.windowGroup.alpha = 1.0f;
         completeLevelComponent.windowGroup.interactable = true;
         completeLevelComponent.windowGroup.blocksRaycasts = true;
-    }
-
-    private void StartYGEvents(int nextSceneIndex)
-    {
-        _ecsWorld.NewEntity().Get<YGSaveProgressEvent>() = new YGSaveProgressEvent
-        {
-            levelIndex = nextSceneIndex,
-            coinsWinner = 25
-        };
     }
 }

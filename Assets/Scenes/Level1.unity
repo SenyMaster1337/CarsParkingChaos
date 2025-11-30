@@ -9433,7 +9433,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4014115897865479399, guid: edabbf6f14a6f45bc812e209ecb1acbc, type: 3}
       propertyPath: m_text
-      value: 50000
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4014115897865479399, guid: edabbf6f14a6f45bc812e209ecb1acbc, type: 3}
       propertyPath: m_fontSize
@@ -9636,7 +9636,10 @@ PrefabInstance:
     - {fileID: 4014115898150427745, guid: edabbf6f14a6f45bc812e209ecb1acbc, type: 3}
     - {fileID: 4014115897274321931, guid: edabbf6f14a6f45bc812e209ecb1acbc, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4014115897865479396, guid: edabbf6f14a6f45bc812e209ecb1acbc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1491807378}
   m_SourcePrefab: {fileID: 100100000, guid: edabbf6f14a6f45bc812e209ecb1acbc, type: 3}
 --- !u!224 &1157720289 stripped
 RectTransform:
@@ -12583,6 +12586,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 794075188ac85f7499ee3331ea9af1ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1491807373 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4014115897865479396, guid: edabbf6f14a6f45bc812e209ecb1acbc, type: 3}
+  m_PrefabInstance: {fileID: 1157720288}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1491807376 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4014115897865479399, guid: edabbf6f14a6f45bc812e209ecb1acbc, type: 3}
+  m_PrefabInstance: {fileID: 1157720288}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491807373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1491807378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491807373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d3821e8181d36448de96d0eecbd6b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Value>k__BackingField: {fileID: 1491807376}
 --- !u!1 &1497573344
 GameObject:
   m_ObjectHideFlags: 0
@@ -14714,6 +14746,7 @@ MonoBehaviour:
   _levelCompleteShower: {fileID: 1340556294}
   _levelLossShower: {fileID: 1257797020}
   _leaderboradShower: {fileID: 1996784424}
+  _coinCountText: {fileID: 1491807378}
   _gameSounds: {fileID: 1765410868}
 --- !u!1001 &1786708101
 PrefabInstance:

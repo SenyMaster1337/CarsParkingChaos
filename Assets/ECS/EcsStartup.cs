@@ -25,6 +25,7 @@ public class EcsStartup : MonoBehaviour
     [SerializeField] private LevelCompleteShower _levelCompleteShower;
     [SerializeField] private LevelLossShower _levelLossShower;
     [SerializeField] private LeaderboradShower _leaderboradShower;
+    [SerializeField] private CoinCountText _coinCountText;
 
     [SerializeField] private GameSounds _gameSounds;
 
@@ -45,7 +46,15 @@ public class EcsStartup : MonoBehaviour
         AddLevelSystems();
         AddUISystems();
 
-        //TryAddTutorial();
+        _systems
+            .Add(new CurrencyInitSystem())
+            .Add(new CurrencySystem());
+
+        _systems
+            .Add(new CurrencyShowInitSystem(_coinCountText))
+            .Add(new CurrencyShowSystem());
+        
+        TryAddTutorial();
 
         _systems
             .Inject(_staticData)

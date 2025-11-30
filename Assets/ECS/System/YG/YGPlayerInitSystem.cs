@@ -1,6 +1,5 @@
 using Leopotam.Ecs;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using YG;
 
 public class YGPlayerInitSystem : IEcsInitSystem

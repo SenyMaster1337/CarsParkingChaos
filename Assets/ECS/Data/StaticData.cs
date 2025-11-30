@@ -18,4 +18,5 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public float MinMasterSoundValue { get; private set; } = -80;
     [field: SerializeField] public float MaxMasterSoundValue { get; private set; } = -20;
     [field: SerializeField] public float TimeToLevelShowLevelComplete { get; private set; } = 1.5f;
+    [field: SerializeField] public int NumberCointAddedPerWin { get; private set; } = 50;
 }
