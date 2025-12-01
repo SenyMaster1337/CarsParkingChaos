@@ -6416,7 +6416,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &709254126
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7083,7 +7083,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 201426839155363527, guid: cf45994829cd546cbb7f9ee1cd8ca47c, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 110
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 201426839155363527, guid: cf45994829cd546cbb7f9ee1cd8ca47c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11137,7 +11137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4014115898416777780, guid: edabbf6f14a6f45bc812e209ecb1acbc, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -100
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 4014115898416777780, guid: edabbf6f14a6f45bc812e209ecb1acbc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -11371,11 +11371,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 191281306699547918, guid: 98d3092aa5868474685730b082065a22, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 225
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 191281306699547918, guid: 98d3092aa5868474685730b082065a22, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 125
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 191281306699547918, guid: 98d3092aa5868474685730b082065a22, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12732,9 +12732,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 637725990165402202, guid: a97d4a1e7696dbf4884e5dd78cf80e44, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1288252024}
-    - targetCorrespondingSourceObject: {fileID: 637725990165402202, guid: a97d4a1e7696dbf4884e5dd78cf80e44, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1288252023}
   m_SourcePrefab: {fileID: 100100000, guid: a97d4a1e7696dbf4884e5dd78cf80e44, type: 3}
 --- !u!224 &1288252020 stripped
 RectTransform:
@@ -12757,19 +12754,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1288252023
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1288252021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfa5daf07bb13e24595f0f2bf21bb68f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Button: {fileID: 1288252024}
 --- !u!114 &1288252024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13024,7 +13008,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1340556293
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16823,7 +16807,7 @@ Transform:
   m_GameObject: {fileID: 1782515614}
   serializedVersion: 2
   m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
-  m_LocalPosition: {x: -16.5, y: 63, z: -28}
+  m_LocalPosition: {x: -16.5, y: 63, z: -26.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19628,7 +19612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 459524975697090386, guid: 495c05e97ce2d48f29ed71af576ab9e6, type: 3}
       propertyPath: m_Name
-      value: Button_Color_Sky
+      value: RestartLoss
       objectReference: {fileID: 0}
     - target: {fileID: 459524976158953048, guid: 495c05e97ce2d48f29ed71af576ab9e6, type: 3}
       propertyPath: m_text

@@ -81,11 +81,13 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem
     private void OnButtonClickOpenMenuSettings()
     {
         _ecsWorld.NewEntity().Get<OpenSettingsEvent>();
+        _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
     }
 
     private void OnButtonClickCloseMenuSettings()
     {
         _ecsWorld.NewEntity().Get<CloseSettingsEvent>();
+        _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
     }
 
     private void OnButtonClickRestart()
@@ -101,27 +103,32 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem
     private void OnButtonClickOpenLeaderboard()
     {
         _ecsWorld.NewEntity().Get<OpenLeaderboardEvent>();
+        _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
     }
 
     private void OnButtonClickCloseLeaderboard()
     {
         _ecsWorld.NewEntity().Get<CloseLeaderboardEvent>();
+        _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
     }
 
     private void OnButtonClickOpenBuyingPassengerSorting()
     {
         _ecsWorld.NewEntity().Get<OpenPassengerSortingInfoShowerEvent>();
+        _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
     }
 
     private void OnButtonClickAcceptBuyingPassengerSorting()
     {
         _ecsWorld.NewEntity().Get<ClosePassengerSortingInfoShowerEvent>(); 
         _ecsWorld.NewEntity().Get<BuyPassengerSortingEvent>();
-        _ecsWorld.NewEntity().Get<SortPassengerEvent>(); 
+        _ecsWorld.NewEntity().Get<SortPassengerEvent>();
+        _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
     }
 
     private void OnButtonClickDeclineBuyingPassengerSorting()
     {
         _ecsWorld.NewEntity().Get<ClosePassengerSortingInfoShowerEvent>();
+        _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
     }
 }

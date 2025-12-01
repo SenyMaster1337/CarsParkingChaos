@@ -26,13 +26,11 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
     }
 
     public void Run()
-    { 
+    {
         foreach (var entity in _filter)
         {
             ref var parkingReservationComponent = ref _filter.Get1(entity);
 
-            ToggleSwitchRayReaderActiveEvent(parkingReservationComponent.parkingSlots);
-            TrySaveCarInParkingData(entity, parkingReservationComponent.parkingSlots);
 
             foreach (var reservedEntity in _reservedSlot)
             {
@@ -40,6 +38,8 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
 
                 var reservedEntityEvent = _reservedSlot.GetEntity(reservedEntity);
                 ReserveParkingSlot(reserveEvent.carEntity, parkingReservationComponent.parkingSlots);
+                TrySaveCarInParkingData(entity, parkingReservationComponent.parkingSlots);
+                ToggleSwitchRayReaderActiveEvent(parkingReservationComponent.parkingSlots);
                 reservedEntityEvent.Del<ReservedParkingSlotEvent>();
             }
 
@@ -49,6 +49,7 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
 
                 var cancelEntityEvent = _cancelParkingReserve.GetEntity(cancelEntity);
                 CancelParkingReserved(cancelReservationEvent, parkingReservationComponent.parkingSlots);
+                ToggleSwitchRayReaderActiveEvent(parkingReservationComponent.parkingSlots);
                 cancelEntityEvent.Del<ParkingCancelReservationEvent>();
             }
 
