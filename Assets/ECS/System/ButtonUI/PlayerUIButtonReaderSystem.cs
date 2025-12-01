@@ -10,14 +10,16 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem
     private LevelCompleteShower _levelCompleteShower;
     private LevelLossShower _levelLossShower;
     private LeaderboradShower _leaderboradShower;
+    private BuySortingPassengersShower _buySortingPassengersShower;
 
-    public PlayerUIButtonReaderSystem(MenuSettingsShower menuSettings, RestartButtonClickReader restartButtonClickReader, LevelCompleteShower levelCompleteShower, LevelLossShower levelLossShower, LeaderboradShower leaderboradShower)
+    public PlayerUIButtonReaderSystem(MenuSettingsShower menuSettings, RestartButtonClickReader restartButtonClickReader, LevelCompleteShower levelCompleteShower, LevelLossShower levelLossShower, LeaderboradShower leaderboradShower, BuySortingPassengersShower buySortingPassengersShower)
     {
         _menuSettings = menuSettings;
         _restartButtonClickReader = restartButtonClickReader;
         _levelCompleteShower = levelCompleteShower;
         _levelLossShower = levelLossShower;
         _leaderboradShower = leaderboradShower;
+        _buySortingPassengersShower = buySortingPassengersShower;
     }
 
     public void Init()
@@ -33,6 +35,9 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem
         _levelLossShower.RestartButtonClickReader.OnButtonClicked += OnButtonClickRestart;
         _leaderboradShower.LeaderboradOpenButtonClick.OnButtonClicked += OnButtonClickOpenLeaderboard;
         _leaderboradShower.LeaderboradCloseButtonClick.OnButtonClicked += OnButtonClickCloseLeaderboard;
+        _buySortingPassengersShower.OpenBuyingPassengerSortingButtonClickReader.OnButtonClicked += OnButtonClickOpenBuyingPassengerSorting;
+        _buySortingPassengersShower.AcceptBuyingPassengersSortingButtonClickReader.OnButtonClicked += OnButtonClickAcceptBuyingPassengerSorting;
+        _buySortingPassengersShower.DeclineBuyingPassengerSortingButtonClickReader.OnButtonClicked += OnButtonClickDeclineBuyingPassengerSorting;
     }
 
     public void Destroy()
@@ -48,6 +53,9 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem
         _levelLossShower.RestartButtonClickReader.OnButtonClicked -= OnButtonClickRestart;
         _leaderboradShower.LeaderboradOpenButtonClick.OnButtonClicked -= OnButtonClickOpenLeaderboard;
         _leaderboradShower.LeaderboradCloseButtonClick.OnButtonClicked -= OnButtonClickCloseLeaderboard;
+        _buySortingPassengersShower.OpenBuyingPassengerSortingButtonClickReader.OnButtonClicked -= OnButtonClickOpenBuyingPassengerSorting;
+        _buySortingPassengersShower.AcceptBuyingPassengersSortingButtonClickReader.OnButtonClicked -= OnButtonClickAcceptBuyingPassengerSorting;
+        _buySortingPassengersShower.DeclineBuyingPassengerSortingButtonClickReader.OnButtonClicked -= OnButtonClickDeclineBuyingPassengerSorting;
     }
 
     private void OnButtonClickMuteSound()
@@ -98,5 +106,22 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem
     private void OnButtonClickCloseLeaderboard()
     {
         _ecsWorld.NewEntity().Get<CloseLeaderboardEvent>();
+    }
+
+    private void OnButtonClickOpenBuyingPassengerSorting()
+    {
+        _ecsWorld.NewEntity().Get<OpenPassengerSortingInfoShowerEvent>();
+    }
+
+    private void OnButtonClickAcceptBuyingPassengerSorting()
+    {
+        _ecsWorld.NewEntity().Get<ClosePassengerSortingInfoShowerEvent>(); 
+        _ecsWorld.NewEntity().Get<BuyPassengerSortingEvent>();
+        _ecsWorld.NewEntity().Get<SortPassengerEvent>(); 
+    }
+
+    private void OnButtonClickDeclineBuyingPassengerSorting()
+    {
+        _ecsWorld.NewEntity().Get<ClosePassengerSortingInfoShowerEvent>();
     }
 }

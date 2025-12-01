@@ -1576,8 +1576,8 @@ RectTransform:
   - {fileID: 709254126}
   - {fileID: 1340556293}
   - {fileID: 1257797019}
-  - {fileID: 368047463}
   - {fileID: 1470349707}
+  - {fileID: 368047463}
   m_Father: {fileID: 74472352}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2179,11 +2179,11 @@ MonoBehaviour:
       de: 
       hi: 
   text: 
-  ru: "\u0412\u044B \u0445\u043E\u0442\u0438\u0442\u0435 \u0441\u043E\u043F\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C
-    \u043F\u0430\u0441\u0441\u0430\u0436\u0438\u0440\u043E\u0432 \u043F\u043E\u0434
-    \u0446\u0432\u0435\u0442 \u043C\u0430\u0448\u0438\u043D?"
-  en: Do you want to match the passengers to the color of the cars?
-  tr: "Yolcular\u0131 arabalar\u0131n rengiyle e\u015Fle\u015Ftirmek ister misiniz?"
+  ru: "\u0412\u044B \u0445\u043E\u0442\u0438\u0442\u0435 \u0441\u0434\u0435\u043B\u0430\u0442\u044C
+    \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0443 \u043F\u0430\u0441\u0441\u0430\u0436\u0438\u0440\u043E\u0432
+    \u043F\u043E\u0434 \u0446\u0432\u0435\u0442 \u043C\u0430\u0448\u0438\u043D?"
+  en: Do you want to sort passengers according to the color of the cars?
+  tr: "Yolcular\u0131 arabalar\u0131n rengine g\xF6re s\u0131ralamak ister misiniz?"
   az: 
   be: 
   he: 
@@ -2236,9 +2236,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0412\u044B \u0445\u043E\u0442\u0438\u0442\u0435 \u0441\u043E\u043F\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C
-    \u043F\u0430\u0441\u0441\u0430\u0436\u0438\u0440\u043E\u0432 \u043F\u043E\u0434
-    \u0446\u0432\u0435\u0442 \u043C\u0430\u0448\u0438\u043D?"
+  m_text: "\u0412\u044B \u0445\u043E\u0442\u0438\u0442\u0435 \u0441\u0434\u0435\u043B\u0430\u0442\u044C
+    \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0443 \u043F\u0430\u0441\u0441\u0430\u0436\u0438\u0440\u043E\u0432
+    \u043F\u043E\u0434 \u0446\u0432\u0435\u0442 \u043C\u0430\u0448\u0438\u043D?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 02fea1fb776e0ad43a5e684a1ab0ce9e, type: 2}
   m_sharedMaterial: {fileID: 942589445191879500, guid: 02fea1fb776e0ad43a5e684a1ab0ce9e, type: 2}
@@ -3096,7 +3096,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7676413435862848187, guid: 21c9391d1777b42658aeb2b9cba06399, type: 3}
       propertyPath: m_Name
-      value: MuteMusicButton
+      value: DeclineBuy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -3108,7 +3108,7 @@ PrefabInstance:
       addedObject: {fileID: 302093907}
     - targetCorrespondingSourceObject: {fileID: 7676413435862848187, guid: 21c9391d1777b42658aeb2b9cba06399, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 302093906}
+      addedObject: {fileID: 302093908}
   m_SourcePrefab: {fileID: 100100000, guid: 21c9391d1777b42658aeb2b9cba06399, type: 3}
 --- !u!224 &302093903 stripped
 RectTransform:
@@ -3131,19 +3131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &302093906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 302093904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d78e3c86769e90243bc9bf2aef7ff03a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Button: {fileID: 302093907}
 --- !u!114 &302093907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3188,6 +3175,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &302093908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302093904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ac2eab3b86465444991a5e03fc2c234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Button: {fileID: 302093907}
 --- !u!1 &342570071
 GameObject:
   m_ObjectHideFlags: 0
@@ -3290,19 +3290,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 191281306699547918, guid: 98d3092aa5868474685730b082065a22, type: 3}
   m_PrefabInstance: {fileID: 1170646416}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &368047464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 368047462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 483b3f6e7529b8e47ba013d104a3abcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Button: {fileID: 368047465}
 --- !u!114 &368047465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3358,6 +3345,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &368047467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368047462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f783005976856cc418a478856d97c340, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Button: {fileID: 368047465}
 --- !u!1001 &383019862
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5221,7 +5221,7 @@ GameObject:
   - component: {fileID: 588518095}
   - component: {fileID: 588518094}
   m_Layer: 5
-  m_Name: background
+  m_Name: BlueBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11427,7 +11427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 191281306699547919, guid: 98d3092aa5868474685730b082065a22, type: 3}
       propertyPath: m_Name
-      value: BuyArrangeButton
+      value: OpenBuyingPassengerSortButton
       objectReference: {fileID: 0}
     - target: {fileID: 191281307279750882, guid: 98d3092aa5868474685730b082065a22, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -11483,7 +11483,7 @@ PrefabInstance:
       addedObject: {fileID: 368047465}
     - targetCorrespondingSourceObject: {fileID: 191281306699547919, guid: 98d3092aa5868474685730b082065a22, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 368047464}
+      addedObject: {fileID: 368047467}
   m_SourcePrefab: {fileID: 100100000, guid: 98d3092aa5868474685730b082065a22, type: 3}
 --- !u!1 &1206051583
 GameObject:
@@ -13847,9 +13847,9 @@ GameObject:
   - component: {fileID: 1470349711}
   - component: {fileID: 1470349710}
   - component: {fileID: 1470349709}
-  - component: {fileID: 1470349708}
+  - component: {fileID: 1470349712}
   m_Layer: 5
-  m_Name: Buying
+  m_Name: BuyingPassengerSorting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13879,23 +13879,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 550, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1470349708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1470349706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66509dc8e5753e5458730396af363400, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <WindowGroup>k__BackingField: {fileID: 1470349709}
-  <SettingsOpenButtonClick>k__BackingField: {fileID: 1254894206}
-  <SettingsCloseButtonClick>k__BackingField: {fileID: 0}
-  <SoundMuteToggle>k__BackingField: {fileID: 0}
-  <MusicMuteToggle>k__BackingField: {fileID: 0}
 --- !u!225 &1470349709
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -13946,6 +13929,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1470349706}
   m_CullTransparentMesh: 1
+--- !u!114 &1470349712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470349706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 312cd05d788652348b3c9b8151c316e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <WindowGroup>k__BackingField: {fileID: 1470349709}
+  <PriceBuyingPassengerSortingText>k__BackingField: {fileID: 1570780016}
+  <OpenBuyingPassengerSortingButtonClickReader>k__BackingField: {fileID: 368047467}
+  <AcceptBuyingPassengersSortingButtonClickReader>k__BackingField: {fileID: 1708449188}
+  <DeclineBuyingPassengerSortingButtonClickReader>k__BackingField: {fileID: 302093908}
 --- !u!1001 &1478845139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14895,6 +14895,7 @@ GameObject:
   - component: {fileID: 1570780013}
   - component: {fileID: 1570780015}
   - component: {fileID: 1570780014}
+  - component: {fileID: 1570780016}
   m_Layer: 5
   m_Name: PriceValue
   m_TagString: Untagged
@@ -15018,6 +15019,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1570780012}
   m_CullTransparentMesh: 1
+--- !u!114 &1570780016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570780012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce35e92ba58bad34dbdc3e86bfcab395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Value>k__BackingField: {fileID: 1570780014}
 --- !u!1 &1571930994
 GameObject:
   m_ObjectHideFlags: 0
@@ -15968,7 +15982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7676413435862848187, guid: 21c9391d1777b42658aeb2b9cba06399, type: 3}
       propertyPath: m_Name
-      value: MuteSoundButton
+      value: AcceptBuy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -15980,7 +15994,7 @@ PrefabInstance:
       addedObject: {fileID: 1708449187}
     - targetCorrespondingSourceObject: {fileID: 7676413435862848187, guid: 21c9391d1777b42658aeb2b9cba06399, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1708449186}
+      addedObject: {fileID: 1708449188}
   m_SourcePrefab: {fileID: 100100000, guid: 21c9391d1777b42658aeb2b9cba06399, type: 3}
 --- !u!224 &1708449183 stripped
 RectTransform:
@@ -16003,19 +16017,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1708449186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1708449184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e1f394eae3e59e4c8780651d3fd47d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Button: {fileID: 1708449187}
 --- !u!114 &1708449187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16060,6 +16061,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1708449188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708449184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2028e4812909c42a0562361598b94c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Button: {fileID: 1708449187}
 --- !u!1 &1712291042
 GameObject:
   m_ObjectHideFlags: 0
@@ -16906,6 +16920,7 @@ MonoBehaviour:
   _levelLossShower: {fileID: 1257797020}
   _leaderboradShower: {fileID: 1996784424}
   _coinCountText: {fileID: 1491807378}
+  _buySortingPassengerShower: {fileID: 1470349712}
   _gameSounds: {fileID: 1765410868}
 --- !u!1001 &1786708101
 PrefabInstance:

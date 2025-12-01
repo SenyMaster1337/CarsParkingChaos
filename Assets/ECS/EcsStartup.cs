@@ -26,6 +26,7 @@ public class EcsStartup : MonoBehaviour
     [SerializeField] private LevelLossShower _levelLossShower;
     [SerializeField] private LeaderboradShower _leaderboradShower;
     [SerializeField] private CurrentCoinCountText _coinCountText;
+    [SerializeField] private BuySortingPassengersShower _buySortingPassengerShower;
 
     [SerializeField] private GameSounds _gameSounds;
 
@@ -54,6 +55,9 @@ public class EcsStartup : MonoBehaviour
 
         AddSettingSystems();
         AddButtonsUISystems();
+
+        AddShowPassengerSortingSystems();
+
 
         TryAddTutorial();
 
@@ -156,7 +160,7 @@ public class EcsStartup : MonoBehaviour
     private void AddButtonsUISystems()
     {
         _systems
-            .Add(new PlayerUIButtonReaderSystem(_menuSettingsShower, _restartButtonClickReader, _levelCompleteShower, _levelLossShower, _leaderboradShower));
+            .Add(new PlayerUIButtonReaderSystem(_menuSettingsShower, _restartButtonClickReader, _levelCompleteShower, _levelLossShower, _leaderboradShower, _buySortingPassengerShower));
     }
 
     private void AddSettingSystems()
@@ -178,6 +182,13 @@ public class EcsStartup : MonoBehaviour
         _systems
             .Add(new CurrencyInitSystem())
             .Add(new CurrencySystem());
+    }
+
+    private void AddShowPassengerSortingSystems()
+    {
+        _systems
+            .Add(new PassengerSortingShowerInitSystem(_buySortingPassengerShower))
+            .Add(new PassengerSortingShowerSystem());
     }
 
     private void TryAddTutorial()
