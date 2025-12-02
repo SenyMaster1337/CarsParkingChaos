@@ -9,7 +9,7 @@ public struct CarComponent
 
     public Renderer renderer;
 
-    public float maxPassengersSlots;
+    public int maxPassengersSlots;
     public List<PassengerComponent> passengers;
     public List<PassengerComponent> reservedSeats;
 

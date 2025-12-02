@@ -11429,6 +11429,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OpenBuyingPassengerSortButton
       objectReference: {fileID: 0}
+    - target: {fileID: 191281306699547919, guid: 98d3092aa5868474685730b082065a22, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 191281307279750882, guid: 98d3092aa5868474685730b082065a22, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
@@ -13838,7 +13842,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1470349707
 RectTransform:
   m_ObjectHideFlags: 0

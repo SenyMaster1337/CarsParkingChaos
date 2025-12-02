@@ -57,6 +57,9 @@ public class EcsStartup : MonoBehaviour
         AddButtonsUISystems();
 
         AddShowPassengerSortingSystems();
+        _systems
+            .Add(new PassengerSortingInitSystem())
+            .Add(new PassengerSortingSystem());
 
 
         TryAddTutorial();

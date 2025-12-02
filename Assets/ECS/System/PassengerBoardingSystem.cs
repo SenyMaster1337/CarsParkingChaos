@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
 {
+    private EcsWorld _ecsWorld;
+    private EcsFilter<SendRequesPassengersAndCarsDataEvent> _sendRequestFilter;
+
     private List<Passenger> _passengers;
     private CarToParkingTriggerHandler _carToParkingTriggerHandler;
 
@@ -42,6 +45,19 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
 
     public void Run()
     {
+        foreach (var sendRequestEntity  in _sendRequestFilter)
+        {
+            var requestEntity = _sendRequestFilter.GetEntity(sendRequestEntity);
+
+            _ecsWorld.NewEntity().Get<GetPassengersAndCarsDataEvent>() = new GetPassengersAndCarsDataEvent
+            {
+                cars = _cars,
+                passengers = _passengers,
+            };
+
+            requestEntity.Del<SendRequesPassengersAndCarsDataEvent>();
+        }
+
         MovePassengerToCar();
     }
 

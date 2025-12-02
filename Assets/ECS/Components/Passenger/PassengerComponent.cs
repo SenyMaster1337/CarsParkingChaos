@@ -7,4 +7,6 @@ public struct PassengerComponent
     public CarComponent carComponent;
 
     public Vector3 startQueuePosition;
+
+    public bool isSorted;
 }

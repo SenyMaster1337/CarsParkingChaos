@@ -6,6 +6,7 @@ public class CurrencySystem : IEcsRunSystem
     private EcsFilter<CurrencyComponent> _filter;
     private EcsFilter<AddCoinsWinningEvent> _filterWinning;
     private EcsFilter<BuyPassengerSortingEvent> _buyPassengerSortingFilter;
+    private EcsFilter<ConfirmPassengerSortingBuyingEvent> _confirmBuyingPassengerSortingFilter;
 
     private StaticData _staticData;
 
@@ -25,9 +26,33 @@ public class CurrencySystem : IEcsRunSystem
             foreach (var buySortingEntity in _buyPassengerSortingFilter)
             {
                 var sortingEvent = _buyPassengerSortingFilter.GetEntity(buySortingEntity);
-                DeductCoinsBuyingPassengerSorting(ref currencyComponent);
+                TryToBuyPassengerSorting(currencyComponent);
                 sortingEvent.Del<BuyPassengerSortingEvent>();
             }
+
+            foreach (var confirmSortingBuyingEntity in _confirmBuyingPassengerSortingFilter)
+            {
+                var confirmSortingEvent = _confirmBuyingPassengerSortingFilter.GetEntity(confirmSortingBuyingEntity);
+                ConfirmBuyingPassengerSorting(ref currencyComponent);
+                confirmSortingEvent.Del<ConfirmPassengerSortingBuyingEvent>();
+            }
+        }
+    }
+
+    private void ConfirmBuyingPassengerSorting(ref CurrencyComponent currencyComponent)
+    {
+        currencyComponent.playerCoins -= _staticData.PriceSortPassengers;
+        StartChangeCurrentCoinShowerEvent(currencyComponent.playerCoins);
+        _ecsWorld.NewEntity().Get<YGSaveProgressEvent>();
+        _ecsWorld.NewEntity().Get<ClosePassengerSortingInfoShowerEvent>();
+        _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
+    }
+
+    private void TryToBuyPassengerSorting(CurrencyComponent currencyComponent)
+    {
+        if (currencyComponent.playerCoins >= _staticData.PriceSortPassengers)
+        {
+            _ecsWorld.NewEntity().Get<SortPassengerEvent>();
         }
     }
 
@@ -37,14 +62,6 @@ public class CurrencySystem : IEcsRunSystem
         StartChangeCurrentCoinShowerEvent(currencyComponent.playerCoins);
     }
 
-    private void DeductCoinsBuyingPassengerSorting(ref CurrencyComponent currencyComponent)
-    {
-        if (currencyComponent.playerCoins >= _staticData.PriceSortPassengers)
-        {
-            currencyComponent.playerCoins -= _staticData.PriceSortPassengers;
-            StartChangeCurrentCoinShowerEvent(currencyComponent.playerCoins);
-        }
-    }
 
     private void StartChangeCurrentCoinShowerEvent(int newCurrentCoins)
     {

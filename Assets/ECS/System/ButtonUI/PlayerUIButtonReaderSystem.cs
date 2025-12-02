@@ -120,10 +120,7 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem
 
     private void OnButtonClickAcceptBuyingPassengerSorting()
     {
-        _ecsWorld.NewEntity().Get<ClosePassengerSortingInfoShowerEvent>(); 
         _ecsWorld.NewEntity().Get<BuyPassengerSortingEvent>();
-        _ecsWorld.NewEntity().Get<SortPassengerEvent>();
-        _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
     }
 
     private void OnButtonClickDeclineBuyingPassengerSorting()

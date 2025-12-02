@@ -24,7 +24,6 @@ public class YGPlayerSaveProgressSystem : IEcsRunSystem
         {
             ref var levelComponent = ref _levelFilter.Get1(levelEntity);
             int newLevel = levelComponent.currentLevel;
-            Debug.Log(levelComponent.currentLevel);
             YG2.saves.level = newLevel;
         }
 
