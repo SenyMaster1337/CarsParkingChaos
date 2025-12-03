@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3872027303744702461
+--- !u!1 &339134698178654112
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,55 +8,55 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6740869452171169740}
-  - component: {fileID: 88778552035374762}
+  - component: {fileID: 1177776320041031855}
+  - component: {fileID: 1024174661189220516}
   m_Layer: 0
-  m_Name: passenger
+  m_Name: PassengerBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6740869452171169740
+--- !u!4 &1177776320041031855
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3872027303744702461}
+  m_GameObject: {fileID: 339134698178654112}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 2.1}
+  m_LocalPosition: {x: -31.07, y: 0, z: 103.26692}
   m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 5138289405135300059}
+  - {fileID: 5816831765876380589}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
---- !u!114 &88778552035374762
+--- !u!114 &1024174661189220516
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3872027303744702461}
+  m_GameObject: {fileID: 339134698178654112}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 794075188ac85f7499ee3331ea9af1ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &8901965851499517494
+--- !u!1001 &7817533822071889984
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 6740869452171169740}
+    m_TransformParent: {fileID: 1177776320041031855}
     m_Modifications:
     - target: {fileID: 1485061586127833438, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: edc2b15e86600e94bb70197105ba80e2, type: 2}
+      objectReference: {fileID: 2100000, guid: 53a03a1bd2d84d44dbfb0dab1200b8fe, type: 2}
     - target: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -123,26 +123,26 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3656344088546448434, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6839791065361642169}
+      addedObject: {fileID: 425471979587307392}
   m_SourcePrefab: {fileID: 100100000, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
---- !u!4 &5138289405135300059 stripped
+--- !u!4 &5816831765876380589 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4378902070316987373, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
-  m_PrefabInstance: {fileID: 8901965851499517494}
+  m_PrefabInstance: {fileID: 7817533822071889984}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5275917852445000196 stripped
+--- !u!1 &6827602188250608754 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3656344088546448434, guid: 67e352ba26298f840aef5584aa2ee01c, type: 3}
-  m_PrefabInstance: {fileID: 8901965851499517494}
+  m_PrefabInstance: {fileID: 7817533822071889984}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &6839791065361642169
+--- !u!95 &425471979587307392
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5275917852445000196}
+  m_GameObject: {fileID: 6827602188250608754}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: b9d45172aed071d4e9fc2a7d8e22c12d, type: 2}

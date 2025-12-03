@@ -1,11 +1,11 @@
 using Leopotam.Ecs;
 
-public class YGLeaderBoardInitSystem : IEcsInitSystem
+public class YGLeaderboardShowInitSystem : IEcsInitSystem
 {
     private EcsWorld _ecsWorld;
     private LeaderboradShower _leaderboradShower;
 
-    public YGLeaderBoardInitSystem(LeaderboradShower leaderboradShower)
+    public YGLeaderboardShowInitSystem(LeaderboradShower leaderboradShower)
     {
         _leaderboradShower = leaderboradShower;
     }

@@ -9,8 +9,6 @@ public class YGPlayerInitSystem : IEcsInitSystem
 
     public void Init()
     {
-        YG2.SetLeaderboard("LeaderboradYG2", 100);
-
         if (YG2.envir.isDesktop)
         {
             _mainCamera.orthographicSize = _staticData.DesktopCameraOrtograpgicSize;

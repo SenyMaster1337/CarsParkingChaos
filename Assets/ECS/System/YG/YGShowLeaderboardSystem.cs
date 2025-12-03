@@ -1,6 +1,6 @@
 using Leopotam.Ecs;
 
-public class LeaderboardSystem : IEcsRunSystem
+public class YGShowLeaderboardSystem : IEcsRunSystem
 {
     private EcsFilter<UILeaderboardComponent> _filter;
     private EcsFilter<OpenLeaderboardEvent> _openLeaderboard;

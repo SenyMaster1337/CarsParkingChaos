@@ -57,10 +57,7 @@ public class EcsStartup : MonoBehaviour
         AddButtonsUISystems();
 
         AddShowPassengerSortingSystems();
-        _systems
-            .Add(new PassengerSortingInitSystem())
-            .Add(new PassengerSortingSystem());
-
+        AddPassengerSortingSystems();
 
         TryAddTutorial();
 
@@ -110,8 +107,9 @@ public class EcsStartup : MonoBehaviour
             .Add(new YGPlayerInitSystem())
             .Add(new YGPlayerSaveProgressSystem())
             .Add(new YGAdvShowSystem())
-            .Add(new YGLeaderBoardInitSystem(_leaderboradShower))
-            .Add(new LeaderboardSystem());
+            .Add(new YGLeaderboardShowInitSystem(_leaderboradShower))
+            .Add(new YGShowLeaderboardSystem())
+            .Add(new YGLeaderboardSystem());
     }
 
     private void AddCarSystems()
@@ -194,9 +192,16 @@ public class EcsStartup : MonoBehaviour
             .Add(new PassengerSortingShowerSystem());
     }
 
+    private void AddPassengerSortingSystems()
+    {
+        _systems
+            .Add(new PassengerSortingInitSystem())
+            .Add(new PassengerSortingSystem());
+    }
+
     private void TryAddTutorial()
     {
-        if (YG2.saves.level == 1)
+        if (_sceneData.TutorialEnabe)
         {
             _systems
                 .Add(new TutorialInitSystem(_cars))
