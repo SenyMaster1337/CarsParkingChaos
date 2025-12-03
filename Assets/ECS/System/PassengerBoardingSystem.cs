@@ -45,7 +45,7 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
 
     public void Run()
     {
-        foreach (var sendRequestEntity  in _sendRequestFilter)
+        foreach (var sendRequestEntity in _sendRequestFilter)
         {
             var requestEntity = _sendRequestFilter.GetEntity(sendRequestEntity);
 

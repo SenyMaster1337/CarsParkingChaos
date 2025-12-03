@@ -1,3 +1,3 @@
-﻿Build path: D:/MYGAME/03.12 PREDFINISH
-Build number: 30
+﻿Build path: D:/MYGAME/A 03.12
+Build number: 31
 PluginYG version: 2.007

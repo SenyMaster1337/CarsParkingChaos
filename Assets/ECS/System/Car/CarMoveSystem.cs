@@ -26,9 +26,9 @@ public class CarMoveSystem : IEcsRunSystem
 
                     if (movable.currentTransform.position == movable.spawnPosition)
                     {
+                        component.isCrashed = false;
                         movable.isMoving = false;
                         movable.isReverseDirectionEnable = false;
-                        component.isCrashed = false;
                         component.canClickable = true;
                     }
                 }

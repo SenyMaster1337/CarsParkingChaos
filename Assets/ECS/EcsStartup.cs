@@ -121,7 +121,8 @@ public class EcsStartup : MonoBehaviour
             .Add(new CarLockSystem())
             .Add(new CarRotatorSystem(_triggerHandlers))
             .Add(new AnimatedCarSystem())
-            .Add(new CarSoundSystem());
+            .Add(new CarSoundSystem())
+            .Add(new CarEffectsSystem());
     }
 
     private void AddPassengerSystems()

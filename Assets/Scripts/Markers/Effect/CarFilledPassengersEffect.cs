@@ -1,0 +1,5 @@
+
+public class CarFilledPassengersEffect : BaseEffect
+{
+
+}

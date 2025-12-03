@@ -71,6 +71,13 @@ public class CarsInitSystem : IEcsInitSystem
             carAudioComponent.isCrashSoundEnable = false;
             carAudioComponent.isLeavingCarSoundEnable = false;
 
+            ref var carEffectComponent = ref carNewEntity.Get<CarEffectsComponent>();
+            carEffectComponent.carEffectFilledPassengers = _cars[i].GetComponentInChildren<CarFilledPassengersEffect>();
+            carEffectComponent.carCrashEffect = _cars[i].GetComponentInChildren<CarCrashEffect>();
+
+            carEffectComponent.isFilledPassengersEffectActive = false;
+            carEffectComponent.isCrashEffectActive = false;
+
             _cars[i].Entity = carNewEntity;
         }
     }
