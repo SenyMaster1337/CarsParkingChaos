@@ -69,5 +69,6 @@ public class LevelProgressSystem : IEcsRunSystem
         completeLevelComponent.levelCompleteShower.WindowGroup.alpha = 1.0f;
         completeLevelComponent.levelCompleteShower.WindowGroup.interactable = true;
         completeLevelComponent.levelCompleteShower.WindowGroup.blocksRaycasts = true;
+        _ecsWorld.NewEntity().Get<DisableButtonsEvent>();
     }
 }

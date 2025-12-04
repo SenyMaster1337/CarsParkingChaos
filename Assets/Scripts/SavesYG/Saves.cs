@@ -12,7 +12,7 @@ namespace YG
 
     public partial class SavesYG
     {
-        public float musicSoundValue;
-        public float masterSoundValue;
+        public float musicSoundValue = 0;
+        public float masterSoundValue = 0;
     }
 }

@@ -41,16 +41,8 @@ public class CarSoundSystem : IEcsRunSystem
     {
         if (carComponent.isParked == false && carAudioComponent.isDriveSoundEnable == false)
         {
-            carAudioComponent.driveSound.AudioSource.loop = true;
             carAudioComponent.driveSound.AudioSource.Play();
             carAudioComponent.isDriveSoundEnable = true;
-        }
-
-        if (carComponent.isParked && carAudioComponent.isDriveSoundEnable)
-        {
-            carAudioComponent.driveSound.AudioSource.Stop();
-            carAudioComponent.driveSound.AudioSource.loop = false;
-            carAudioComponent.isDriveSoundEnable = false;
         }
     }
 }

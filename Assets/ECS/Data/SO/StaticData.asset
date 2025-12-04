@@ -23,10 +23,11 @@ MonoBehaviour:
   <MobileCameraOrtograpgicSize>k__BackingField: 45
   <CooldownInputReaderToCar>k__BackingField: 0.7
   <MinMusicSoundValue>k__BackingField: -80
-  <MaxMusicSoundValue>k__BackingField: -10
+  <MaxMusicSoundValue>k__BackingField: -13
   <MinMasterSoundValue>k__BackingField: -80
   <MaxMasterSoundValue>k__BackingField: -10
-  <DriveVolume>k__BackingField: 0
-  <CrashVolume>k__BackingField: 0
-  <LeavingVolume>k__BackingField: 0
-  <WinVolume>k__BackingField: 0.1
+  <TimeToLevelShowLevelComplete>k__BackingField: 1.5
+  <NumberCointAddedPerWin>k__BackingField: 50
+  <PriceSortPassengers>k__BackingField: 15
+  <TimeLeftInTimerToVerifyCarsInParking>k__BackingField: 3
+  <TimeDisableCarInScene>k__BackingField: 1.2

@@ -4,8 +4,9 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class CarLockSystem : IEcsRunSystem
 {
-    private readonly float _timeLeftToTimer = 2f;
     private EcsFilter<CarComponent> _filter;
+
+    private StaticData _staticData;
 
     public void Run()
     {
@@ -15,9 +16,8 @@ public class CarLockSystem : IEcsRunSystem
 
             if (carComponent.passengers.Count == carComponent.maxPassengersSlots && carComponent.isAllPassengersBoarded == false)
             {
-
                 carComponent.isAllPassengersBoarded = true;
-                StartTimer(entity, _timeLeftToTimer);
+                StartTimer(entity, _staticData.TimeDisableCarInScene);
             }
         }
     }

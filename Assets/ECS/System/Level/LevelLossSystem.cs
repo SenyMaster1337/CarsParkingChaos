@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class LevelLossSystem : IEcsRunSystem
 {
+    private EcsWorld _ecsWorld;
     private EcsFilter<UILevelLossComponent> _filter;
     private EcsFilter<ShowLossWindowEvent> _showLoss;
 
@@ -25,5 +26,6 @@ public class LevelLossSystem : IEcsRunSystem
         lossComponent.levelLossShower.WindowGroup.alpha = 1;
         lossComponent.levelLossShower.WindowGroup.interactable = true;
         lossComponent.levelLossShower.WindowGroup.blocksRaycasts = true;
+        _ecsWorld.NewEntity().Get<DisableButtonsEvent>();
     }
 }

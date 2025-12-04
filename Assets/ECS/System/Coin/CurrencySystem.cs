@@ -46,6 +46,7 @@ public class CurrencySystem : IEcsRunSystem
         _ecsWorld.NewEntity().Get<YGSaveProgressEvent>();
         _ecsWorld.NewEntity().Get<ClosePassengerSortingInfoShowerEvent>();
         _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
+        _ecsWorld.NewEntity().Get<EnableButtonsEvent>();
     }
 
     private void TryToBuyPassengerSorting(CurrencyComponent currencyComponent)

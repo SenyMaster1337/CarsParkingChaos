@@ -74,9 +74,11 @@ public class CarsInitSystem : IEcsInitSystem
             ref var carEffectComponent = ref carNewEntity.Get<CarEffectsComponent>();
             carEffectComponent.carEffectFilledPassengers = _cars[i].GetComponentInChildren<CarFilledPassengersEffect>();
             carEffectComponent.carCrashEffect = _cars[i].GetComponentInChildren<CarCrashEffect>();
+            carEffectComponent.carDriveEffect = _cars[i].GetComponentInChildren<CarDriveEffect>();
 
             carEffectComponent.isFilledPassengersEffectActive = false;
             carEffectComponent.isCrashEffectActive = false;
+            carEffectComponent.isDriveEffectActive = false;
 
             _cars[i].Entity = carNewEntity;
         }

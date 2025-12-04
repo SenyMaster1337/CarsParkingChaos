@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
 {
-    private readonly float _timeLeftInTimerToVerifyCarsInParking = 4f;
-
     private EcsWorld _ecsWorld;
     private EcsFilter<ParkingReservationComponent> _filter;
     private EcsFilter<ReservedParkingSlotEvent> _reservedSlot;
@@ -14,6 +12,7 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
 
     private List<ParkingSlot> _reservedParkingSlots;
     private bool _isParkingFull = false;
+    private StaticData _staticData;
 
     public ParkingReservationSystem()
     {
@@ -119,7 +118,7 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
 
             _filter.GetEntity(entity).Get<TimerComponent>() = new TimerComponent
             {
-                TimeLeft = _timeLeftInTimerToVerifyCarsInParking,
+                TimeLeft = _staticData.TimeLeftInTimerToVerifyCarsInParking,
                 IsActive = true
             };
 
