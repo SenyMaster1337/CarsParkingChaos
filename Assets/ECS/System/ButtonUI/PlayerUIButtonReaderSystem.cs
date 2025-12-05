@@ -8,57 +8,53 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEc
     private EcsFilter<EnableButtonsEvent> _enableFilter;
     private EcsFilter<DisableButtonsEvent> _disableFilter;
 
-    private MenuSettingsShower _menuSettings;
+    private SoundMuteToggle _soundMueToggle;
     private RestartButtonClickReader _restartButtonClickReader;
     private LevelCompleteShower _levelCompleteShower;
     private LevelLossShower _levelLossShower;
     private LeaderboradShower _leaderboradShower;
-    private BuySortingPassengersShower _buySortingPassengersShower;
+    private ShopShower _shopShower;
 
-    public PlayerUIButtonReaderSystem(MenuSettingsShower menuSettings, RestartButtonClickReader restartButtonClickReader, LevelCompleteShower levelCompleteShower, LevelLossShower levelLossShower, LeaderboradShower leaderboradShower, BuySortingPassengersShower buySortingPassengersShower)
+    public PlayerUIButtonReaderSystem(SoundMuteToggle soundMuteToggle, RestartButtonClickReader restartButtonClickReader, LevelCompleteShower levelCompleteShower, LevelLossShower levelLossShower, LeaderboradShower leaderboradShower, ShopShower shopShower)
     {
-        _menuSettings = menuSettings;
+        _soundMueToggle = soundMuteToggle;
         _restartButtonClickReader = restartButtonClickReader;
         _levelCompleteShower = levelCompleteShower;
         _levelLossShower = levelLossShower;
         _leaderboradShower = leaderboradShower;
-        _buySortingPassengersShower = buySortingPassengersShower;
+        _shopShower = shopShower;
     }
 
     public void Init()
     {
-        _menuSettings.SettingsOpenButtonClick.OnButtonClicked += OnButtonClickOpenMenuSettings;
-        _menuSettings.SettingsCloseButtonClick.OnButtonClicked += OnButtonClickCloseMenuSettings;
-        _menuSettings.SoundMuteToggle.MuteSoundButtonClickReader.OnButtonClicked += OnButtonClickMuteSound;
-        _menuSettings.SoundMuteToggle.UnmuteSoundButtonClickReader.OnButtonClicked += OnButtonClickUnmuteSound;
-        _menuSettings.MusicMuteToggle.MuteMusicButtonClickReader.OnButtonClicked += OnButtonClickMuteMusic;
-        _menuSettings.MusicMuteToggle.UnmuteMusicButtonClickReader.OnButtonClicked += OnButtonClickUnmuteMusic;
+        _soundMueToggle.MuteSoundButtonClickReader.OnButtonClicked += OnButtonClickMuteSound;
+        _soundMueToggle.UnmuteSoundButtonClickReader.OnButtonClicked += OnButtonClickUnmuteSound;
         _restartButtonClickReader.OnButtonClicked += OnButtonClickRestart;
         _levelCompleteShower.NextLevelButtonClickReader.OnButtonClicked += OnButtonCkickNextLevel;
         _levelLossShower.RestartButtonClickReader.OnButtonClicked += OnButtonClickRestart;
         _leaderboradShower.LeaderboradOpenButtonClick.OnButtonClicked += OnButtonClickOpenLeaderboard;
         _leaderboradShower.LeaderboradCloseButtonClick.OnButtonClicked += OnButtonClickCloseLeaderboard;
-        _buySortingPassengersShower.OpenBuyingPassengerSortingButtonClickReader.OnButtonClicked += OnButtonClickOpenBuyingPassengerSorting;
-        _buySortingPassengersShower.AcceptBuyingPassengersSortingButtonClickReader.OnButtonClicked += OnButtonClickAcceptBuyingPassengerSorting;
-        _buySortingPassengersShower.DeclineBuyingPassengerSortingButtonClickReader.OnButtonClicked += OnButtonClickDeclineBuyingPassengerSorting;
+        _shopShower.OpenShopButtonClickReader.OnButtonClicked += OnButtonClickOpenShop;
+        _shopShower.CloseShopButtonClickReader.OnButtonClicked += OnButtonClickCloseShop;
+        _shopShower.BuyPassengerSortingShower.OpenBuyingPassengerSortingButtonClickReader.OnButtonClicked += OnButtonClickOpenBuyingPassengerSorting;
+        _shopShower.BuyPassengerSortingShower.AcceptBuyingPassengersSortingButtonClickReader.OnButtonClicked += OnButtonClickAcceptBuyingPassengerSorting;
+        _shopShower.BuyPassengerSortingShower.DeclineBuyingPassengerSortingButtonClickReader.OnButtonClicked += OnButtonClickDeclineBuyingPassengerSorting;
     }
 
     public void Destroy()
     {
-        _menuSettings.SettingsOpenButtonClick.OnButtonClicked -= OnButtonClickOpenMenuSettings;
-        _menuSettings.SettingsCloseButtonClick.OnButtonClicked -= OnButtonClickCloseMenuSettings;
-        _menuSettings.SoundMuteToggle.MuteSoundButtonClickReader.OnButtonClicked -= OnButtonClickMuteSound;
-        _menuSettings.SoundMuteToggle.UnmuteSoundButtonClickReader.OnButtonClicked -= OnButtonClickUnmuteSound;
-        _menuSettings.MusicMuteToggle.MuteMusicButtonClickReader.OnButtonClicked -= OnButtonClickMuteMusic;
-        _menuSettings.MusicMuteToggle.UnmuteMusicButtonClickReader.OnButtonClicked -= OnButtonClickUnmuteMusic;
+        _soundMueToggle.MuteSoundButtonClickReader.OnButtonClicked -= OnButtonClickMuteSound;
+        _soundMueToggle.UnmuteSoundButtonClickReader.OnButtonClicked -= OnButtonClickUnmuteSound;
         _restartButtonClickReader.OnButtonClicked -= OnButtonClickRestart;
         _levelCompleteShower.NextLevelButtonClickReader.OnButtonClicked -= OnButtonCkickNextLevel;
         _levelLossShower.RestartButtonClickReader.OnButtonClicked -= OnButtonClickRestart;
         _leaderboradShower.LeaderboradOpenButtonClick.OnButtonClicked -= OnButtonClickOpenLeaderboard;
         _leaderboradShower.LeaderboradCloseButtonClick.OnButtonClicked -= OnButtonClickCloseLeaderboard;
-        _buySortingPassengersShower.OpenBuyingPassengerSortingButtonClickReader.OnButtonClicked -= OnButtonClickOpenBuyingPassengerSorting;
-        _buySortingPassengersShower.AcceptBuyingPassengersSortingButtonClickReader.OnButtonClicked -= OnButtonClickAcceptBuyingPassengerSorting;
-        _buySortingPassengersShower.DeclineBuyingPassengerSortingButtonClickReader.OnButtonClicked -= OnButtonClickDeclineBuyingPassengerSorting;
+        _shopShower.OpenShopButtonClickReader.OnButtonClicked -= OnButtonClickOpenShop;
+        _shopShower.CloseShopButtonClickReader.OnButtonClicked -= OnButtonClickCloseShop;
+        _shopShower.BuyPassengerSortingShower.OpenBuyingPassengerSortingButtonClickReader.OnButtonClicked -= OnButtonClickOpenBuyingPassengerSorting;
+        _shopShower.BuyPassengerSortingShower.AcceptBuyingPassengersSortingButtonClickReader.OnButtonClicked -= OnButtonClickAcceptBuyingPassengerSorting;
+        _shopShower.BuyPassengerSortingShower.DeclineBuyingPassengerSortingButtonClickReader.OnButtonClicked -= OnButtonClickDeclineBuyingPassengerSorting;
     }
 
     public void Run()
@@ -86,30 +82,6 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEc
         _ecsWorld.NewEntity().Get<UnmuteSoundEvent>();
     }
 
-    private void OnButtonClickMuteMusic()
-    {
-        _ecsWorld.NewEntity().Get<MuteMusicEvent>();
-    }
-
-    private void OnButtonClickUnmuteMusic()
-    {
-        _ecsWorld.NewEntity().Get<UnmuteMusicEvent>();
-    }
-
-    private void OnButtonClickOpenMenuSettings()
-    {
-        _ecsWorld.NewEntity().Get<OpenSettingsEvent>();
-        _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
-        DisableButtons();
-    }
-
-    private void OnButtonClickCloseMenuSettings()
-    {
-        _ecsWorld.NewEntity().Get<CloseSettingsEvent>();
-        _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
-        EnableButtons();
-    }
-
     private void OnButtonClickRestart()
     {
         _ecsWorld.NewEntity().Get<RestartLevelEvent>();
@@ -134,11 +106,24 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEc
         EnableButtons();
     }
 
+    private void OnButtonClickOpenShop()
+    {
+        _ecsWorld.NewEntity().Get<OpenShopEvent>();
+        _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
+        DisableButtons();
+    }
+
+    private void OnButtonClickCloseShop()
+    {
+        _ecsWorld.NewEntity().Get<CloseShopEvent>();
+        _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
+        EnableButtons();
+    }
+
     private void OnButtonClickOpenBuyingPassengerSorting()
     {
         _ecsWorld.NewEntity().Get<OpenPassengerSortingInfoShowerEvent>();
-        _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
-        DisableButtons();
+        _ecsWorld.NewEntity().Get<CloseShopEvent>();
     }
 
     private void OnButtonClickAcceptBuyingPassengerSorting()
@@ -149,34 +134,20 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEc
     private void OnButtonClickDeclineBuyingPassengerSorting()
     {
         _ecsWorld.NewEntity().Get<ClosePassengerSortingInfoShowerEvent>();
-        _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
-        EnableButtons();
+        _ecsWorld.NewEntity().Get<OpenShopEvent>();
     }
 
     private void EnableButtons()
     {
-        _menuSettings.SettingsOpenButtonClick.Button.interactable = true;
-        _restartButtonClickReader.Button.interactable = false;
+        _restartButtonClickReader.Button.interactable = true;
         _leaderboradShower.LeaderboradOpenButtonClick.Button.interactable = true;
-        _buySortingPassengersShower.OpenBuyingPassengerSortingButtonClickReader.Button.interactable = true;
+        _shopShower.OpenShopButtonClickReader.Button.interactable = true;
     }
 
     private void DisableButtons()
     {
-        _menuSettings.SettingsOpenButtonClick.Button.interactable = false;
         _restartButtonClickReader.Button.interactable = false;
         _leaderboradShower.LeaderboradOpenButtonClick.Button.interactable = false;
-        _buySortingPassengersShower.OpenBuyingPassengerSortingButtonClickReader.Button.interactable = false;
-    }
-
-    private void SetButtonsInteractable(List<ButtonClickReader> buttons, bool interactable)
-    {
-        foreach (var button in buttons)
-        {
-            if (button != null && button.Button != null)
-            {
-                button.Button.interactable = interactable;
-            }
-        }
+        _shopShower.OpenShopButtonClickReader.Button.interactable = false;
     }
 }

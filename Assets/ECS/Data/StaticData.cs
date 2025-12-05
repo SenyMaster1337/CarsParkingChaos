@@ -10,11 +10,9 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public int MinivanCarSlots { get; private set; } = 8;
     [field: SerializeField] public Quaternion RotationCarInParking { get; private set; } = Quaternion.Euler(0, -30, 0);
     [field: SerializeField] public float DistanceToDisableCrashHandler { get; private set; } = 16f;
-    [field: SerializeField] public float DesktopCameraOrtograpgicSize { get; private set; } = 35;
-    [field: SerializeField] public float MobileCameraOrtograpgicSize { get; private set; } = 45;
+    [field: SerializeField] public float DesktopFieldSizeCamera { get; private set; } = 50;
+    [field: SerializeField] public float MobileFieldSizeCamera { get; private set; } = 70;
     [field: SerializeField] public float CooldownInputReaderToCar { get; private set; } = 0.7f;
-    [field: SerializeField] public float MinMusicSoundValue { get; private set; } = -80;
-    [field: SerializeField] public float MaxMusicSoundValue { get; private set; } = -25;
     [field: SerializeField] public float MinMasterSoundValue { get; private set; } = -80;
     [field: SerializeField] public float MaxMasterSoundValue { get; private set; } = -20;
     [field: SerializeField] public float TimeToLevelShowLevelComplete { get; private set; } = 1.5f;
@@ -22,4 +20,5 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public int PriceSortPassengers { get; private set; } = 15;
     [field: SerializeField] public float TimeLeftInTimerToVerifyCarsInParking { get; private set; } = 3f;
     [field: SerializeField] public float TimeDisableCarInScene { get; private set; } = 1.2f;
+    [field: SerializeField] public int AddScoreWinningValueToLeaderboard { get; private set; } = 100;
 }

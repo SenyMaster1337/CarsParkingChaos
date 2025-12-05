@@ -19,11 +19,9 @@ MonoBehaviour:
   <MinivanCarSlots>k__BackingField: 8
   <RotationCarInParking>k__BackingField: {x: 0, y: -0.25881904, z: 0, w: 0.9659258}
   <DistanceToDisableCrashHandler>k__BackingField: 16
-  <DesktopCameraOrtograpgicSize>k__BackingField: 35
-  <MobileCameraOrtograpgicSize>k__BackingField: 45
+  <DesktopFieldSizeCamera>k__BackingField: 32
+  <MobileFieldSizeCamera>k__BackingField: 45
   <CooldownInputReaderToCar>k__BackingField: 0.7
-  <MinMusicSoundValue>k__BackingField: -80
-  <MaxMusicSoundValue>k__BackingField: -13
   <MinMasterSoundValue>k__BackingField: -80
   <MaxMasterSoundValue>k__BackingField: -10
   <TimeToLevelShowLevelComplete>k__BackingField: 1.5
@@ -31,3 +29,4 @@ MonoBehaviour:
   <PriceSortPassengers>k__BackingField: 15
   <TimeLeftInTimerToVerifyCarsInParking>k__BackingField: 3
   <TimeDisableCarInScene>k__BackingField: 1.2
+  <AddScoreWinningValueToLeaderboard>k__BackingField: 100

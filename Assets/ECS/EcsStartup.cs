@@ -21,12 +21,12 @@ public class EcsStartup : MonoBehaviour
     [SerializeField] private StartQueuePoint _startQueuePoint;
 
     [SerializeField] private RestartButtonClickReader _restartButtonClickReader;
-    [SerializeField] private MenuSettingsShower _menuSettingsShower;
+    [SerializeField] private SoundMuteToggle _soundMuteToggle;
     [SerializeField] private LevelCompleteShower _levelCompleteShower;
     [SerializeField] private LevelLossShower _levelLossShower;
     [SerializeField] private LeaderboradShower _leaderboradShower;
     [SerializeField] private CurrentCoinCountText _coinCountText;
-    [SerializeField] private BuySortingPassengersShower _buySortingPassengerShower;
+    [SerializeField] private ShopShower _shopShower;
 
     [SerializeField] private GameSounds _gameSounds;
 
@@ -47,7 +47,7 @@ public class EcsStartup : MonoBehaviour
         AddPassengerSystems();
         AddParkingSystems();
 
-        AddGameSoundSystems();
+        AddLevelSoundSystems();
         AddLevelSystems();
 
         AddCurrencySystems();
@@ -58,6 +58,10 @@ public class EcsStartup : MonoBehaviour
 
         AddShowPassengerSortingSystems();
         AddPassengerSortingSystems();
+
+        _systems
+            .Add(new ShopShowerInitSystem(_shopShower))
+            .Add(new ShopShowerSystem());
 
         TryAddTutorial();
 
@@ -141,11 +145,11 @@ public class EcsStartup : MonoBehaviour
             .Add(new ParkingReservationSystem());
     }
 
-    private void AddGameSoundSystems()
+    private void AddLevelSoundSystems()
     {
         _systems
-            .Add(new GameSoundInitSystem(_gameSounds))
-            .Add(new GameSoundSystem());
+            .Add(new LevelSoundInitSystem(_gameSounds))
+            .Add(new LevelSoundSystem());
     }
 
     private void AddLevelSystems()
@@ -162,14 +166,14 @@ public class EcsStartup : MonoBehaviour
     private void AddButtonsUISystems()
     {
         _systems
-            .Add(new PlayerUIButtonReaderSystem(_menuSettingsShower, _restartButtonClickReader, _levelCompleteShower, _levelLossShower, _leaderboradShower, _buySortingPassengerShower));
+            .Add(new PlayerUIButtonReaderSystem(_soundMuteToggle, _restartButtonClickReader, _levelCompleteShower, _levelLossShower, _leaderboradShower, _shopShower));
     }
 
     private void AddSettingSystems()
     {
         _systems
-            .Add(new SettingsInitSystem(_menuSettingsShower))
-            .Add(new SettingsSystem());
+            .Add(new SoundMuteToggleInitSystem(_soundMuteToggle))
+            .Add(new SoundMuteToggleSystem());
     }
 
     private void AddShowCurrencySystems()
@@ -189,7 +193,7 @@ public class EcsStartup : MonoBehaviour
     private void AddShowPassengerSortingSystems()
     {
         _systems
-            .Add(new PassengerSortingShowerInitSystem(_buySortingPassengerShower))
+            .Add(new PassengerSortingShowerInitSystem(_shopShower.BuyPassengerSortingShower))
             .Add(new PassengerSortingShowerSystem());
     }
 
