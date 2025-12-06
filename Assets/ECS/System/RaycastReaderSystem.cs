@@ -12,11 +12,11 @@ public class RaycastReaderSystem : IEcsRunSystem
     private EcsFilter<CooldownEvent> _cooldown;
 
     private StaticData _staticData;
-    private bool _isActiveSystem;
+    private bool _isRaycastSystemActive;
 
     public RaycastReaderSystem()
     {
-        _isActiveSystem = true;
+        _isRaycastSystemActive = true;
     }
 
     public void Run()
@@ -31,21 +31,21 @@ public class RaycastReaderSystem : IEcsRunSystem
         foreach (var entityDisable in _raycastEnable)
         {
             var entityDisableEvent = _raycastEnable.GetEntity(entityDisable);
-            _isActiveSystem = true;
+            _isRaycastSystemActive = true;
             entityDisableEvent.Del<RaycastReaderEnableEvent>();
         }
 
         foreach (var entityDisable in _raycastDisable)
         {
             var entityDisableEvent = _raycastDisable.GetEntity(entityDisable);
-            _isActiveSystem = false;
+            _isRaycastSystemActive = false;
             entityDisableEvent.Del<RaycastReaderDisableEvent>();
         }
     }
 
     public void ReadRaycast(EcsEntity ecsEntity)
     {
-        if (_isActiveSystem == false)
+        if (_isRaycastSystemActive == false)
             return;
 
         if (_cooldown.GetEntitiesCount() > 0)

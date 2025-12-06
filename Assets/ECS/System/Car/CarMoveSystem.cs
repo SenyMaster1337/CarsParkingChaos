@@ -45,12 +45,6 @@ public class CarMoveSystem : IEcsRunSystem
                     movable.currentTransform.LookAt(movable.targetPoint);
                 }
             }
-
-            if (component.reservedSeats.Count == component.maxPassengersSlots && component.isNotEmptySeats == false)
-            {
-                component.isNotEmptySeats = true;
-                StartCancelParkingReserverEvent(component.parkingReservedSlot);
-            }
         }
     }
 
@@ -104,13 +98,5 @@ public class CarMoveSystem : IEcsRunSystem
             component.crashHandler.DisableBoxCollider();
             component.isParked = false;
         }
-    }
-
-    private void StartCancelParkingReserverEvent(ParkingSlot slot)
-    {
-        _ecsWorld.NewEntity().Get<ParkingCancelReservationEvent>() = new ParkingCancelReservationEvent
-        {
-            parkingSlot = slot
-        };
     }
 }

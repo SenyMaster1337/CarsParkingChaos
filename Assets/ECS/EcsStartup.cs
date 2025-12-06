@@ -63,6 +63,10 @@ public class EcsStartup : MonoBehaviour
             .Add(new ShopShowerInitSystem(_shopShower))
             .Add(new ShopShowerSystem());
 
+        _systems
+            .Add(new PassengerShuffleShowerInitSystem(_shopShower.BuyPassengerShuffleShower))
+            .Add(new PassengerShuffleShowerSystem());
+
         TryAddTutorial();
 
         _systems
@@ -122,7 +126,7 @@ public class EcsStartup : MonoBehaviour
             .Add(new CarsInitSystem(_cars))
             .Add(new CarMoveSystem())
             .Add(new CarCrashHandlerSystem(_cars))
-            .Add(new CarLockSystem())
+            .Add(new CarSystem())
             .Add(new CarRotatorSystem(_triggerHandlers))
             .Add(new AnimatedCarSystem())
             .Add(new CarSoundSystem())

@@ -8,7 +8,7 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
     private EcsFilter<ParkingReservationComponent> _filter;
     private EcsFilter<ReservedParkingSlotEvent> _reservedSlot;
     private EcsFilter<ParkingCancelReservationEvent> _cancelParkingReserve;
-    private EcsFilter<VerifyCarsInParkingDataEvent> _verifyCarsInParkingData;
+    private EcsFilter<CarsInParkingDataEvent> _verifyCarsInParkingData;
 
     private List<ParkingSlot> _reservedParkingSlots;
     private bool _isParkingFull = false;
@@ -29,7 +29,6 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
         foreach (var entity in _filter)
         {
             ref var parkingReservationComponent = ref _filter.Get1(entity);
-
 
             foreach (var reservedEntity in _reservedSlot)
             {
@@ -56,7 +55,7 @@ public class ParkingReservationSystem : IEcsInitSystem, IEcsRunSystem
             {
                 var verifyEntityEvent = _verifyCarsInParkingData.GetEntity(verifyEntity);
                 VerifyCarsInParkingData(parkingReservationComponent.parkingSlots);
-                verifyEntityEvent.Del<VerifyCarsInParkingDataEvent>();
+                verifyEntityEvent.Del<CarsInParkingDataEvent>();
             }
         }
     }

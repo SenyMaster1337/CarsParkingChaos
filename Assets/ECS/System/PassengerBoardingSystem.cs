@@ -5,7 +5,7 @@ using UnityEngine;
 public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
 {
     private EcsWorld _ecsWorld;
-    private EcsFilter<SendRequesPassengersAndCarsDataEvent> _sendRequestFilter;
+    private EcsFilter<SendRequesUnitsDataEvent> _sendRequestFilter;
 
     private List<Passenger> _passengers;
     private CarToParkingTriggerHandler _carToParkingTriggerHandler;
@@ -45,20 +45,29 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
 
     public void Run()
     {
+        SendDataToPassengerSortingSystem();
+        MovePassengerToCar();
+    }
+
+    private void SendDataToPassengerSortingSystem()
+    {
         foreach (var sendRequestEntity in _sendRequestFilter)
         {
-            var requestEntity = _sendRequestFilter.GetEntity(sendRequestEntity);
-
-            _ecsWorld.NewEntity().Get<GetPassengersAndCarsDataEvent>() = new GetPassengersAndCarsDataEvent
+            if (_cars.Count > 0)
             {
-                cars = _cars,
-                passengers = _passengers,
-            };
+                var passengerSortingNewEntity = _ecsWorld.NewEntity();
+                ref var passengerSortingDataEvent = ref passengerSortingNewEntity.Get<GetUnitsDataEvent>();
+                passengerSortingDataEvent.carsOnlyInParking = _cars;
+                passengerSortingDataEvent.allPassengersInLevel = _passengers;
 
-            requestEntity.Del<SendRequesPassengersAndCarsDataEvent>();
+                passengerSortingNewEntity.Get<VerifyCarsToPassengerSortingEvent>();
+
+                _ecsWorld.NewEntity().Get<ConfirmPassengerSortingBuyingEvent>();
+            }
+
+            _sendRequestFilter.GetEntity(sendRequestEntity).Del<SendRequesUnitsDataEvent>();
         }
 
-        MovePassengerToCar();
     }
 
     private void MovePassengerToCar()

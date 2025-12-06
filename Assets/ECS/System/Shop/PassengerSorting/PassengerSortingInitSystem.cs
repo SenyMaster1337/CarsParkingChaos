@@ -11,8 +11,8 @@ public class PassengerSortingInitSystem : IEcsInitSystem
 
         ref var passengerSortingComponent = ref passengerSortingNewEntity.Get<PassengerSortingComponent>();
 
-        ref var getDataEvent = ref passengerSortingNewEntity.Get<GetPassengersAndCarsDataEvent>();
-        getDataEvent.passengers = new List<Passenger>();
-        getDataEvent.cars = new List<Vehicle>();
+        ref var getDataEvent = ref passengerSortingNewEntity.Get<GetUnitsDataEvent>();
+        getDataEvent.allPassengersInLevel = new List<Passenger>();
+        getDataEvent.carsOnlyInParking = new List<Vehicle>();
     }
 }

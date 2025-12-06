@@ -4,12 +4,12 @@ public class PassengerSortingShowerInitSystem : IEcsInitSystem
 {
     private EcsWorld _ecsWorld;
 
-    private BuyPassengerSortingShower _buySortingPassengersShower;
+    private BuyPassengerSortingShower _buyPassengerSortingShower;
     private StaticData _staticData;
 
-    public PassengerSortingShowerInitSystem(BuyPassengerSortingShower buySortingPassengersShower)
+    public PassengerSortingShowerInitSystem(BuyPassengerSortingShower buyPassengerSortingShower)
     {
-        _buySortingPassengersShower = buySortingPassengersShower;
+        _buyPassengerSortingShower = buyPassengerSortingShower;
     }
 
     public void Init()
@@ -17,13 +17,13 @@ public class PassengerSortingShowerInitSystem : IEcsInitSystem
         var sortingPassengerNewEntity = _ecsWorld.NewEntity();
 
         ref var sortingPassengerComponent = ref sortingPassengerNewEntity.Get<PassengerSortingShowerComponent>();
-        sortingPassengerComponent.buySortingPassengersShower = _buySortingPassengersShower;
+        sortingPassengerComponent.buyPassengerSortingShower = _buyPassengerSortingShower;
 
-        sortingPassengerComponent.buySortingPassengersShower.WindowGroup.alpha = 0f;
-        sortingPassengerComponent.buySortingPassengersShower.WindowGroup.interactable = false;
-        sortingPassengerComponent.buySortingPassengersShower.WindowGroup.blocksRaycasts = false;
+        sortingPassengerComponent.buyPassengerSortingShower.WindowGroup.alpha = 0f;
+        sortingPassengerComponent.buyPassengerSortingShower.WindowGroup.interactable = false;
+        sortingPassengerComponent.buyPassengerSortingShower.WindowGroup.blocksRaycasts = false;
 
-        sortingPassengerComponent.buySortingPassengersShower.PriceBuyingPassengerSortingText.Value.SetText($"{_staticData.PriceSortPassengers}");
-        sortingPassengerComponent.buySortingPassengersShower.PriceBuyingPassengerSortingShopAsssortmentMenuText.Value.SetText($"{_staticData.PriceSortPassengers}");
+        sortingPassengerComponent.buyPassengerSortingShower.PriceBuyingPassengerSortingText.Value.SetText($"{_staticData.PriceSortPassengers}");
+        sortingPassengerComponent.buyPassengerSortingShower.PriceBuyingPassengerSortingShopAsssortmentMenuText.Value.SetText($"{_staticData.PriceSortPassengers}");
     }
 }

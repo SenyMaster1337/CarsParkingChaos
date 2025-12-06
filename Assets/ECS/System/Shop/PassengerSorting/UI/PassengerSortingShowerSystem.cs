@@ -31,15 +31,15 @@ public class PassengerSortingShowerSystem : IEcsRunSystem
 
     private void OpenSortingInfo(PassengerSortingShowerComponent sortingShowerComponent)
     {
-        sortingShowerComponent.buySortingPassengersShower.WindowGroup.alpha = 1.0f;
-        sortingShowerComponent.buySortingPassengersShower.WindowGroup.interactable = true;
-        sortingShowerComponent.buySortingPassengersShower.WindowGroup.blocksRaycasts = true;
+        sortingShowerComponent.buyPassengerSortingShower.WindowGroup.alpha = 1.0f;
+        sortingShowerComponent.buyPassengerSortingShower.WindowGroup.interactable = true;
+        sortingShowerComponent.buyPassengerSortingShower.WindowGroup.blocksRaycasts = true;
     }
 
     private void CloseSortingInfo(PassengerSortingShowerComponent sortingShowerComponent)
     {
-        sortingShowerComponent.buySortingPassengersShower.WindowGroup.alpha = 0f;
-        sortingShowerComponent.buySortingPassengersShower.WindowGroup.interactable = false;
-        sortingShowerComponent.buySortingPassengersShower.WindowGroup.blocksRaycasts = false;
+        sortingShowerComponent.buyPassengerSortingShower.WindowGroup.alpha = 0f;
+        sortingShowerComponent.buyPassengerSortingShower.WindowGroup.interactable = false;
+        sortingShowerComponent.buyPassengerSortingShower.WindowGroup.blocksRaycasts = false;
     }
 }
