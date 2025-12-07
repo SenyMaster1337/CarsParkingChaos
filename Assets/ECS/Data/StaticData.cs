@@ -18,6 +18,7 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public float TimeToLevelShowLevelComplete { get; private set; } = 1.5f;
     [field: SerializeField] public int NumberCointAddedPerWin { get; private set; } = 50;
     [field: SerializeField] public int PriceSortPassengers { get; private set; } = 15;
+    [field: SerializeField] public int PriceShufflePassengers { get; private set; } = 10;
     [field: SerializeField] public float TimeLeftInTimerToVerifyCarsInParking { get; private set; } = 3f;
     [field: SerializeField] public float TimeDisableCarInScene { get; private set; } = 1.2f;
     [field: SerializeField] public int AddScoreWinningValueToLeaderboard { get; private set; } = 100;

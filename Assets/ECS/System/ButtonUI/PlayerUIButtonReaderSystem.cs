@@ -1,6 +1,4 @@
 using Leopotam.Ecs;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
@@ -40,14 +38,6 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEc
 
         _shopShower.OpenShopButtonClickReader.OnButtonClicked += OnButtonClickOpenShop;
         _shopShower.CloseShopButtonClickReader.OnButtonClicked += OnButtonClickCloseShop;
-
-        _shopShower.BuyPassengerSortingShower.OpenBuyingPassengerSortingButtonClickReader.OnButtonClicked += OnButtonClickOpenBuyingPassengerSorting;
-        _shopShower.BuyPassengerSortingShower.AcceptBuyingPassengersSortingButtonClickReader.OnButtonClicked += OnButtonClickAcceptBuyingPassengerSorting;
-        _shopShower.BuyPassengerSortingShower.DeclineBuyingPassengerSortingButtonClickReader.OnButtonClicked += OnButtonClickDeclineBuyingPassengerSorting;
-
-        _shopShower.BuyPassengerShuffleShower.OpenBuyingPassengerMixerButtonClickReader.OnButtonClicked += OnButtonClickOpenBuyingPassengerSorting;
-        _shopShower.BuyPassengerShuffleShower.AcceptBuyingPassengerMixerButtonClickReader.OnButtonClicked += OnButtonClickAcceptBuyingPassengerSorting;
-        _shopShower.BuyPassengerShuffleShower.DeclineBuyingPassengerMixerButtonClickReader.OnButtonClicked += OnButtonClickDeclineBuyingPassengerSorting;
     }
 
     public void Destroy()
@@ -64,14 +54,6 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEc
 
         _shopShower.OpenShopButtonClickReader.OnButtonClicked -= OnButtonClickOpenShop;
         _shopShower.CloseShopButtonClickReader.OnButtonClicked -= OnButtonClickCloseShop;
-
-        _shopShower.BuyPassengerSortingShower.OpenBuyingPassengerSortingButtonClickReader.OnButtonClicked -= OnButtonClickOpenBuyingPassengerSorting;
-        _shopShower.BuyPassengerSortingShower.AcceptBuyingPassengersSortingButtonClickReader.OnButtonClicked -= OnButtonClickAcceptBuyingPassengerSorting;
-        _shopShower.BuyPassengerSortingShower.DeclineBuyingPassengerSortingButtonClickReader.OnButtonClicked -= OnButtonClickDeclineBuyingPassengerSorting;
-
-        _shopShower.BuyPassengerShuffleShower.OpenBuyingPassengerMixerButtonClickReader.OnButtonClicked -= OnButtonClickOpenBuyingPassengerSorting;
-        _shopShower.BuyPassengerShuffleShower.AcceptBuyingPassengerMixerButtonClickReader.OnButtonClicked -= OnButtonClickAcceptBuyingPassengerSorting;
-        _shopShower.BuyPassengerShuffleShower.DeclineBuyingPassengerMixerButtonClickReader.OnButtonClicked -= OnButtonClickDeclineBuyingPassengerSorting;
     }
 
     public void Run()
@@ -135,42 +117,6 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEc
         _ecsWorld.NewEntity().Get<CloseShopEvent>();
         _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
         EnableButtons();
-    }
-
-    private void OnButtonClickOpenBuyingPassengerSorting()
-    {
-        _ecsWorld.NewEntity().Get<OpenPassengerSortingInfoShowerEvent>();
-        _ecsWorld.NewEntity().Get<CloseShopEvent>();
-    }
-
-    private void OnButtonClickAcceptBuyingPassengerSorting()
-    {
-        _ecsWorld.NewEntity().Get<BuyPassengerSortingEvent>();
-        _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
-    }
-
-    private void OnButtonClickDeclineBuyingPassengerSorting()
-    {
-        _ecsWorld.NewEntity().Get<ClosePassengerSortingInfoShowerEvent>();
-        _ecsWorld.NewEntity().Get<OpenShopEvent>();
-    }
-
-    private void OnButtonClickOpenBuyingPassengerShuffle()
-    {
-        _ecsWorld.NewEntity().Get<OpenPassengerShuffleInfoShowerEvent>();
-        _ecsWorld.NewEntity().Get<CloseShopEvent>();
-    }
-
-    private void OnButtonClickAcceptBuyingPassengerShuffle()
-    {
-        //_ecsWorld.NewEntity().Get<BuyPassengerSortingEvent>();
-        _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
-    }
-
-    private void OnButtonClickDeclineBuyingPassengerShuffle()
-    {
-        _ecsWorld.NewEntity().Get<ClosePassengerShuffleInfoShowerEvent>();
-        _ecsWorld.NewEntity().Get<OpenShopEvent>();
     }
 
     private void EnableButtons()

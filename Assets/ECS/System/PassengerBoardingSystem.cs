@@ -5,7 +5,7 @@ using UnityEngine;
 public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
 {
     private EcsWorld _ecsWorld;
-    private EcsFilter<SendRequesUnitsDataEvent> _sendRequestFilter;
+    private EcsFilter<SendRequesGetDataPassengerBoardingSystemEvent> _sendRequestFilter;
 
     private List<Passenger> _passengers;
     private CarToParkingTriggerHandler _carToParkingTriggerHandler;
@@ -55,19 +55,20 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
         {
             if (_cars.Count > 0)
             {
+                var confirmEventNewEntity = _ecsWorld.NewEntity();
+                confirmEventNewEntity.Get<ConfirmBuyingEvent>();
+                confirmEventNewEntity.Get<PassengerSortingConfirmBuyingEvent>();
+
                 var passengerSortingNewEntity = _ecsWorld.NewEntity();
                 ref var passengerSortingDataEvent = ref passengerSortingNewEntity.Get<GetUnitsDataEvent>();
-                passengerSortingDataEvent.carsOnlyInParking = _cars;
+                passengerSortingDataEvent.carsOnlyParkingZone = _cars;
                 passengerSortingDataEvent.allPassengersInLevel = _passengers;
 
                 passengerSortingNewEntity.Get<VerifyCarsToPassengerSortingEvent>();
-
-                _ecsWorld.NewEntity().Get<ConfirmPassengerSortingBuyingEvent>();
             }
 
-            _sendRequestFilter.GetEntity(sendRequestEntity).Del<SendRequesUnitsDataEvent>();
+            _sendRequestFilter.GetEntity(sendRequestEntity).Del<SendRequesGetDataPassengerBoardingSystemEvent>();
         }
-
     }
 
     private void MovePassengerToCar()

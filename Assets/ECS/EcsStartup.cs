@@ -56,16 +56,9 @@ public class EcsStartup : MonoBehaviour
         AddSettingSystems();
         AddButtonsUISystems();
 
-        AddShowPassengerSortingSystems();
+        AddShopSystem();
         AddPassengerSortingSystems();
-
-        _systems
-            .Add(new ShopShowerInitSystem(_shopShower))
-            .Add(new ShopShowerSystem());
-
-        _systems
-            .Add(new PassengerShuffleShowerInitSystem(_shopShower.BuyPassengerShuffleShower))
-            .Add(new PassengerShuffleShowerSystem());
+        AddShuffleSystem();
 
         TryAddTutorial();
 
@@ -126,7 +119,8 @@ public class EcsStartup : MonoBehaviour
             .Add(new CarsInitSystem(_cars))
             .Add(new CarMoveSystem())
             .Add(new CarCrashHandlerSystem(_cars))
-            .Add(new CarSystem())
+            .Add(new CarLeavingInitSystem(_cars))
+            .Add(new CarLeavingSystem())
             .Add(new CarRotatorSystem(_triggerHandlers))
             .Add(new AnimatedCarSystem())
             .Add(new CarSoundSystem())
@@ -194,18 +188,30 @@ public class EcsStartup : MonoBehaviour
             .Add(new CurrencySystem());
     }
 
-    private void AddShowPassengerSortingSystems()
+    private void AddShopSystem()
     {
         _systems
-            .Add(new PassengerSortingShowerInitSystem(_shopShower.BuyPassengerSortingShower))
-            .Add(new PassengerSortingShowerSystem());
+            .Add(new ShopShowerInitSystem(_shopShower))
+            .Add(new ShopShowerSystem());
+    }
+
+    private void AddShuffleSystem()
+    {
+        _systems
+            .Add(new ShuffleInitSystem(_cars, _passengers))
+            .Add(new ShuffleSystem())
+            .Add(new CarShuffleShowerInitSystem(_shopShower.BuyPassengerShuffleShower))
+            .Add(new CarShuffleShowerSystem())
+            .Add(new CarShuffleUIButtonsReader(_shopShower.BuyPassengerShuffleShower));
     }
 
     private void AddPassengerSortingSystems()
     {
         _systems
-            .Add(new PassengerSortingInitSystem())
-            .Add(new PassengerSortingSystem());
+            .Add(new PassengerSortingSystem())
+            .Add(new PassengerSortingUIButtonsReader(_shopShower.BuyPassengerSortingShower))
+            .Add(new PassengerSortingShowerInitSystem(_shopShower.BuyPassengerSortingShower))
+            .Add(new PassengerSortingShowerSystem());
     }
 
     private void TryAddTutorial()

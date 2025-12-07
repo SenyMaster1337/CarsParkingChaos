@@ -6,38 +6,31 @@ public class PassengerSortingSystem : IEcsRunSystem
     private const float TimeLeftToVerifyCarsCountInParking = 1f;
 
     private EcsWorld _ecsWorld;
-    private EcsFilter<PassengerSortingComponent> _passengerSortingFilter;
-    private EcsFilter<SortPassengerEvent> _sortFilter;
-    private EcsFilter<GetUnitsDataEvent> _passengersAndCarsDataFilter;
+    private EcsFilter<PassengerSortingEvent> _sortEventFilter;
+    private EcsFilter<GetUnitsDataEvent> _unitsDataFilter;
 
     private SceneData _sceneData;
 
     public void Run()
     {
-        foreach (var PassengerSortingEntity in _passengerSortingFilter)
+        foreach (var sortEntity in _sortEventFilter)
         {
-            ref var component = ref _passengerSortingFilter.Get1(PassengerSortingEntity);
+            _ecsWorld.NewEntity().Get<SendRequesGetDataPassengerBoardingSystemEvent>();
+            _sortEventFilter.GetEntity(sortEntity).Del<PassengerSortingEvent>();
+        }
 
-            foreach (var sortEntity in _sortFilter)
+        foreach (var passengersAndCarsDataEntity in _unitsDataFilter)
+        {
+            var dataEntity = _unitsDataFilter.GetEntity(passengersAndCarsDataEntity);
+
+            if (dataEntity.Has<VerifyCarsToPassengerSortingEvent>())
             {
-                var sortEventEntity = _sortFilter.GetEntity(sortEntity);
-                _ecsWorld.NewEntity().Get<SendRequesUnitsDataEvent>();
-                sortEventEntity.Del<SortPassengerEvent>();
-            }
+                if (_sceneData.VariableSortingSystem == 1)
+                    SortPassengersFirstVariable(dataEntity);
+                else
+                    SortPassengersSecondVariable(dataEntity);
 
-            foreach (var passengersAndCarsDataEntity in _passengersAndCarsDataFilter)
-            {
-                var dataEntity = _passengersAndCarsDataFilter.GetEntity(passengersAndCarsDataEntity);
-
-                if (dataEntity.Has<VerifyCarsToPassengerSortingEvent>())
-                {
-                    if (_sceneData.VariableSortingSystem == 1)
-                        SortPassengersFirstVariable(dataEntity);
-                    else
-                        SortPassengersSecondVariable(dataEntity);
-
-                    dataEntity.Del<VerifyCarsToPassengerSortingEvent>();
-                }
+                dataEntity.Del<VerifyCarsToPassengerSortingEvent>();
             }
         }
     }
@@ -46,7 +39,7 @@ public class PassengerSortingSystem : IEcsRunSystem
     {
         ref var dataEvent = ref dataEntity.Get<GetUnitsDataEvent>();
 
-        if (dataEvent.carsOnlyInParking.Count == 0 || dataEvent.allPassengersInLevel.Count == 0)
+        if (dataEvent.carsOnlyParkingZone.Count == 0 || dataEvent.allPassengersInLevel.Count == 0)
         {
             _ecsWorld.NewEntity().Get<ParkingCancelReservationEvent>();
             _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
@@ -64,9 +57,9 @@ public class PassengerSortingSystem : IEcsRunSystem
 
     private void PerformSortingIteration(ref GetUnitsDataEvent dataEvent)
     {
-        for (int carIndex = 0; carIndex < dataEvent.carsOnlyInParking.Count; carIndex++)
+        for (int carIndex = 0; carIndex < dataEvent.carsOnlyParkingZone.Count; carIndex++)
         {
-            ref var carComponent = ref dataEvent.carsOnlyInParking[carIndex].Entity.Get<CarComponent>();
+            ref var carComponent = ref dataEvent.carsOnlyParkingZone[carIndex].Entity.Get<CarComponent>();
             int count = 0;
             bool isCountMax = false;
 
@@ -120,12 +113,12 @@ public class PassengerSortingSystem : IEcsRunSystem
     {
         ref var dataEvent = ref dataEntity.Get<GetUnitsDataEvent>();
 
-        if (dataEvent.carsOnlyInParking.Count == 0 || dataEvent.allPassengersInLevel.Count == 0)
+        if (dataEvent.carsOnlyParkingZone.Count == 0 || dataEvent.allPassengersInLevel.Count == 0)
             return;
 
-        for (int carIndex = 0; carIndex < dataEvent.carsOnlyInParking.Count; carIndex++)
+        for (int carIndex = 0; carIndex < dataEvent.carsOnlyParkingZone.Count; carIndex++)
         {
-            ref var carComponent = ref dataEvent.carsOnlyInParking[carIndex].Entity.Get<CarComponent>();
+            ref var carComponent = ref dataEvent.carsOnlyParkingZone[carIndex].Entity.Get<CarComponent>();
             int count = 0;
             bool isCountMax = false;
 
@@ -157,6 +150,6 @@ public class PassengerSortingSystem : IEcsRunSystem
             }
         }
 
-        _ecsWorld.NewEntity().Get<ConfirmPassengerSortingBuyingEvent>();
+        _ecsWorld.NewEntity().Get<ConfirmBuyingEvent>();
     }
 }

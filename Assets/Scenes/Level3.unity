@@ -768,11 +768,10 @@ MonoBehaviour:
       de: 
       hi: 
   text: 
-  ru: "\u0412\u044B \u0445\u043E\u0442\u0438\u0442\u0435 \u0441\u0434\u0435\u043B\u0430\u0442\u044C
-    \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0443 \u043F\u0430\u0441\u0441\u0430\u0436\u0438\u0440\u043E\u0432
-    \u043F\u043E\u0434 \u0446\u0432\u0435\u0442 \u043C\u0430\u0448\u0438\u043D?"
-  en: Do you want to sort passengers according to the color of the cars?
-  tr: "Yolcular\u0131 arabalar\u0131n rengine g\xF6re s\u0131ralamak ister misiniz?"
+  ru: "\u0412\u044B \u0445\u043E\u0442\u0438\u0442\u0435 \u043F\u0435\u0440\u0435\u0442\u0430\u0441\u043E\u0432\u0430\u0442\u044C
+    \u043C\u0430\u0448\u0438\u043D\u044B?"
+  en: Do you want to shuffle the cars?
+  tr: "Arabalar\u0131 kar\u0131\u015Ft\u0131rmak ister misin?"
   az: 
   be: 
   he: 
@@ -801,7 +800,7 @@ MonoBehaviour:
   fontNumber: 0
   uniqueFont: {fileID: 0}
   additionalText: {fileID: 0}
-  textHeight: 28
+  textHeight: 31
   processTranslateLabel: 3/3 completed
   componentTextField: 1
   countLang: 3
@@ -825,8 +824,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0412\u044B \u0445\u043E\u0442\u0438\u0442\u0435 \u043F\u0435\u0440\u0435\u043C\u0435\u0448\u0430\u0442\u044C
-    \u043C\u0430\u0448\u0438\u043D\u044B \u043F\u043E \u0446\u0432\u0435\u0442\u0443?"
+  m_text: "\u0412\u044B \u0445\u043E\u0442\u0438\u0442\u0435 \u043F\u0435\u0440\u0435\u0442\u0430\u0441\u043E\u0432\u0430\u0442\u044C
+    \u043C\u0430\u0448\u0438\u043D\u044B?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 02fea1fb776e0ad43a5e684a1ab0ce9e, type: 2}
   m_sharedMaterial: {fileID: 942589445191879500, guid: 02fea1fb776e0ad43a5e684a1ab0ce9e, type: 2}
@@ -3277,7 +3276,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 191281307279750885, guid: 98d3092aa5868474685730b082065a22, type: 3}
       propertyPath: m_text
-      value: "\u041F\u0435\u0440\u0435\u043C\u0435\u0448\u0430\u0442\u044C \u043C\u0430\u0448\u0438\u043D\u044B"
+      value: "\u0422\u0435\u0441\u0442"
       objectReference: {fileID: 0}
     - target: {fileID: 191281307279750885, guid: 98d3092aa5868474685730b082065a22, type: 3}
       propertyPath: m_fontSize
@@ -3526,9 +3525,9 @@ MonoBehaviour:
       de: 
       hi: 
   text: 
-  ru: "\u041F\u0435\u0440\u0435\u043C\u0435\u0448\u0430\u0442\u044C \u043C\u0430\u0448\u0438\u043D\u044B"
-  en: Mix machine
-  tr: "Kar\u0131\u015Ft\u0131rma makinesi"
+  ru: "\u0422\u0435\u0441\u0442"
+  en: Test
+  tr: Test
   az: 
   be: 
   he: 
@@ -11170,7 +11169,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 663613513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99db950ffd972bf469ef927cbd7bd30a, type: 3}
+  m_Script: {fileID: 11500000, guid: 03820f7c9ab458b48ac76fafaa32cfdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Value>k__BackingField: {fileID: 663613515}
@@ -14246,7 +14245,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &828439678
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14449,7 +14448,7 @@ PrefabInstance:
       addedObject: {fileID: 830262298}
     - targetCorrespondingSourceObject: {fileID: 5520699925731651093, guid: f5c2679886ea94c5f999dc55b059c39b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 830262300}
+      addedObject: {fileID: 830262302}
   m_SourcePrefab: {fileID: 100100000, guid: f5c2679886ea94c5f999dc55b059c39b, type: 3}
 --- !u!224 &830262294 stripped
 RectTransform:
@@ -14516,7 +14515,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &830262300
+--- !u!114 &830262302
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14525,7 +14524,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 830262295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aea1da5d4c9299246b045d6531f351e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d33d40eb76115f44bbf9ab3558506ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Button: {fileID: 830262298}
@@ -18840,7 +18839,7 @@ GameObject:
   - component: {fileID: 1121480474}
   - component: {fileID: 1121480477}
   m_Layer: 5
-  m_Name: BuyingPassengerShuffle
+  m_Name: BuyingCarShuffle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18929,15 +18928,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1121480471}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 449136976e177b541acd311e3471dc9a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7df22cb58f6c2cd42849c5fdcdd0bd21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <WindowGroup>k__BackingField: {fileID: 1121480474}
-  <PriceBuyingPassengerShuffleText>k__BackingField: {fileID: 1405710820}
-  <PriceBuyingPassengerShuffleShopAsssortmentMenuText>k__BackingField: {fileID: 663613517}
-  <OpenBuyingPassengerMixerButtonClickReader>k__BackingField: {fileID: 1818001085}
-  <AcceptBuyingPassengerMixerButtonClickReader>k__BackingField: {fileID: 2062997451}
-  <DeclineBuyingPassengerMixerButtonClickReader>k__BackingField: {fileID: 830262300}
+  <PriceBuyingCarShuffleText>k__BackingField: {fileID: 1405710820}
+  <PriceBuyingCarShuffleShopAsssortmentMenuText>k__BackingField: {fileID: 663613517}
+  <OpenBuyingCarShuffleButton>k__BackingField: {fileID: 1818001087}
+  <AcceptBuyingCarShuffleButton>k__BackingField: {fileID: 2062997451}
+  <DeclineBuyingCarShuffleButton>k__BackingField: {fileID: 830262302}
 --- !u!1 &1124542657
 GameObject:
   m_ObjectHideFlags: 0
@@ -22980,7 +22979,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1405710815}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3aac455be26ceda48baea9f57900f695, type: 3}
+  m_Script: {fileID: 11500000, guid: 944bc5058a92d224f83dc039348c71aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Value>k__BackingField: {fileID: 1405710818}
@@ -32544,7 +32543,7 @@ GameObject:
   - component: {fileID: 1714642810}
   - component: {fileID: 1714642809}
   m_Layer: 5
-  m_Name: BuyingCarMixer
+  m_Name: mb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35138,7 +35137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 191281306699547919, guid: 98d3092aa5868474685730b082065a22, type: 3}
       propertyPath: m_Name
-      value: PessengerShuffle
+      value: CarShuffle
       objectReference: {fileID: 0}
     - target: {fileID: 191281306699547919, guid: 98d3092aa5868474685730b082065a22, type: 3}
       propertyPath: m_IsActive
@@ -35162,7 +35161,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 191281307279750885, guid: 98d3092aa5868474685730b082065a22, type: 3}
       propertyPath: m_text
-      value: "\u041F\u0435\u0440\u0435\u043C\u0435\u0448\u0430\u0442\u044C \u043F\u0430\u0441\u0441\u0430\u0436\u0438\u0440\u043E\u0432"
+      value: "\u041F\u0435\u0440\u0435\u0442\u0430\u0441\u043E\u0432\u0430\u0442\u044C
+        \u043C\u0430\u0448\u0438\u043D\u044B"
       objectReference: {fileID: 0}
     - target: {fileID: 191281307279750885, guid: 98d3092aa5868474685730b082065a22, type: 3}
       propertyPath: m_fontSize
@@ -35234,7 +35234,7 @@ PrefabInstance:
       addedObject: {fileID: 1818001080}
     - targetCorrespondingSourceObject: {fileID: 191281306699547919, guid: 98d3092aa5868474685730b082065a22, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1818001085}
+      addedObject: {fileID: 1818001087}
     - targetCorrespondingSourceObject: {fileID: 191281307279750883, guid: 98d3092aa5868474685730b082065a22, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1818001079}
@@ -35411,9 +35411,9 @@ MonoBehaviour:
       de: 
       hi: 
   text: 
-  ru: "\u041F\u0435\u0440\u0435\u043C\u0435\u0448\u0430\u0442\u044C \u043F\u0430\u0441\u0441\u0430\u0436\u0438\u0440\u043E\u0432"
-  en: Shuffle passengers
-  tr: "Yolcular\u0131 kar\u0131\u015Ft\u0131r"
+  ru: "\u041F\u0435\u0440\u0435\u0442\u0430\u0441\u043E\u0432\u0430\u0442\u044C \u043C\u0430\u0448\u0438\u043D\u044B"
+  en: Shuffle the cars
+  tr: "Arabalar\u0131 kar\u0131\u015Ft\u0131r"
   az: 
   be: 
   he: 
@@ -35490,7 +35490,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1818001085
+--- !u!114 &1818001087
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -35499,7 +35499,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1818001077}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6767a17b57c301b44a29f1b7da76559b, type: 3}
+  m_Script: {fileID: 11500000, guid: c1bbed73352bd5a41ae3c0e5b94f4262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Button: {fileID: 1818001080}
@@ -36748,7 +36748,7 @@ GameObject:
   - component: {fileID: 1926723127}
   - component: {fileID: 1926723126}
   m_Layer: 5
-  m_Name: PricePassengerShuffle
+  m_Name: PriceCarShuffle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38787,7 +38787,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2062997445}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d76e9a03e03206458131befa08ae523, type: 3}
+  m_Script: {fileID: 11500000, guid: fce787c3e7eb01c48a65583123ed3e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Button: {fileID: 2062997448}
