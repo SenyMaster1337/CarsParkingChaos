@@ -1,4 +1,5 @@
 using Leopotam.Ecs;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,30 +17,39 @@ public class ShuffleSystem : IEcsRunSystem
 
             foreach (var shuffleEventEntity in _shuffleEventfilter)
             {
-                if (shuffleComponent.passengers.Count > 0)
+                if (shuffleComponent.cars.Count <= 1)
+                    return;
+
+                StartConfirmBuyingEvent();
+
+                System.Random random = new();
+
+                for (int i = 0; i < shuffleComponent.cars.Count; i++)
                 {
-                    StartConfirmBuyingEvent();
+                    int randomIndex = random.Next(i + 1);
 
-                    System.Random random = new();
+                    ref var firstCarComponent = ref shuffleComponent.cars[i].Entity.Get<CarComponent>();
+                    ref var secondCarComponent = ref shuffleComponent.cars[randomIndex].Entity.Get<CarComponent>();
 
-                    for (int i = 0; i < shuffleComponent.cars.Count; i++)
+                    Color tempFirstPassengerColor = firstCarComponent.renderer.material.color;
+                    Color templastPassengerColor = secondCarComponent.renderer.material.color;
+
+                    firstCarComponent.renderer.material.color = templastPassengerColor;
+                    secondCarComponent.renderer.material.color = tempFirstPassengerColor;
+                }
+
+                int passengerIndex = 0;
+
+                for (int i = 0; i < shuffleComponent.cars.Count && passengerIndex < shuffleComponent.passengers.Count; i++)
+                {
+                    ref var carComponent = ref shuffleComponent.cars[i].Entity.Get<CarComponent>();
+
+                    for (int j = 0; j < carComponent.maxPassengersSlots && passengerIndex < shuffleComponent.passengers.Count; j++)
                     {
-                        int randomIndex = random.Next(i, shuffleComponent.cars.Count);
-
-                        ref var firstCarComponent = ref shuffleComponent.cars[i].Entity.Get<CarComponent>();
-                        ref var secondCarComponent = ref shuffleComponent.cars[randomIndex].Entity.Get<CarComponent>();
-
-                        if (firstCarComponent.canCrashed == false || secondCarComponent.canCrashed == false)
-                            continue;
-
-                        ref var firstCarMovable = ref shuffleComponent.cars[i].Entity.Get<CarMovableComponent>();
-                        ref var secondCarMovable = ref shuffleComponent.cars[randomIndex].Entity.Get<CarMovableComponent>();
-
-                        firstCarMovable.spawnPosition = secondCarMovable.currentTransform.position;
-                        secondCarMovable.spawnPosition = firstCarMovable.currentTransform.position;
-
-                        secondCarMovable.currentTransform.position = secondCarMovable.spawnPosition;
-                        secondCarMovable.currentTransform.position = firstCarMovable.spawnPosition;
+                        Debug.Log(passengerIndex);
+                        ref var passengerComponent = ref shuffleComponent.passengers[passengerIndex].Entity.Get<PassengerComponent>();
+                        passengerComponent.renderer.material.color = carComponent.renderer.material.color;
+                        passengerIndex++;
                     }
                 }
 

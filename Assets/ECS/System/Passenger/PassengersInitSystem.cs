@@ -31,7 +31,7 @@ public class PassengersInitSystem : IEcsInitSystem
 
             ref var passengerComponent = ref passengerNewEntity.Get<PassengerComponent>();
             passengerComponent.passenger = _passengers[i];
-            passengerComponent.renderer = _passengers[i].gameObject.GetComponentInChildren<Renderer>();
+            passengerComponent.renderer = _passengers[i].gameObject.GetComponentInChildren<PassengerRenderer>().Renderer;
             passengerComponent.startQueuePosition = _startQueuePoint.transform.position;
             passengerComponent.isSorted = false;
 

@@ -27,7 +27,7 @@ public class CarsInitSystem : IEcsInitSystem
 
             ref var carComponent = ref carNewEntity.Get<CarComponent>();
             carComponent.car = _cars[i];
-            carComponent.renderer = _cars[i].gameObject.GetComponentInChildren<Renderer>();
+            carComponent.renderer = _cars[i].gameObject.GetComponentInChildren<CarRenderer>().Renderer;
             carComponent.crashHandler = _cars[i].GetComponentInChildren<CrashHandler>();
 
             carComponent.passengers = new List<PassengerComponent>();
@@ -46,6 +46,8 @@ public class CarsInitSystem : IEcsInitSystem
 
             if (_cars[i].TryGetComponent(out Minivan minivan))
                 carComponent.maxPassengersSlots = _staticData.MinivanCarSlots;
+            else if (_cars[i].TryGetComponent(out Coope coope))
+                carComponent.maxPassengersSlots = _staticData.CoopeCarSlots;
             else
                 carComponent.maxPassengersSlots = _staticData.DefaultCarSlots;
 

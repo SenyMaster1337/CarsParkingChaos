@@ -8,6 +8,7 @@ public struct CarComponent
     public CrashHandler crashHandler;
 
     public Renderer renderer;
+    public Renderer renderer2;
 
     public int maxPassengersSlots;
     public List<PassengerComponent> passengers;

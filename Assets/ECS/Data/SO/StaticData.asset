@@ -17,6 +17,7 @@ MonoBehaviour:
   <PassengerSpeed>k__BackingField: 20
   <DefaultCarSlots>k__BackingField: 4
   <MinivanCarSlots>k__BackingField: 8
+  <CoopeCarSlots>k__BackingField: 2
   <RotationCarInParking>k__BackingField: {x: 0, y: -0.25881904, z: 0, w: 0.9659258}
   <DistanceToDisableCrashHandler>k__BackingField: 16
   <DesktopFieldSizeCamera>k__BackingField: 32
@@ -27,6 +28,7 @@ MonoBehaviour:
   <TimeToLevelShowLevelComplete>k__BackingField: 1.5
   <NumberCointAddedPerWin>k__BackingField: 50
   <PriceSortPassengers>k__BackingField: 15
-  <TimeLeftInTimerToVerifyCarsInParking>k__BackingField: 3
+  <PriceShufflePassengers>k__BackingField: 10
+  <TimeLeftInTimerToVerifyCarsInParking>k__BackingField: 4
   <TimeDisableCarInScene>k__BackingField: 1.2
   <AddScoreWinningValueToLeaderboard>k__BackingField: 100

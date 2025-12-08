@@ -90,6 +90,9 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
             ref var firstPassengerComponent = ref passengersArray[0].Entity.Get<PassengerComponent>();
             ref var carComponent = ref carsArray[i].Entity.Get<CarComponent>();
 
+            if (carComponent.isParked == false)
+                continue;
+
             if (carComponent.isNotEmptySeats == false)
             {
                 if (carComponent.renderer.material.color == firstPassengerComponent.renderer.material.color)
