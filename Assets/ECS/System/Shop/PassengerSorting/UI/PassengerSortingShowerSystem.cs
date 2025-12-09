@@ -15,16 +15,14 @@ public class PassengerSortingShowerSystem : IEcsRunSystem
 
             foreach (var openEntity in _openFilter)
             {
-                var openEvent = _openFilter.GetEntity(openEntity);
                 OpenSortingInfo(sortingShowerComponent);
-                openEvent.Del<OpenPassengerSortingInfoShowerEvent>();
+                _openFilter.GetEntity(openEntity).Del<OpenPassengerSortingInfoShowerEvent>();
             }
 
             foreach (var closeEntity in _closeFilter)
             {
-                var closeEvent = _closeFilter.GetEntity(closeEntity);
                 CloseSortingInfo(sortingShowerComponent);
-                closeEvent.Del<ClosePassengerSortingInfoShowerEvent>();
+                _closeFilter.GetEntity(closeEntity).Del<ClosePassengerSortingInfoShowerEvent>();
             }
         }
     }

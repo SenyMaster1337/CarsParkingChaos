@@ -27,6 +27,8 @@ public class EcsStartup : MonoBehaviour
     [SerializeField] private LeaderboradShower _leaderboradShower;
     [SerializeField] private CurrentCoinCountText _coinCountText;
     [SerializeField] private ShopShower _shopShower;
+    [SerializeField] private ADVUnlockParkingSlotShower _advUnlockParkingSlotShower;
+    [SerializeField] private PassengersCountText _passengersCountText;
 
     [SerializeField] private GameSounds _gameSounds;
 
@@ -59,6 +61,8 @@ public class EcsStartup : MonoBehaviour
         AddShopSystem();
         AddPassengerSortingSystems();
         AddShuffleSystem();
+        AddUnlcokParkingSlotSystems();
+        AddPassengerCountShowerSystems();
 
         TryAddTutorial();
 
@@ -138,7 +142,7 @@ public class EcsStartup : MonoBehaviour
     private void AddParkingSystems()
     {
         _systems
-            .Add(new ParkingInitSystem(_parkingSlots))
+            .Add(new ParkingReservationInitSystem(_parkingSlots))
             .Add(new CarParkingSystem(_carHandler))
             .Add(new ParkingReservationSystem());
     }
@@ -203,6 +207,22 @@ public class EcsStartup : MonoBehaviour
             .Add(new CarShuffleShowerInitSystem(_shopShower.BuyPassengerShuffleShower))
             .Add(new CarShuffleShowerSystem())
             .Add(new CarShuffleUIButtonsReader(_shopShower.BuyPassengerShuffleShower));
+    }
+
+    private void AddPassengerCountShowerSystems()
+    {
+        _systems
+            .Add(new PassengersCountShowerInitSystem(_passengers, _passengersCountText))
+            .Add(new PassengersCountShowerSystem());
+    }
+
+    private void AddUnlcokParkingSlotSystems()
+    {
+        _systems
+            .Add(new UnlockParkingSlotSystem())
+            .Add(new UnlockParkingSlotShowerInitSystem(_advUnlockParkingSlotShower))
+            .Add(new UnlockParkingSlotShowerButtonReaderSystem(_advUnlockParkingSlotShower))
+            .Add(new UnlockParkingSlotShowerSystem());
     }
 
     private void AddPassengerSortingSystems()

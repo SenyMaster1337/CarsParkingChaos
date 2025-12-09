@@ -5,7 +5,7 @@ public class CarShuffleShowerSystem : IEcsRunSystem
 {
     private EcsFilter<PassengerShuffleShowerComponent> _sortingFilter;
     private EcsFilter<OpenPassengerShuffleInfoShowerEvent> _openFilter;
-    private EcsFilter<CloseCarShuffleInfoShowerEvent> _closeFilter;
+    private EcsFilter<CloseShuffleInfoShowerEvent> _closeFilter;
 
     public void Run()
     {
@@ -24,7 +24,7 @@ public class CarShuffleShowerSystem : IEcsRunSystem
             {
                 var closeEvent = _closeFilter.GetEntity(closeEntity);
                 CloseSortingInfo(sortingShowerComponent);
-                closeEvent.Del<CloseCarShuffleInfoShowerEvent>();
+                closeEvent.Del<CloseShuffleInfoShowerEvent>();
             }
         }
     }

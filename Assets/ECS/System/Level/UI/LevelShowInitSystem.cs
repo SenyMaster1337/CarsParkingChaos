@@ -31,7 +31,6 @@ public class LevelShowInitSystem : IEcsInitSystem
             completeLevelComponent.levelCompleteShower.WindowGroup.interactable = false;
             completeLevelComponent.levelCompleteShower.WindowGroup.blocksRaycasts = false;
             completeLevelComponent.levelCompleteShower.CoinsNumberToWinText.Value.SetText($"{_staticData.NumberCointAddedPerWin}");
-            completeLevelComponent.levelCompleteShower.CurrentLevelNumberText.Value.SetText($"{levelComponent.currentLevel}");
 
             ref var levelLossComponent = ref levelComponent.entity.Get<UILevelLossComponent>();
             levelLossComponent.levelLossShower = _levelLossShower;

@@ -1,22 +1,42 @@
 using Leopotam.Ecs;
 using UnityEngine;
+using YG;
 
 public class PassengerSortingSystem : IEcsRunSystem
 {
     private const float TimeLeftToVerifyCarsCountInParking = 1f;
 
     private EcsWorld _ecsWorld;
-    private EcsFilter<PassengerSortingEvent> _sortEventFilter;
+    private EcsFilter<PassengerSortEvent> _sortEventFilter;
     private EcsFilter<GetUnitsDataEvent> _unitsDataFilter;
+    private EcsFilter<ShowAdvToPassengerSortEvent> _showAdvFilter;
 
-    private SceneData _sceneData;
+    private string rewardID;
+    private bool _isNeedConfirmToPay;
+    private bool _isNeedAdvShow;
+
+    public PassengerSortingSystem()
+    {
+        _isNeedConfirmToPay = false;
+        _isNeedAdvShow = false;
+    }
 
     public void Run()
     {
         foreach (var sortEntity in _sortEventFilter)
         {
-            _ecsWorld.NewEntity().Get<SendRequesGetDataPassengerBoardingSystemEvent>();
-            _sortEventFilter.GetEntity(sortEntity).Del<PassengerSortingEvent>();
+            _ecsWorld.NewEntity().Get<SendRequesGetDataInPassengerBoardingEvent>();
+            _isNeedConfirmToPay = true;
+            _isNeedAdvShow = false;
+            _sortEventFilter.GetEntity(sortEntity).Del<PassengerSortEvent>();
+        }
+
+        foreach (var advEntity in _showAdvFilter)
+        {
+            _ecsWorld.NewEntity().Get<SendRequesGetDataInPassengerBoardingEvent>();
+            _isNeedConfirmToPay = false;
+            _isNeedAdvShow = true;
+            _showAdvFilter.GetEntity(advEntity).Del<ShowAdvToPassengerSortEvent>();
         }
 
         foreach (var passengersAndCarsDataEntity in _unitsDataFilter)
@@ -25,11 +45,7 @@ public class PassengerSortingSystem : IEcsRunSystem
 
             if (dataEntity.Has<VerifyCarsToPassengerSortingEvent>())
             {
-                if (_sceneData.VariableSortingSystem == 1)
-                    SortPassengersFirstVariable(dataEntity);
-                else
-                    SortPassengersSecondVariable(dataEntity);
-
+                SortPassengersFirstVariable(dataEntity);
                 dataEntity.Del<VerifyCarsToPassengerSortingEvent>();
             }
         }
@@ -39,24 +55,55 @@ public class PassengerSortingSystem : IEcsRunSystem
     {
         ref var dataEvent = ref dataEntity.Get<GetUnitsDataEvent>();
 
-        if (dataEvent.carsOnlyParkingZone.Count == 0 || dataEvent.allPassengersInLevel.Count == 0)
+        if (dataEvent.carsOnlyParkingZone.Count > 0)
         {
-            _ecsWorld.NewEntity().Get<ParkingCancelReservationEvent>();
-            _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
-
-            dataEntity.Del<GetUnitsDataEvent>();
-            return;
+            StartConfirmPayment();
+            TryAdvShow(dataEntity);
+            StartTimerToAnotherVerify(dataEntity);
         }
+    }
 
+    private void TryAdvShow(EcsEntity dataEntity)
+    {
+        if (_isNeedAdvShow == true)
+        {
+            YG2.RewardedAdvShow(rewardID, () =>
+            {
+                PerformSortingIteration(dataEntity);
+                _ecsWorld.NewEntity().Get<EnableButtonsEvent>();
+                _ecsWorld.NewEntity().Get<ClosePassengerSortingInfoShowerEvent>();
+                _isNeedAdvShow = false;
+            });
+        }
+        else
+        {
+            PerformSortingIteration(dataEntity);
+        }
+    }
+
+    private void StartConfirmPayment()
+    {
+        if (_isNeedConfirmToPay == true)
+        {
+            var confirmEventNewEntity = _ecsWorld.NewEntity();
+            confirmEventNewEntity.Get<ConfirmBuyingEvent>();
+            confirmEventNewEntity.Get<PassengerSortingConfirmBuyingEvent>();
+            _ecsWorld.NewEntity().Get<EnableButtonsEvent>();
+            _isNeedConfirmToPay = false;
+        }
+    }
+
+    private void StartTimerToAnotherVerify(EcsEntity dataEntity)
+    {
         ref var timerToVerifyCars = ref dataEntity.Get<TimerComponent>();
         timerToVerifyCars.TimeLeft = TimeLeftToVerifyCarsCountInParking;
         timerToVerifyCars.IsActive = true;
-
-        PerformSortingIteration(ref dataEvent);
     }
 
-    private void PerformSortingIteration(ref GetUnitsDataEvent dataEvent)
+    private void PerformSortingIteration(EcsEntity dataEntity)
     {
+        ref var dataEvent = ref dataEntity.Get<GetUnitsDataEvent>();
+
         for (int carIndex = 0; carIndex < dataEvent.carsOnlyParkingZone.Count; carIndex++)
         {
             ref var carComponent = ref dataEvent.carsOnlyParkingZone[carIndex].Entity.Get<CarComponent>();
@@ -106,6 +153,14 @@ public class PassengerSortingSystem : IEcsRunSystem
         {
             ref var passengerComponent = ref dataEvent.allPassengersInLevel[z].Entity.Get<PassengerComponent>();
             passengerComponent.isSorted = false;
+        }
+
+        if (dataEvent.carsOnlyParkingZone.Count == 0)
+        {
+            _ecsWorld.NewEntity().Get<ParkingCancelReservationEvent>();
+            _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
+
+            dataEntity.Del<GetUnitsDataEvent>();
         }
     }
 

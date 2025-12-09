@@ -4,34 +4,36 @@ using UnityEngine;
 public class CarShuffleUIButtonsReader : IEcsInitSystem, IEcsDestroySystem
 {
     private EcsWorld _ecsWorld;
-    private BuyCarShuffleShower _buyPassengerShuffleShower;
+    private BuyShuffleShower _buyPassengerShuffleShower;
 
-    public CarShuffleUIButtonsReader(BuyCarShuffleShower buyPassengerShuffleShower)
+    public CarShuffleUIButtonsReader(BuyShuffleShower buyPassengerShuffleShower)
     {
         _buyPassengerShuffleShower = buyPassengerShuffleShower;
     }
 
     public void Init()
     {
-        _buyPassengerShuffleShower.OpenBuyingCarShuffleButton.OnButtonClicked += OnButtonClickOpenBuyingPassengerShuffle;
-        _buyPassengerShuffleShower.AcceptBuyingCarShuffleButton.OnButtonClicked += OnButtonClickAcceptBuyingPassengerShuffle;
-        _buyPassengerShuffleShower.DeclineBuyingCarShuffleButton.OnButtonClicked += OnButtonClickDeclineBuyingPassengerShuffle;
+        _buyPassengerShuffleShower.OpenBuyingCarShuffleButton.OnButtonClicked += OnButtonClickOpen;
+        _buyPassengerShuffleShower.AcceptBuyingCarShuffleButton.OnButtonClicked += OnButtonClickAccept;
+        _buyPassengerShuffleShower.DeclineBuyingCarShuffleButton.OnButtonClicked += OnButtonClickDecline;
+        _buyPassengerShuffleShower.RewardShuffleButton.OnButtonClicked += OnButtonClickReward;
     }
 
     public void Destroy()
     {
-        _buyPassengerShuffleShower.OpenBuyingCarShuffleButton.OnButtonClicked -= OnButtonClickOpenBuyingPassengerShuffle;
-        _buyPassengerShuffleShower.AcceptBuyingCarShuffleButton.OnButtonClicked -= OnButtonClickAcceptBuyingPassengerShuffle;
-        _buyPassengerShuffleShower.DeclineBuyingCarShuffleButton.OnButtonClicked -= OnButtonClickDeclineBuyingPassengerShuffle;
+        _buyPassengerShuffleShower.OpenBuyingCarShuffleButton.OnButtonClicked -= OnButtonClickOpen;
+        _buyPassengerShuffleShower.AcceptBuyingCarShuffleButton.OnButtonClicked -= OnButtonClickAccept;
+        _buyPassengerShuffleShower.DeclineBuyingCarShuffleButton.OnButtonClicked -= OnButtonClickDecline;
+        _buyPassengerShuffleShower.RewardShuffleButton.OnButtonClicked -= OnButtonClickReward;
     }
 
-    private void OnButtonClickOpenBuyingPassengerShuffle()
+    private void OnButtonClickOpen()
     {
         _ecsWorld.NewEntity().Get<OpenPassengerShuffleInfoShowerEvent>();
         _ecsWorld.NewEntity().Get<CloseShopEvent>();
     }
 
-    private void OnButtonClickAcceptBuyingPassengerShuffle()
+    private void OnButtonClickAccept()
     {
         var TryBuyEventNewEntity = _ecsWorld.NewEntity();
         TryBuyEventNewEntity.Get<TryBuyEvent>();
@@ -40,9 +42,14 @@ public class CarShuffleUIButtonsReader : IEcsInitSystem, IEcsDestroySystem
         _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
     }
 
-    private void OnButtonClickDeclineBuyingPassengerShuffle()
+    private void OnButtonClickDecline()
     {
-        _ecsWorld.NewEntity().Get<CloseCarShuffleInfoShowerEvent>();
+        _ecsWorld.NewEntity().Get<CloseShuffleInfoShowerEvent>();
         _ecsWorld.NewEntity().Get<OpenShopEvent>();
+    }
+
+    private void OnButtonClickReward()
+    {
+        _ecsWorld.NewEntity().Get<ShowAdvToShuffleEvent>();
     }
 }

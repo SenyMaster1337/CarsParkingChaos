@@ -5,7 +5,7 @@ using UnityEngine;
 public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
 {
     private EcsWorld _ecsWorld;
-    private EcsFilter<SendRequesGetDataPassengerBoardingSystemEvent> _sendRequestFilter;
+    private EcsFilter<SendRequesGetDataInPassengerBoardingEvent> _sendRequestFilter;
 
     private List<Passenger> _passengers;
     private CarToParkingTriggerHandler _carToParkingTriggerHandler;
@@ -53,21 +53,14 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
     {
         foreach (var sendRequestEntity in _sendRequestFilter)
         {
-            if (_cars.Count > 0)
-            {
-                var confirmEventNewEntity = _ecsWorld.NewEntity();
-                confirmEventNewEntity.Get<ConfirmBuyingEvent>();
-                confirmEventNewEntity.Get<PassengerSortingConfirmBuyingEvent>();
+            var passengerSortingNewEntity = _ecsWorld.NewEntity();
+            ref var passengerSortingDataEvent = ref passengerSortingNewEntity.Get<GetUnitsDataEvent>();
+            passengerSortingDataEvent.carsOnlyParkingZone = _cars;
+            passengerSortingDataEvent.allPassengersInLevel = _passengers;
 
-                var passengerSortingNewEntity = _ecsWorld.NewEntity();
-                ref var passengerSortingDataEvent = ref passengerSortingNewEntity.Get<GetUnitsDataEvent>();
-                passengerSortingDataEvent.carsOnlyParkingZone = _cars;
-                passengerSortingDataEvent.allPassengersInLevel = _passengers;
+            passengerSortingNewEntity.Get<VerifyCarsToPassengerSortingEvent>();
 
-                passengerSortingNewEntity.Get<VerifyCarsToPassengerSortingEvent>();
-            }
-
-            _sendRequestFilter.GetEntity(sendRequestEntity).Del<SendRequesGetDataPassengerBoardingSystemEvent>();
+            _sendRequestFilter.GetEntity(sendRequestEntity).Del<SendRequesGetDataInPassengerBoardingEvent>();
         }
     }
 
@@ -107,6 +100,12 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
                         firstPassengerMovable.targetCarPosition = carMovable.currentTransform.position;
                         carComponent.reservedSeats.Add(firstPassengerComponent);
                         _passengers.RemoveAt(0);
+
+                        _ecsWorld.NewEntity().Get<ChangePassengersCountToShowerEvent>() = new ChangePassengersCountToShowerEvent
+                        {
+                            newCurrentCount = _passengers.Count
+                        };
+
                         return;
                     }
                 }

@@ -55,21 +55,35 @@ public class RaycastReaderSystem : IEcsRunSystem
 
         if (Physics.Raycast(inputEvent.ray, out RaycastHit hit))
         {
-            var hitEntity = hit.collider.GetComponent<Vehicle>();
+            var carHit = hit.collider.GetComponent<Vehicle>();
+            var advParkingSlotHit = hit.collider.GetComponent<OpenADVParkingSlotUnlock>();
 
-            if (hitEntity == null)
-                return;
+            if (carHit != null)
+            {
+                ref var carComponent = ref carHit.Entity.Get<CarComponent>();
 
-            ref var carComponent = ref hitEntity.Entity.Get<CarComponent>();
+                if (carComponent.canClickable == false)
+                    return;
 
-            if (carComponent.canClickable == false)
-                return;
+                StartParkingReservedEvent(carComponent);
 
-            StartParkingReservedEvent(carComponent);
+                StartCooldownEvent();
 
-            StartCooldownEvent();
+                TryStartHandTutorialHideEvent(carComponent);
+            }
 
-            TryStartHandTutorialHideEvent(carComponent);
+            if(advParkingSlotHit != null)
+            {
+                _ecsWorld.NewEntity().Get<SaveParkingSlotEvent>() = new SaveParkingSlotEvent
+                {
+                    parkingSlot = advParkingSlotHit.ParkingSlot,
+                    openADVParkingSlotUnlock = advParkingSlotHit
+                };
+
+                _ecsWorld.NewEntity().Get<OpenADVUnlockParkingSlotEvent>();
+                _ecsWorld.NewEntity().Get<DisableButtonsEvent>();
+                _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
+            }
         }
     }
 

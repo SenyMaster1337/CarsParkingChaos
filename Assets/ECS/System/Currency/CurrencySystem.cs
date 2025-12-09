@@ -47,7 +47,7 @@ public class CurrencySystem : IEcsRunSystem
         {
             if (currencyComponent.playerCoins >= _staticData.PriceSortPassengers)
             {
-                _ecsWorld.NewEntity().Get<PassengerSortingEvent>();
+                _ecsWorld.NewEntity().Get<PassengerSortEvent>();
             }
         }
 
@@ -71,7 +71,7 @@ public class CurrencySystem : IEcsRunSystem
         if (confirmSortingEvent.Has<PassengerShuffleConfirmBuyingEvent>())
         {
             TakeCoins(ref currencyComponent, _staticData.PriceShufflePassengers);
-            _ecsWorld.NewEntity().Get<CloseCarShuffleInfoShowerEvent>();
+            _ecsWorld.NewEntity().Get<CloseShuffleInfoShowerEvent>();
         }
     }
 
@@ -80,7 +80,6 @@ public class CurrencySystem : IEcsRunSystem
         currencyComponent.playerCoins -= value;
         StartChangeCurrentCoinShowerEvent(currencyComponent.playerCoins);
         _ecsWorld.NewEntity().Get<YGSaveProgressEvent>();
-        _ecsWorld.NewEntity().Get<EnableButtonsEvent>();
     }
 
     private void AddCoinsWinningEvent(ref CurrencyComponent currencyComponent)

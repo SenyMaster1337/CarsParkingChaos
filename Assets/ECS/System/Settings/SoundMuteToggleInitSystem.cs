@@ -35,8 +35,6 @@ public class SoundMuteToggleInitSystem : IEcsInitSystem
         }
         else
         {
-            Debug.Log("ау");
-            Debug.Log(YG2.saves.masterSoundValue);
             soundComponent.soundMuteToggle.AudioMixer.SetFloat(MasterVolume, _staticData.MinMasterSoundValue);
             soundComponent.soundMuteToggle.MuteSoundButtonClickReader.gameObject.SetActive(false);
             soundComponent.soundMuteToggle.UnmuteSoundButtonClickReader.gameObject.SetActive(true);

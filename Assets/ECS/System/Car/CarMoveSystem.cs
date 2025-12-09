@@ -41,8 +41,8 @@ public class CarMoveSystem : IEcsRunSystem
 
                 if (movable.targetPoint != Vector3.zero)
                 {
-                    MoveToPosition(movable, movable.targetPoint);
                     movable.currentTransform.LookAt(movable.targetPoint);
+                    movable.targetPoint = Vector3.zero;
                 }
             }
         }

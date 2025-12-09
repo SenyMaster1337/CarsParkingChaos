@@ -17,15 +17,15 @@ public class CarParkingSystem : IEcsInitSystem, IEcsDestroySystem
         _carHandler.OnCollisionCar += ParkCar;
     }
 
+    public void Destroy()
+    {
+        _carHandler.OnCollisionCar -= ParkCar;
+    }
+
     private void ParkCar(Vehicle car)
     {
         ref var movable = ref car.Entity.Get<CarMovableComponent>();
         ref var component = ref car.Entity.Get<CarComponent>();
         movable.targetPoint = component.parkingReservedSlot.transform.position;
-    }
-
-    public void Destroy()
-    {
-        _carHandler.OnCollisionCar -= ParkCar;
     }
 }
