@@ -1,6 +1,5 @@
 using Leopotam.Ecs;
 using UnityEngine;
-using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 
 public class CurrencySystem : IEcsRunSystem
 {

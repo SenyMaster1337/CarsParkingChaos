@@ -360,6 +360,9 @@ MonoBehaviour:
         extraData: 
   Localization:
     setLanguageMod: 1
+  RewardedAdv:
+    skipInterAdvAfterReward: 0
+    labelAdvSimLabel: 0
   Storage:
     saveLocal: 0
     saveCloud: 1
@@ -421,6 +424,7 @@ MonoBehaviour:
     interAdvInterval: 0
     postponeCallByFail: 0
     setLanguageMod: 0
+    skipInterAdvAfterReward: 0
     saveLocal: 0
     saveCloud: 0
     autoPauseGame: 0

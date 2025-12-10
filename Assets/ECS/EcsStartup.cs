@@ -23,6 +23,7 @@ public class EcsStartup : MonoBehaviour
     [SerializeField] private RestartButtonClickReader _restartButtonClickReader;
     [SerializeField] private SoundMuteToggle _soundMuteToggle;
     [SerializeField] private LevelCompleteShower _levelCompleteShower;
+    [SerializeField] private LevelCurrentShower _levelCurrentShower;
     [SerializeField] private LevelLossShower _levelLossShower;
     [SerializeField] private LeaderboradShower _leaderboradShower;
     [SerializeField] private CurrentCoinCountText _coinCountText;
@@ -158,7 +159,7 @@ public class EcsStartup : MonoBehaviour
     {
         _systems
             .Add(new LevelInitSystem())
-            .Add(new LevelShowInitSystem(_levelCompleteShower, _levelLossShower))
+            .Add(new LevelShowInitSystem(_levelCompleteShower, _levelLossShower, _levelCurrentShower))
             .Add(new LevelProgressSystem(_passengers))
             .Add(new LoadNextLevelSystem())
             .Add(new LevelLossSystem())

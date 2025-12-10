@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class SceneData : MonoBehaviour
 {
+    [field: SerializeField] public PassengerCounter PassengerCounter { get; private set; }
     [field: SerializeField] public List<Transform> QueuePositions { get; private set; }
     [field: SerializeField] public bool TutorialEnabe { get; private set; } = false;
 

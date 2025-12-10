@@ -6,12 +6,14 @@ public class LevelShowInitSystem : IEcsInitSystem
 
     private LevelCompleteShower _levelCompleteShower;
     private LevelLossShower _levelLossShower;
+    private LevelCurrentShower _levelCurrentShower;
     private StaticData _staticData;
 
-    public LevelShowInitSystem(LevelCompleteShower levelCompleteShower, LevelLossShower levelLossShower)
+    public LevelShowInitSystem(LevelCompleteShower levelCompleteShower, LevelLossShower levelLossShower, LevelCurrentShower levelCurrentShower)
     {
         _levelCompleteShower = levelCompleteShower;
         _levelLossShower = levelLossShower;
+        _levelCurrentShower = levelCurrentShower;
     }
 
     public void Init()
@@ -37,6 +39,10 @@ public class LevelShowInitSystem : IEcsInitSystem
             levelLossComponent.levelLossShower.WindowGroup.alpha = 0f;
             levelLossComponent.levelLossShower.WindowGroup.interactable = false;
             levelLossComponent.levelLossShower.WindowGroup.blocksRaycasts = false;
+
+            ref var levelUIComponent = ref levelComponent.entity.Get<UILevelComponent>();
+            levelUIComponent.levelCurrentShower = _levelCurrentShower;
+            levelUIComponent.levelCurrentShower.CurrentLevelNumberText.Value.SetText($"{levelComponent.currentLevel}");
         }
     }
 }

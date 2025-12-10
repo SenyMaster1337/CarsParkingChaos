@@ -1,8 +1,11 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine.SceneManagement;
+using UnityEngine;
 
 public class LoadNextLevelSystem : IEcsRunSystem
 {
+    private const string SceneLevelName = "Level";
+    private const string EndGameSceneName = "EndGame";
     private EcsWorld _ecsWorld;
     private EcsFilter<LevelComponent> _filter;
     private EcsFilter<LoadNextLevelEvent> _nextLevelEvent;
@@ -28,8 +31,31 @@ public class LoadNextLevelSystem : IEcsRunSystem
 
             _ecsWorld.NewEntity().Get<YGInterstitialAdvShowEvent>();
 
-            if (levelComponent.currentLevel < SceneManager.sceneCountInBuildSettings)
-                SceneManager.LoadScene(levelComponent.currentLevel);
+            string sceneName = SceneLevelName + levelComponent.currentLevel;
+
+            if (SceneExists(sceneName))
+            {
+                SceneManager.LoadScene(sceneName);
+            }
+            else
+            {
+                SceneManager.LoadScene(EndGameSceneName);
+            }
         }
+    }
+
+    private bool SceneExists(string sceneName)
+    {
+        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+        {
+            string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+            string currentSceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
+
+            if (currentSceneName == sceneName)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

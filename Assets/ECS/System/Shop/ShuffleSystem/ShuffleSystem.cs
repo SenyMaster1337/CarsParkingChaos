@@ -8,6 +8,7 @@ public class ShuffleSystem : IEcsRunSystem
 {
     private EcsWorld _ecsWorld;
     private EcsFilter<ShuffleComponent> _shuffleComponentFilter;
+    private EcsFilter<ShuffleStartInitPassengersEvent> _shuffleStartInitPassengerFilter;
     private EcsFilter<ShuffleEvent> _shuffleEventfilter;
     private EcsFilter<ShowAdvToShuffleEvent> _showAdvToShuffleFilter;
 
@@ -25,18 +26,26 @@ public class ShuffleSystem : IEcsRunSystem
         {
             ref var shuffleComponent = ref _shuffleComponentFilter.Get1(shuffleComponentEntity);
 
+            foreach (var shuffleStartEntity in _shuffleStartInitPassengerFilter)
+            {
+                SortPassengerInColorCars(shuffleComponentEntity);
+                _shuffleStartInitPassengerFilter.GetEntity(shuffleStartEntity).Del<ShuffleStartInitPassengersEvent>();
+            }
+
             foreach (var shuffleEventEntity in _shuffleEventfilter)
             {
                 if (shuffleComponent.cars.Count <= 1)
                     return;
 
                 StartConfirmPayment();
-                ShuffleUnits(shuffleComponentEntity);
+                ShuffleCars(shuffleComponentEntity);
+                SortPassengerInColorCars(shuffleComponentEntity);
+                _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
 
                 _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
                 _shuffleEventfilter.GetEntity(shuffleEventEntity).Del<ShuffleEvent>();
             }
-            
+
             foreach (var showAdvShuffleEntity in _showAdvToShuffleFilter)
             {
                 if (shuffleComponent.cars.Count <= 1)
@@ -44,7 +53,10 @@ public class ShuffleSystem : IEcsRunSystem
 
                 YG2.RewardedAdvShow(rewardID, () =>
                 {
-                    ShuffleUnits(shuffleComponentEntity);
+                    ShuffleCars(shuffleComponentEntity);
+                    SortPassengerInColorCars(shuffleComponentEntity);
+                    _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
+
                     _ecsWorld.NewEntity().Get<EnableButtonsEvent>();
                     _ecsWorld.NewEntity().Get<CloseShuffleInfoShowerEvent>();
                 });
@@ -54,7 +66,26 @@ public class ShuffleSystem : IEcsRunSystem
         }
     }
 
-    private void ShuffleUnits(int shuffleComponentEntity)
+    private void SortPassengerInColorCars(int shuffleComponentEntity)
+    {
+        ref var shuffleComponent = ref _shuffleComponentFilter.Get1(shuffleComponentEntity);
+
+        int passengerIndex = 0;
+
+        for (int i = 0; i < shuffleComponent.cars.Count && passengerIndex < shuffleComponent.passengers.Count; i++)
+        {
+            ref var carComponent = ref shuffleComponent.cars[i].Entity.Get<CarComponent>();
+
+            for (int j = 0; j < carComponent.maxPassengersSlots && passengerIndex < shuffleComponent.passengers.Count; j++)
+            {
+                ref var passengerComponent = ref shuffleComponent.passengers[passengerIndex].Entity.Get<PassengerComponent>();
+                passengerComponent.renderer.material.color = carComponent.renderer.material.color;
+                passengerIndex++;
+            }
+        }
+    }
+
+    private void ShuffleCars(int shuffleComponentEntity)
     {
         ref var shuffleComponent = ref _shuffleComponentFilter.Get1(shuffleComponentEntity);
 
@@ -71,22 +102,6 @@ public class ShuffleSystem : IEcsRunSystem
             firstCarComponent.renderer.material.color = templastPassengerColor;
             secondCarComponent.renderer.material.color = tempFirstPassengerColor;
         }
-
-        int passengerIndex = 0;
-
-        for (int i = 0; i < shuffleComponent.cars.Count && passengerIndex < shuffleComponent.passengers.Count; i++)
-        {
-            ref var carComponent = ref shuffleComponent.cars[i].Entity.Get<CarComponent>();
-
-            for (int j = 0; j < carComponent.maxPassengersSlots && passengerIndex < shuffleComponent.passengers.Count; j++)
-            {
-                ref var passengerComponent = ref shuffleComponent.passengers[passengerIndex].Entity.Get<PassengerComponent>();
-                passengerComponent.renderer.material.color = carComponent.renderer.material.color;
-                passengerIndex++;
-            }
-        }
-
-        _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
     }
 
     private void StartConfirmPayment()

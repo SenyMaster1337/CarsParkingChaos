@@ -54,7 +54,6 @@ public class LevelProgressSystem : IEcsRunSystem
     {
         levelComponent.isLevelCompleted = true;
         levelComponent.currentLevel++;
-        Debug.Log(levelComponent.currentLevel);
 
         _ecsWorld.NewEntity().Get<AddPointsWinningLeaderboardEvent>();
         _ecsWorld.NewEntity().Get<AddCoinsWinningEvent>();

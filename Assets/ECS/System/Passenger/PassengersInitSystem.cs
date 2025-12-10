@@ -68,5 +68,7 @@ public class PassengersInitSystem : IEcsInitSystem
 
             _passengers[i].Entity = passengerNewEntity;
         }
+
+        _ecsWorld.NewEntity().Get<ShuffleStartInitPassengersEvent>();
     }
 }
