@@ -6,13 +6,14 @@ using YG;
 
 public class ShuffleSystem : IEcsRunSystem
 {
+    public string RewardID = "ShuffleRewardID";
+
     private EcsWorld _ecsWorld;
     private EcsFilter<ShuffleComponent> _shuffleComponentFilter;
     private EcsFilter<ShuffleStartInitPassengersEvent> _shuffleStartInitPassengerFilter;
     private EcsFilter<ShuffleEvent> _shuffleEventfilter;
     private EcsFilter<ShowAdvToShuffleEvent> _showAdvToShuffleFilter;
 
-    public string rewardID;
     private System.Random _random;
 
     public ShuffleSystem()
@@ -40,9 +41,7 @@ public class ShuffleSystem : IEcsRunSystem
                 StartConfirmPayment();
                 ShuffleCars(shuffleComponentEntity);
                 SortPassengerInColorCars(shuffleComponentEntity);
-                _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
 
-                _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
                 _shuffleEventfilter.GetEntity(shuffleEventEntity).Del<ShuffleEvent>();
             }
 
@@ -51,16 +50,16 @@ public class ShuffleSystem : IEcsRunSystem
                 if (shuffleComponent.cars.Count <= 1)
                     return;
 
-                YG2.RewardedAdvShow(rewardID, () =>
+                YG2.RewardedAdvShow(RewardID, () =>
                 {
-                    ShuffleCars(shuffleComponentEntity);
-                    SortPassengerInColorCars(shuffleComponentEntity);
-                    _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
-
-                    _ecsWorld.NewEntity().Get<EnableButtonsEvent>();
-                    _ecsWorld.NewEntity().Get<CloseShuffleInfoShowerEvent>();
+                    if (RewardID == "ShuffleRewardID")
+                    {
+                        ShuffleCars(shuffleComponentEntity);
+                        SortPassengerInColorCars(shuffleComponentEntity);
+                    }
                 });
 
+                _ecsWorld.NewEntity().Get<CloseShuffleInfoShowerEvent>();
                 _showAdvToShuffleFilter.GetEntity(showAdvShuffleEntity).Del<ShowAdvToShuffleEvent>();
             }
         }
@@ -83,6 +82,8 @@ public class ShuffleSystem : IEcsRunSystem
                 passengerIndex++;
             }
         }
+
+        StartEnabledEvent();
     }
 
     private void ShuffleCars(int shuffleComponentEntity)
@@ -109,6 +110,11 @@ public class ShuffleSystem : IEcsRunSystem
         var confirmEventNewEntity = _ecsWorld.NewEntity();
         confirmEventNewEntity.Get<ConfirmBuyingEvent>();
         confirmEventNewEntity.Get<PassengerShuffleConfirmBuyingEvent>();
+    }
+
+    private void StartEnabledEvent()
+    {
+        _ecsWorld.NewEntity().Get<EnableRaycastReaderEvent>();
         _ecsWorld.NewEntity().Get<EnableButtonsEvent>();
     }
 }

@@ -4,11 +4,12 @@ using YG;
 
 public class UnlockParkingSlotSystem : IEcsRunSystem
 {
+    public string RewardID = "UnlockParkingSlotRewardID";
+
     private EcsWorld _ecsWorld;
     private EcsFilter<SaveParkingSlotEvent> _saveFilter;
     private EcsFilter<ShowADVToUnlockParkingSlotEvent> _showAdvFilter;
 
-    public string rewardID;
     private ParkingSlot _parkingSlot;
     private OpenADVParkingSlotUnlock _openADVParkingSlotUnlock;
 
@@ -23,17 +24,26 @@ public class UnlockParkingSlotSystem : IEcsRunSystem
 
         foreach (var showAdvEntity in _showAdvFilter)
         {
-            YG2.RewardedAdvShow(rewardID, () =>
+            YG2.RewardedAdvShow(RewardID, () =>
             {
-                _ecsWorld.NewEntity().Get<AddParkingSlotEvent>() = new AddParkingSlotEvent
+                if (RewardID == "UnlockParkingSlotRewardID")
                 {
-                    parkingSlot = _parkingSlot
-                };
-
-                _openADVParkingSlotUnlock.gameObject.SetActive(false);
-                _showAdvFilter.GetEntity(showAdvEntity).Del<ShowADVToUnlockParkingSlotEvent>();
+                    StartAddParkingSlotEvent();
+                }
             });
+
+            _showAdvFilter.GetEntity(showAdvEntity).Del<ShowADVToUnlockParkingSlotEvent>();
         }
+    }
+
+    private void StartAddParkingSlotEvent()
+    {
+        _ecsWorld.NewEntity().Get<AddParkingSlotEvent>() = new AddParkingSlotEvent
+        {
+            parkingSlot = _parkingSlot
+        };
+
+        _openADVParkingSlotUnlock.gameObject.SetActive(false);
     }
 
     private void SaveParkingSlot(EcsEntity saveEventEntity)

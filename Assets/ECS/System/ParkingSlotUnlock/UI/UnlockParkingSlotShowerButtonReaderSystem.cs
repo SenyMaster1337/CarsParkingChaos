@@ -33,6 +33,6 @@ public class UnlockParkingSlotShowerButtonReaderSystem : IEcsInitSystem, IEcsDes
     {
         _ecsWorld.NewEntity().Get<CloseADVUnlockParkingSlotEvent>();
         _ecsWorld.NewEntity().Get<EnableButtonsEvent>();
-        _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
+        _ecsWorld.NewEntity().Get<EnableRaycastReaderEvent>();
     }
 }

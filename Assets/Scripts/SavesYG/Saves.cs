@@ -7,7 +7,7 @@ namespace YG
 
     public partial class SavesYG
     {
-        public int coins = 200;
+        public int coins = 10000;
     }
 
     public partial class SavesYG

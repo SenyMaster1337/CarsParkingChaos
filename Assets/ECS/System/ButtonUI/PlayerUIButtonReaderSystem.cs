@@ -101,7 +101,7 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEc
     private void OnButtonClickCloseLeaderboard()
     {
         _ecsWorld.NewEntity().Get<CloseLeaderboardEvent>();
-        _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
+        _ecsWorld.NewEntity().Get<EnableRaycastReaderEvent>();
         EnableButtons();
     }
 
@@ -115,7 +115,7 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEc
     private void OnButtonClickCloseShop()
     {
         _ecsWorld.NewEntity().Get<CloseShopEvent>();
-        _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
+        _ecsWorld.NewEntity().Get<EnableRaycastReaderEvent>();
         EnableButtons();
     }
 

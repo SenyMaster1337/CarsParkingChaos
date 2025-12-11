@@ -39,6 +39,8 @@ public class PassengerSortingUIButtonsReader : IEcsInitSystem, IEcsDestroySystem
         var TryBuyEventNewEntity = _ecsWorld.NewEntity();
         TryBuyEventNewEntity.Get<TryBuyEvent>();
         TryBuyEventNewEntity.Get<PassengerSortingComponent>();
+
+        _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
     }
 
     private void OnButtonClickDecline()
@@ -50,5 +52,7 @@ public class PassengerSortingUIButtonsReader : IEcsInitSystem, IEcsDestroySystem
     private void OnButtonClickReward()
     {
         _ecsWorld.NewEntity().Get<ShowAdvToPassengerSortEvent>();
+
+        _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
     }
 }

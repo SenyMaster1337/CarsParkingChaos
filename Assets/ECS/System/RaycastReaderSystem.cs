@@ -7,7 +7,7 @@ public class RaycastReaderSystem : IEcsRunSystem
 {
     private EcsWorld _ecsWorld;
     private EcsFilter<InputEvent> _input;
-    private EcsFilter<RaycastReaderEnableEvent> _raycastEnable;
+    private EcsFilter<EnableRaycastReaderEvent> _raycastEnable;
     private EcsFilter<RaycastReaderDisableEvent> _raycastDisable;
     private EcsFilter<CooldownEvent> _cooldown;
 
@@ -32,7 +32,7 @@ public class RaycastReaderSystem : IEcsRunSystem
         {
             var entityDisableEvent = _raycastEnable.GetEntity(entityDisable);
             _isRaycastSystemActive = true;
-            entityDisableEvent.Del<RaycastReaderEnableEvent>();
+            entityDisableEvent.Del<EnableRaycastReaderEvent>();
         }
 
         foreach (var entityDisable in _raycastDisable)
@@ -80,6 +80,7 @@ public class RaycastReaderSystem : IEcsRunSystem
                     openADVParkingSlotUnlock = advParkingSlotHit
                 };
 
+                Debug.Log("open");
                 _ecsWorld.NewEntity().Get<OpenADVUnlockParkingSlotEvent>();
                 _ecsWorld.NewEntity().Get<DisableButtonsEvent>();
                 _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();

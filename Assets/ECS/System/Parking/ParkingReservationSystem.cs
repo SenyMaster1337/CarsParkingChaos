@@ -10,14 +10,19 @@ public class ParkingReservationSystem : IEcsRunSystem
     private EcsFilter<ParkingCancelReservationEvent> _cancelParkingReserve;
     private EcsFilter<CarsInParkingDataEvent> _verifyCarsInParkingData;
     private EcsFilter<AddParkingSlotEvent> _addParkingSlotFilter;
+    private EcsFilter<EnableRaycastReaderToggleSwitchMethodEvent> _enableRaycastReaderToggleSwitchFilter;
+    private EcsFilter<DisableRaycastReaderToggleSwitchMethodEvent> _disableRaycastReaderToggleSwitchFilter;
 
     private List<ParkingSlot> _reservedParkingSlots;
-    private bool _isParkingFull = false;
+    private bool _isParkingFull;
+    private bool _isToggleSwitchRaycastReaderEventEnable;
     private StaticData _staticData;
 
     public ParkingReservationSystem()
     {
         _reservedParkingSlots = new List<ParkingSlot>();
+        _isParkingFull = false;
+        _isToggleSwitchRaycastReaderEventEnable = true;
     }
 
     public void Run()
@@ -33,7 +38,10 @@ public class ParkingReservationSystem : IEcsRunSystem
                 var reservedEntityEvent = _reservedSlot.GetEntity(reservedEntity);
                 ReserveParkingSlot(reserveEvent.carEntity, parkingReservationComponent.parkingSlots);
                 TrySaveCarInParkingData(entity, parkingReservationComponent.parkingSlots);
-                ToggleSwitchRayReaderActiveEvent(parkingReservationComponent.parkingSlots);
+
+                if (_isToggleSwitchRaycastReaderEventEnable)
+                    ToggleSwitchRaycastReaderActiveEvent(parkingReservationComponent.parkingSlots);
+
                 reservedEntityEvent.Del<ReservedParkingSlotEvent>();
             }
 
@@ -43,7 +51,10 @@ public class ParkingReservationSystem : IEcsRunSystem
 
                 var cancelEntityEvent = _cancelParkingReserve.GetEntity(cancelEntity);
                 CancelParkingReserved(cancelReservationEvent, parkingReservationComponent.parkingSlots);
-                ToggleSwitchRayReaderActiveEvent(parkingReservationComponent.parkingSlots);
+
+                if (_isToggleSwitchRaycastReaderEventEnable)
+                    ToggleSwitchRaycastReaderActiveEvent(parkingReservationComponent.parkingSlots);
+
                 cancelEntityEvent.Del<ParkingCancelReservationEvent>();
             }
 
@@ -54,11 +65,23 @@ public class ParkingReservationSystem : IEcsRunSystem
                 verifyEntityEvent.Del<CarsInParkingDataEvent>();
             }
 
-            foreach( var addParkingSlotEntity in _addParkingSlotFilter)
+            foreach (var addParkingSlotEntity in _addParkingSlotFilter)
             {
                 var addSlotEventEntity = _addParkingSlotFilter.GetEntity(addParkingSlotEntity);
                 AddParkingSlot(ref parkingReservationComponent, addSlotEventEntity);
                 addSlotEventEntity.Del<AddParkingSlotEvent>();
+            }
+
+            foreach (var enableToggleSwitchRaycastReaderEntity in _enableRaycastReaderToggleSwitchFilter)
+            {
+                _isToggleSwitchRaycastReaderEventEnable = true;
+                _enableRaycastReaderToggleSwitchFilter.GetEntity(enableToggleSwitchRaycastReaderEntity).Del<EnableRaycastReaderToggleSwitchMethodEvent>();
+            }
+
+            foreach (var disableToggleSwitchRaycastReaderEntity in _disableRaycastReaderToggleSwitchFilter)
+            {
+                _isToggleSwitchRaycastReaderEventEnable = false;
+                _disableRaycastReaderToggleSwitchFilter.GetEntity(disableToggleSwitchRaycastReaderEntity).Del<DisableRaycastReaderToggleSwitchMethodEvent>();
             }
         }
     }
@@ -166,7 +189,7 @@ public class ParkingReservationSystem : IEcsRunSystem
         }
     }
 
-    public void ToggleSwitchRayReaderActiveEvent(List<ParkingSlot> parkingSlots)
+    public void ToggleSwitchRaycastReaderActiveEvent(List<ParkingSlot> parkingSlots)
     {
         int maxReservedParkingSlot = 0;
 
@@ -180,7 +203,8 @@ public class ParkingReservationSystem : IEcsRunSystem
             }
             else
             {
-                _ecsWorld.NewEntity().Get<RaycastReaderEnableEvent>();
+                _ecsWorld.NewEntity().Get<EnableRaycastReaderEvent>();
+                Debug.Log("éîó");
                 return;
             }
 
