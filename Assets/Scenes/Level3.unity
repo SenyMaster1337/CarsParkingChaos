@@ -5,11 +5,11 @@ OcclusionCullingSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_OcclusionBakeSettings:
-    smallestOccluder: 5
+    smallestOccluder: 2
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: b092d833f06c02b4f9e07a3eecaa5dbd
+  m_OcclusionCullingData: {fileID: 36300000, guid: 5b595c840a0ffb842bc50dd740852c2f, type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -2366,9 +2366,25 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6054769134612337275, guid: caf2b30d27b3b4f488ee257128389815, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7738020674538381014, guid: caf2b30d27b3b4f488ee257128389815, type: 3}
       propertyPath: m_Name
       value: Game
+      objectReference: {fileID: 0}
+    - target: {fileID: 8527393533747399130, guid: caf2b30d27b3b4f488ee257128389815, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8527393533747399130, guid: caf2b30d27b3b4f488ee257128389815, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8527393533747399130, guid: caf2b30d27b3b4f488ee257128389815, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8719013766998433203, guid: caf2b30d27b3b4f488ee257128389815, type: 3}
       propertyPath: m_LocalPosition.x

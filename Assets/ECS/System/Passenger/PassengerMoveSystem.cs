@@ -12,9 +12,8 @@ public class PassengerMoveSystem : IEcsRunSystem
             ref var component = ref _filter.Get2(entity);
             ref var movable = ref _filter.Get1(entity);
 
-            var entityEvent = _filter.GetEntity(entity);
-            movable = TryMoveToStartPointQueue(component, movable, entityEvent);
-            movable = TryMoveToNewQueuePoint(movable, entityEvent);
+            TryMoveToStartPointQueue(component, ref movable, _filter.GetEntity(entity));
+            TryMoveToNewQueuePoint(ref movable, _filter.GetEntity(entity));
 
             if (movable.isMoving)
             {
@@ -57,22 +56,20 @@ public class PassengerMoveSystem : IEcsRunSystem
         }
     }
 
-    private PassengerMovableComponent TryMoveToNewQueuePoint(PassengerMovableComponent movable, EcsEntity entityEvent)
+    private void TryMoveToNewQueuePoint(ref PassengerMovableComponent movable, EcsEntity entityEvent)
     {
-        if (entityEvent.Has<PassengerMoveQueuePointEvent>())
+        if (entityEvent.Has<PassengerMoveInQueuePointEvent>())
         {
-            ref var moveQueueEvent = ref entityEvent.Get<PassengerMoveQueuePointEvent>();
+            ref var moveQueueEvent = ref entityEvent.Get<PassengerMoveInQueuePointEvent>();
 
             movable.isMoving = true;
             movable.isNeedShiftQueue = true;
             movable.queuePointPosition = moveQueueEvent.queuePointPosition;
-            entityEvent.Del<PassengerMoveQueuePointEvent>();
+            entityEvent.Del<PassengerMoveInQueuePointEvent>();
         }
-
-        return movable;
     }
 
-    private PassengerMovableComponent TryMoveToStartPointQueue(PassengerComponent component, PassengerMovableComponent movable, EcsEntity entityEvent)
+    private void TryMoveToStartPointQueue(PassengerComponent component, ref PassengerMovableComponent movable, EcsEntity entityEvent)
     {
         if (entityEvent.Has<PassengerMoveStartQueuePointEvent>())
         {
@@ -80,8 +77,6 @@ public class PassengerMoveSystem : IEcsRunSystem
             movable.startQueuePosition = component.startQueuePosition;
             entityEvent.Del<PassengerMoveStartQueuePointEvent>();
         }
-
-        return movable;
     }
 
     private void MoveToPosition(PassengerMovableComponent movable, Vector3 targetPosition)
@@ -92,6 +87,6 @@ public class PassengerMoveSystem : IEcsRunSystem
 
     private void AddDisableComponent(int entity)
     {
-        _filter.GetEntity(entity).Get<DisableComponent>();
+        _filter.GetEntity(entity).Get<DisableUnitEvent>();
     }
 }

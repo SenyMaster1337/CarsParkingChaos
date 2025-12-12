@@ -1,3 +1,3 @@
-﻿Build path: D:/MYGAME/10.12 ch28
-Build number: 58
+﻿Build path: D:/MYGAME/10.12 ch38
+Build number: 68
 PluginYG version: 2.007

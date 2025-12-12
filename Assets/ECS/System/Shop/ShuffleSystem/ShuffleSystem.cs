@@ -10,7 +10,7 @@ public class ShuffleSystem : IEcsRunSystem
 
     private EcsWorld _ecsWorld;
     private EcsFilter<ShuffleComponent> _shuffleComponentFilter;
-    private EcsFilter<ShuffleStartInitPassengersEvent> _shuffleStartInitPassengerFilter;
+    private EcsFilter<SortPassengerInColorCarsEvent> _SortPassengerInColorCarsFilter;
     private EcsFilter<ShuffleEvent> _shuffleEventfilter;
     private EcsFilter<ShowAdvToShuffleEvent> _showAdvToShuffleFilter;
 
@@ -27,10 +27,10 @@ public class ShuffleSystem : IEcsRunSystem
         {
             ref var shuffleComponent = ref _shuffleComponentFilter.Get1(shuffleComponentEntity);
 
-            foreach (var shuffleStartEntity in _shuffleStartInitPassengerFilter)
+            foreach (var shuffleStartEntity in _SortPassengerInColorCarsFilter)
             {
                 SortPassengerInColorCars(shuffleComponentEntity);
-                _shuffleStartInitPassengerFilter.GetEntity(shuffleStartEntity).Del<ShuffleStartInitPassengersEvent>();
+                _SortPassengerInColorCarsFilter.GetEntity(shuffleStartEntity).Del<SortPassengerInColorCarsEvent>();
             }
 
             foreach (var shuffleEventEntity in _shuffleEventfilter)

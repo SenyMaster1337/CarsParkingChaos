@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public struct PassengerMoveQueuePointEvent
+public struct PassengerMoveInQueuePointEvent
 {
     public Vector3 queuePointPosition;
 }

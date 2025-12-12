@@ -465,7 +465,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 126
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!114 &1112103954655508921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1245,15 +1245,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 1f4cdad4883c4d345b9525bf0a2da3e9, type: 2}
     - target: {fileID: 2510217254272217419, guid: 26d5606393f0143469fdc74713e2d40b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.0095
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 2510217254272217419, guid: 26d5606393f0143469fdc74713e2d40b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.0095
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 2510217254272217419, guid: 26d5606393f0143469fdc74713e2d40b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.0095
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 2510217254272217419, guid: 26d5606393f0143469fdc74713e2d40b, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -1272,7 +1272,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8776319800494561693, guid: 26d5606393f0143469fdc74713e2d40b, type: 3}
+    - {fileID: -5782776634487255888, guid: 26d5606393f0143469fdc74713e2d40b, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 26d5606393f0143469fdc74713e2d40b, type: 3}
       insertIndex: -1

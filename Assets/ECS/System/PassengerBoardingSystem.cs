@@ -55,7 +55,7 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
         {
             var passengerSortingNewEntity = _ecsWorld.NewEntity();
             ref var passengerSortingDataEvent = ref passengerSortingNewEntity.Get<GetUnitsDataEvent>();
-            passengerSortingDataEvent.carsOnlyParkingZone = _cars;
+            passengerSortingDataEvent.carsOnlyParkingZoneList = _cars;
             passengerSortingDataEvent.allPassengersInLevel = _passengers;
 
             passengerSortingNewEntity.Get<VerifyCarsToPassengerSortingEvent>();

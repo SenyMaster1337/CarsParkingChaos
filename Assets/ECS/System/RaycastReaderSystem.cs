@@ -99,7 +99,7 @@ public class RaycastReaderSystem : IEcsRunSystem
 
     private void TryStartHandTutorialHideEvent(CarComponent component)
     {
-        _ecsWorld.NewEntity().Get<HandTutorialHideEvent>() = new HandTutorialHideEvent
+        _ecsWorld.NewEntity().Get<TutorialHideHandEvent>() = new TutorialHideHandEvent
         {
             ecsEntity = component.car.Entity
         };

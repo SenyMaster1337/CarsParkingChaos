@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DisableUnitSystem : IEcsRunSystem
 {
-    private EcsFilter<DisableComponent> _filter;
+    private EcsFilter<DisableUnitEvent> _filter;
 
     public void Run()
     {
@@ -14,42 +14,40 @@ public class DisableUnitSystem : IEcsRunSystem
             Vehicle car = null;
             Passenger passenger = null;
 
-            if (entityDisableComponent.Has<DisableComponent>())
+            if (entityDisableComponent.Has<CarComponent>())
             {
-                if (entityDisableComponent.Has<CarComponent>())
-                {
-                    ref var carComponent = ref entityDisableComponent.Get<CarComponent>();
-                    car = carComponent.car;
+                ref var carComponent = ref entityDisableComponent.Get<CarComponent>();
+                car = carComponent.car;
 
-                    entityDisableComponent.Del<CarComponent>();
-                    entityDisableComponent.Del<CarMovableComponent>();
-                    entityDisableComponent.Del<CarAnimationComponent>();
-                }
-
-                if (entityDisableComponent.Has<PassengerComponent>())
-                {
-                    ref var passengerComponent = ref entityDisableComponent.Get<PassengerComponent>();
-                    passenger = passengerComponent.passenger;
-
-                    entityDisableComponent.Del<PassengerComponent>();
-                    entityDisableComponent.Del<PassengerMovableComponent>();
-                    entityDisableComponent.Del<PassengerAnimationComponent>();
-                }
-
-                entityDisableComponent.Del<DisableComponent>();
-
-                if (car != null)
-                {
-                    car.gameObject.SetActive(false);
-                    car = null;
-                }
-
-                if (passenger != null)
-                {
-                    passenger.gameObject.SetActive(false);
-                    passenger = null;
-                }
+                entityDisableComponent.Del<CarComponent>();
+                entityDisableComponent.Del<CarMovableComponent>();
+                entityDisableComponent.Del<CarAnimationComponent>();
             }
+
+            if (entityDisableComponent.Has<PassengerComponent>())
+            {
+                ref var passengerComponent = ref entityDisableComponent.Get<PassengerComponent>();
+                passenger = passengerComponent.passenger;
+
+                entityDisableComponent.Del<PassengerComponent>();
+                entityDisableComponent.Del<PassengerMovableComponent>();
+                entityDisableComponent.Del<PassengerAnimationComponent>();
+            }
+
+            entityDisableComponent.Del<DisableUnitEvent>();
+
+            if (car != null)
+            {
+                car.gameObject.SetActive(false);
+                car = null;
+            }
+
+            if (passenger != null)
+            {
+                passenger.gameObject.SetActive(false);
+                passenger = null;
+            }
+
         }
     }
 }

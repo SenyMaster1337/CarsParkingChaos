@@ -37,10 +37,9 @@ public class ParkingReservationSystem : IEcsRunSystem
 
                 var reservedEntityEvent = _reservedSlot.GetEntity(reservedEntity);
                 ReserveParkingSlot(reserveEvent.carEntity, parkingReservationComponent.parkingSlots);
-                TrySaveCarInParkingData(entity, parkingReservationComponent.parkingSlots);
 
                 if (_isToggleSwitchRaycastReaderEventEnable)
-                    ToggleSwitchRaycastReaderActiveEvent(parkingReservationComponent.parkingSlots);
+                    ToggleSwitchRaycastReaderActiveEvent(parkingReservationComponent.parkingSlots, entity);
 
                 reservedEntityEvent.Del<ReservedParkingSlotEvent>();
             }
@@ -53,7 +52,7 @@ public class ParkingReservationSystem : IEcsRunSystem
                 CancelParkingReserved(cancelReservationEvent, parkingReservationComponent.parkingSlots);
 
                 if (_isToggleSwitchRaycastReaderEventEnable)
-                    ToggleSwitchRaycastReaderActiveEvent(parkingReservationComponent.parkingSlots);
+                    ToggleSwitchRaycastReaderActiveEvent(parkingReservationComponent.parkingSlots, entity);
 
                 cancelEntityEvent.Del<ParkingCancelReservationEvent>();
             }
@@ -168,7 +167,7 @@ public class ParkingReservationSystem : IEcsRunSystem
                 parkingComponent.isReserved = true;
                 _reservedParkingSlots.Add(parkingSlots[i]);
 
-                carEcsEntity.Get<CarActivatedMovableEvent>();
+                carEcsEntity.Get<ActivateCarMovableEvent>();
 
                 return;
             }
@@ -189,7 +188,7 @@ public class ParkingReservationSystem : IEcsRunSystem
         }
     }
 
-    public void ToggleSwitchRaycastReaderActiveEvent(List<ParkingSlot> parkingSlots)
+    public void ToggleSwitchRaycastReaderActiveEvent(List<ParkingSlot> parkingSlots, int entity)
     {
         int maxReservedParkingSlot = 0;
 
@@ -204,12 +203,12 @@ public class ParkingReservationSystem : IEcsRunSystem
             else
             {
                 _ecsWorld.NewEntity().Get<EnableRaycastReaderEvent>();
-                Debug.Log("éîó");
                 return;
             }
 
             if (maxReservedParkingSlot == parkingSlots.Count)
             {
+                TrySaveCarInParkingData(entity, parkingSlots);
                 _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
                 return;
             }

@@ -1,5 +1,5 @@
 
-public struct CarActivatedMovableEvent
+public struct ActivateCarMovableEvent
 {
     public CarComponent carComponent;
 }

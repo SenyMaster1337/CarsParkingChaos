@@ -2,12 +2,12 @@ using Leopotam.Ecs;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class LevelProgressSystem : IEcsRunSystem
 {
     private EcsWorld _ecsWorld;
     private EcsFilter<LevelComponent> _filter;
     private EcsFilter<UICompleteLevelComponent> _UIfilter;
+    private EcsFilter<LevelCompleteEvent> _levleCompleteFilter;
 
     private StaticData _staticData;
     private List<Passenger> _passengers;
@@ -32,11 +32,14 @@ public class LevelProgressSystem : IEcsRunSystem
                 StartTimer(entity, _staticData.TimeToLevelShowLevelComplete);
             }
 
-            if (levelEntity.Has<LevelCompleteEvent>())
+            foreach (var completeEntity in _levleCompleteFilter)
             {
-                CompleteLevel(entity, ref levelComponent);
-                levelComponent.isLevelCompleted = true;
-                levelEntity.Del<LevelCompleteEvent>();
+                if (levelEntity.Has<LevelCompleteEvent>())
+                {
+                    CompleteLevel(entity, ref levelComponent);
+                    levelComponent.isLevelCompleted = true;
+                    levelEntity.Del<LevelCompleteEvent>();
+                }
             }
         }
     }

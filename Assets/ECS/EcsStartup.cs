@@ -162,7 +162,7 @@ public class EcsStartup : MonoBehaviour
             .Add(new LevelShowInitSystem(_levelCompleteShower, _levelLossShower, _levelCurrentShower))
             .Add(new LevelProgressSystem(_passengers))
             .Add(new LoadNextLevelSystem())
-            .Add(new LevelLossSystem())
+            .Add(new LevelLossShowerSystem())
             .Add(new LevelRestartSystem());
     }
 

@@ -1,7 +1,7 @@
 using Leopotam.Ecs;
 using UnityEngine;
 
-public class LevelLossSystem : IEcsRunSystem
+public class LevelLossShowerSystem : IEcsRunSystem
 {
     private EcsWorld _ecsWorld;
     private EcsFilter<UILevelLossComponent> _filter;
@@ -27,5 +27,6 @@ public class LevelLossSystem : IEcsRunSystem
         lossComponent.levelLossShower.WindowGroup.interactable = true;
         lossComponent.levelLossShower.WindowGroup.blocksRaycasts = true;
         _ecsWorld.NewEntity().Get<DisableButtonsEvent>();
+        _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
     }
 }

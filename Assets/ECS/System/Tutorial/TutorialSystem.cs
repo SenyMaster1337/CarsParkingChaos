@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TutorialSystem : IEcsRunSystem
 {
-    private EcsFilter<HandTutorialHideEvent> _handTutorialHide;
+    private EcsFilter<TutorialHideHandEvent> _handTutorialHide;
     private List<Vehicle> _cars;
 
     public TutorialSystem(List<Vehicle> cars) 
@@ -18,9 +18,8 @@ public class TutorialSystem : IEcsRunSystem
         {
             ref var handHideEvent = ref _handTutorialHide.Get1(handTutorialEntity);
 
-            var reservedEntityEvent = _handTutorialHide.GetEntity(handTutorialEntity);
             HideTutorialHand(handHideEvent.ecsEntity);
-            reservedEntityEvent.Del<HandTutorialHideEvent>();
+            _handTutorialHide.GetEntity(handTutorialEntity).Del<TutorialHideHandEvent>();
         }
     }
 

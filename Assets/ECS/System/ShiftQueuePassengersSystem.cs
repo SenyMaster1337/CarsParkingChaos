@@ -48,7 +48,7 @@ public class ShiftQueuePassengersSystem : IEcsRunSystem
 
     private void StartMoveQueuePointEvent(Passenger passenger, PassengerMovableComponent previousPassengerMovable)
     {
-        passenger.Entity.Get<PassengerMoveQueuePointEvent>() = new PassengerMoveQueuePointEvent
+        passenger.Entity.Get<PassengerMoveInQueuePointEvent>() = new PassengerMoveInQueuePointEvent
         {
             queuePointPosition = previousPassengerMovable.currentTransform.position
         };

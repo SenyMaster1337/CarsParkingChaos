@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class CarMoveSystem : IEcsRunSystem
 {
-    private EcsWorld _ecsWorld;
     private EcsFilter<CarMovableComponent, CarComponent> _filter;
+    private EcsFilter<ActivateCarMovableEvent> _activateCarMovableFilter;
+    private EcsFilter<CarParkingEvent> _carParkingFilter;
 
     private StaticData _staticData;
 
@@ -15,8 +16,15 @@ public class CarMoveSystem : IEcsRunSystem
             ref var movable = ref _filter.Get1(entity);
             ref var component = ref _filter.Get2(entity);
 
-            TryPark(entity, ref movable, ref component);
-            TryMovableActivated(entity, ref movable, ref component);
+            foreach (var activateCarMovableEntity in _activateCarMovableFilter)
+            {
+                TryMovableActivated(entity, ref movable, ref component);
+            }
+
+            foreach (var parkingEntity in _carParkingFilter)
+            {
+                TryPark(entity, ref movable, ref component);
+            }
 
             if (movable.isMoving)
             {
@@ -52,11 +60,11 @@ public class CarMoveSystem : IEcsRunSystem
     {
         var entityMovableEvent = _filter.GetEntity(entity);
 
-        if (entityMovableEvent.Has<CarActivatedMovableEvent>())
+        if (entityMovableEvent.Has<ActivateCarMovableEvent>())
         {
             carComponent.canClickable = false;
             movable.isMoving = true;
-            entityMovableEvent.Del<CarActivatedMovableEvent>();
+            entityMovableEvent.Del<ActivateCarMovableEvent>();
         }
     }
 

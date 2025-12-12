@@ -48,25 +48,22 @@ public class PassengerSortingSystem : IEcsRunSystem
             {
                 ref var dataEvent = ref dataEntity.Get<GetUnitsDataEvent>();
 
-                if (dataEvent.carsOnlyParkingZone.Count > 0)
+                if (dataEvent.carsOnlyParkingZoneList.Count > 0)
                 {
                     TryConfirmPayment();
                     SortPassengers(dataEntity);
-                    StartTimerToAnotherVerify(dataEntity);
-
                     _ecsWorld.NewEntity().Get<DisableRaycastReaderToggleSwitchMethodEvent>();
                 }
 
-                if (dataEvent.carsOnlyParkingZone.Count == 0)
+                if (dataEvent.carsOnlyParkingZoneList.Count == 0)
                 {
-                    _ecsWorld.NewEntity().Get<ParkingCancelReservationEvent>();
+                    _ecsWorld.NewEntity().Get<SortPassengerInColorCarsEvent>();
                     _ecsWorld.NewEntity().Get<EnableRaycastReaderEvent>();
                     _ecsWorld.NewEntity().Get<EnableButtonsEvent>();
                     _ecsWorld.NewEntity().Get<EnableRaycastReaderToggleSwitchMethodEvent>();
                     dataEntity.Del<GetUnitsDataEvent>();
+                    dataEntity.Del<VerifyCarsToPassengerSortingEvent>();
                 }
-
-                dataEntity.Del<VerifyCarsToPassengerSortingEvent>();
             }
         }
     }
@@ -79,7 +76,7 @@ public class PassengerSortingSystem : IEcsRunSystem
             {
                 if (RewardID == "PassengerSortingRewardID")
                 {
-                    PerformSortingIteration(dataEntity);
+                    PerformSortingIterationVersionTwo(dataEntity);
                 }
             });
 
@@ -89,10 +86,9 @@ public class PassengerSortingSystem : IEcsRunSystem
             return;
         }
 
-        if(_isNeedConfirmToPay == false)
+        if (_isNeedConfirmToPay == false)
         {
-           //PerformSortingIterationTwo(dataEntity);
-           PerformSortingIteration(dataEntity);
+            PerformSortingIterationVersionTwo(dataEntity);
         }
     }
 
@@ -118,9 +114,9 @@ public class PassengerSortingSystem : IEcsRunSystem
     {
         ref var dataEvent = ref dataEntity.Get<GetUnitsDataEvent>();
 
-        for (int carIndex = 0; carIndex < dataEvent.carsOnlyParkingZone.Count; carIndex++)
+        for (int carIndex = 0; carIndex < dataEvent.carsOnlyParkingZoneList.Count; carIndex++)
         {
-            ref var carComponent = ref dataEvent.carsOnlyParkingZone[carIndex].Entity.Get<CarComponent>();
+            ref var carComponent = ref dataEvent.carsOnlyParkingZoneList[carIndex].Entity.Get<CarComponent>();
             int count = 0;
             bool isCountMax = false;
 
@@ -170,59 +166,25 @@ public class PassengerSortingSystem : IEcsRunSystem
         }
     }
 
-    public void PerformSortingIterationTwo(EcsEntity dataEntity)
+    private void PerformSortingIterationVersionTwo(EcsEntity dataEntity)
     {
         ref var dataEvent = ref dataEntity.Get<GetUnitsDataEvent>();
 
-        for (int carIndex = 0; carIndex < dataEvent.carsOnlyParkingZone.Count; carIndex++)
-        {
-            ref var carComponent = ref dataEvent.carsOnlyParkingZone[carIndex].Entity.Get<CarComponent>();
-            int count = 0;
-            bool isCountMax = false;
+        int passengerIndex = 0;
 
-            for (int firstPassengerIndex = 0; firstPassengerIndex < dataEvent.allPassengersInLevel.Count && isCountMax == false; firstPassengerIndex++)
+        for (int carIndex = 0; carIndex < dataEvent.carsOnlyParkingZoneList.Count; carIndex++)
+        {
+            ref var carComponent = ref dataEvent.carsOnlyParkingZoneList[carIndex].Entity.Get<CarComponent>();
+
+            for (int currentPassengerIndex = 0; currentPassengerIndex < carComponent.maxPassengersSlots; currentPassengerIndex++)
             {
-                ref var firstPassengerComponent = ref dataEvent.allPassengersInLevel[firstPassengerIndex].Entity.Get<PassengerComponent>();
-                bool isSwapColor = false;
+                ref var firstPassengerComponent = ref dataEvent.allPassengersInLevel[passengerIndex].Entity.Get<PassengerComponent>();
 
-                if (carComponent.renderer.material.color == firstPassengerComponent.renderer.material.color)
-                    continue;
+                Color tempCarColor = carComponent.renderer.material.color;
+                firstPassengerComponent.renderer.material.color = tempCarColor;
 
-                for (int lastPassengerIndex = firstPassengerIndex++; lastPassengerIndex < 0 && isSwapColor == false; lastPassengerIndex++)
-                {
-                    ref var lastPassengerComponent = ref dataEvent.allPassengersInLevel[lastPassengerIndex].Entity.Get<PassengerComponent>();
-
-                    if (carComponent.renderer.material.color != lastPassengerComponent.renderer.material.color)
-                        continue;
-
-                    if (firstPassengerComponent.isSorted)
-                        continue;
-
-                    if (firstPassengerIndex == lastPassengerIndex)
-                        continue;
-
-                    Color tempFirstPassengerColor = firstPassengerComponent.renderer.material.color;
-                    Color templastPassengerColor = lastPassengerComponent.renderer.material.color;
-
-                    firstPassengerComponent.renderer.material.color = templastPassengerColor;
-                    lastPassengerComponent.renderer.material.color = tempFirstPassengerColor;
-
-                    firstPassengerComponent.isSorted = true;
-
-                    isSwapColor = true;
-                }
-
-                count++;
-
-                if (count == carComponent.maxPassengersSlots)
-                    isCountMax = true;
+                passengerIndex++;
             }
-        }
-
-        for (int z = 0; z < dataEvent.allPassengersInLevel.Count; z++)
-        {
-            ref var passengerComponent = ref dataEvent.allPassengersInLevel[z].Entity.Get<PassengerComponent>();
-            passengerComponent.isSorted = false;
         }
     }
 
@@ -230,12 +192,12 @@ public class PassengerSortingSystem : IEcsRunSystem
     {
         ref var dataEvent = ref dataEntity.Get<GetUnitsDataEvent>();
 
-        if (dataEvent.carsOnlyParkingZone.Count == 0 || dataEvent.allPassengersInLevel.Count == 0)
+        if (dataEvent.carsOnlyParkingZoneList.Count == 0 || dataEvent.allPassengersInLevel.Count == 0)
             return;
 
-        for (int carIndex = 0; carIndex < dataEvent.carsOnlyParkingZone.Count; carIndex++)
+        for (int carIndex = 0; carIndex < dataEvent.carsOnlyParkingZoneList.Count; carIndex++)
         {
-            ref var carComponent = ref dataEvent.carsOnlyParkingZone[carIndex].Entity.Get<CarComponent>();
+            ref var carComponent = ref dataEvent.carsOnlyParkingZoneList[carIndex].Entity.Get<CarComponent>();
             int count = 0;
             bool isCountMax = false;
 

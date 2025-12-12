@@ -1,5 +1,5 @@
 using Leopotam.Ecs;
-public struct HandTutorialHideEvent
+public struct TutorialHideHandEvent
 {
     public EcsEntity ecsEntity;
 }
