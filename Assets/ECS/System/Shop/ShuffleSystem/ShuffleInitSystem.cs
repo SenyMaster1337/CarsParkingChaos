@@ -9,10 +9,9 @@ public class ShuffleInitSystem : IEcsInitSystem
     private List<Vehicle> _cars;
     private List<Passenger> _passengers;
 
-    public ShuffleInitSystem(List<Vehicle> cars, List<Passenger> passengers)
+    public ShuffleInitSystem(List<Vehicle> cars)
     {
         _cars = cars;
-        _passengers = passengers;
     }
 
     public void Init()

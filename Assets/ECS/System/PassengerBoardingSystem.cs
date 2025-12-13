@@ -13,9 +13,8 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
     private List<Vehicle> _cars;
     private List<Vehicle> _carsToAdd;
 
-    public PassengerBoardingSystem(List<Passenger> passengers, CarToParkingTriggerHandler parkingTriggerHandler)
+    public PassengerBoardingSystem(CarToParkingTriggerHandler parkingTriggerHandler)
     {
-        _passengers = passengers;
         _carToParkingTriggerHandler = parkingTriggerHandler;
 
         _cars = new List<Vehicle>();

@@ -98,58 +98,6 @@ public class ParkingReservationSystem : IEcsRunSystem
         parkingReservationComponent.parkingSlots.Add(parkingSlotEvent.parkingSlot);
     }
 
-    private void VerifyCarsInParkingData(List<ParkingSlot> parkingSlots)
-    {
-        int count = 0;
-
-        if (_reservedParkingSlots == null || _reservedParkingSlots.Count < parkingSlots.Count)
-        {
-            _isParkingFull = false;
-            return;
-        }
-
-        for (int i = 0; i < parkingSlots.Count; i++)
-        {
-            ref var parkingComponent = ref parkingSlots[i].Entity.Get<ParkingComponent>();
-            ref var ReservedparkingComponent = ref _reservedParkingSlots[i].Entity.Get<ParkingComponent>();
-
-            if (parkingComponent.car == ReservedparkingComponent.car)
-            {
-                count++;
-            }
-            else
-            {
-                _isParkingFull = false;
-                return;
-            }
-
-            if (count == parkingSlots.Count)
-                _ecsWorld.NewEntity().Get<ShowLossWindowEvent>();
-        }
-    }
-
-    private void TrySaveCarInParkingData(int entity, List<ParkingSlot> parkingSlots)
-    {
-        if (_reservedParkingSlots.Count >= parkingSlots.Count && _isParkingFull == false)
-        {
-            for (int i = 0; i < parkingSlots.Count; i++)
-            {
-                ref var parkingComponent = ref parkingSlots[i].Entity.Get<ParkingComponent>();
-                ref var ReservedparkingComponent = ref _reservedParkingSlots[i].Entity.Get<ParkingComponent>();
-
-                ReservedparkingComponent.car = parkingComponent.car;
-            }
-
-            _filter.GetEntity(entity).Get<TimerComponent>() = new TimerComponent
-            {
-                TimeLeft = _staticData.TimeLeftInTimerToVerifyCarsInParking,
-                IsActive = true
-            };
-
-            _isParkingFull = true;
-        }
-    }
-
     private void ReserveParkingSlot(EcsEntity carEcsEntity, List<ParkingSlot> parkingSlots)
     {
         ref var carComponent = ref carEcsEntity.Get<CarComponent>();
@@ -212,6 +160,61 @@ public class ParkingReservationSystem : IEcsRunSystem
                 _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
                 return;
             }
+        }
+    }
+
+    private void TrySaveCarInParkingData(int entity, List<ParkingSlot> parkingSlots)
+    {
+        if (_isParkingFull == true)
+            return;
+
+        if (_reservedParkingSlots.Count >= parkingSlots.Count)
+        {
+            for (int i = 0; i < parkingSlots.Count; i++)
+            {
+                ref var parkingComponent = ref parkingSlots[i].Entity.Get<ParkingComponent>();
+                ref var ReservedParkingComponent = ref _reservedParkingSlots[i].Entity.Get<ParkingComponent>();
+
+                ReservedParkingComponent.car = parkingComponent.car;
+            }
+
+            _filter.GetEntity(entity).Get<TimerComponent>() = new TimerComponent
+            {
+                TimeLeft = _staticData.TimeLeftInTimerToVerifyCarsInParking,
+                IsActive = true
+            };
+
+            _isParkingFull = true;
+        }
+    }
+
+    private void VerifyCarsInParkingData(List<ParkingSlot> parkingSlots)
+    {
+        int count = 0;
+
+        if (_reservedParkingSlots == null || _reservedParkingSlots.Count < parkingSlots.Count)
+        {
+            _isParkingFull = false;
+            return;
+        }
+
+        for (int i = 0; i < parkingSlots.Count; i++)
+        {
+            ref var parkingComponent = ref parkingSlots[i].Entity.Get<ParkingComponent>();
+            ref var ReservedparkingComponent = ref _reservedParkingSlots[i].Entity.Get<ParkingComponent>();
+
+            if (parkingComponent.car == ReservedparkingComponent.car)
+            {
+                count++;
+            }
+            else
+            {
+                _isParkingFull = false;
+                return;
+            }
+
+            if (count == parkingSlots.Count)
+                _ecsWorld.NewEntity().Get<ShowLossWindowEvent>();
         }
     }
 }

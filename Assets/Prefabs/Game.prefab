@@ -2471,6 +2471,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _passengerPrefab: {fileID: 1024174661189220516, guid: b3a5d868e71c28f4a8e5fa25987598f6, type: 3}
   _triggerHandlers:
   - {fileID: 918159829406143931}
   - {fileID: 1313473426639601320}

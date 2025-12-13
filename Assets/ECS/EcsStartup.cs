@@ -11,7 +11,7 @@ public class EcsStartup : MonoBehaviour
     [SerializeField] private SceneData _sceneData;
 
     [SerializeField] private List<Vehicle> _cars;
-    [SerializeField] private List<Passenger> _passengers;
+    [SerializeField] private Passenger _passengerPrefab;
 
     [SerializeField] private List<RotateTriggerHandler> _triggerHandlers;
     [SerializeField] private CarEnterHandler _carHandler;
@@ -30,8 +30,9 @@ public class EcsStartup : MonoBehaviour
     [SerializeField] private ShopShower _shopShower;
     [SerializeField] private ADVUnlockParkingSlotShower _advUnlockParkingSlotShower;
     [SerializeField] private PassengersCountText _passengersCountText;
-
     [SerializeField] private GameSounds _gameSounds;
+
+    private List<Passenger> _passengers;
 
     private EcsWorld _ecsWorld;
     private EcsSystems _systems;
@@ -43,12 +44,12 @@ public class EcsStartup : MonoBehaviour
 
         AddYGSystems();
 
-        AddInputSystem();
-        AddGameSystems();
-
         AddCarSystems();
         AddPassengerSystems();
         AddParkingSystems();
+
+        AddInputSystem();
+        AddGameSystems();
 
         AddLevelSoundSystems();
         AddLevelSystems();
@@ -70,6 +71,7 @@ public class EcsStartup : MonoBehaviour
         _systems
             .Inject(_staticData)
             .Inject(_sceneData)
+            .Inject(_passengers)
             .Inject(_mainCamera);
 
         _systems.Init();
@@ -95,29 +97,6 @@ public class EcsStartup : MonoBehaviour
         else
             _systems.Add(new MobileInputSystem());
     }
-
-    private void AddGameSystems()
-    {
-        _systems
-            .Add(new RaycastReaderSystem())
-            .Add(new PassengerBoardingSystem(_passengers, _parkingTriggerHandler))
-            .Add(new ShiftQueuePassengersSystem(_passengers))
-            .Add(new TimerSystem())
-            .Add(new DisableUnitSystem())
-            .Add(new CooldownSystem());
-    }
-
-    private void AddYGSystems()
-    {
-        _systems
-            .Add(new YGPlayerInitSystem())
-            .Add(new YGPlayerSaveProgressSystem())
-            .Add(new YGAdvShowSystem())
-            .Add(new YGLeaderboardShowInitSystem(_leaderboradShower))
-            .Add(new YGShowLeaderboardSystem())
-            .Add(new YGLeaderboardSystem());
-    }
-
     private void AddCarSystems()
     {
         _systems
@@ -134,8 +113,11 @@ public class EcsStartup : MonoBehaviour
 
     private void AddPassengerSystems()
     {
+        var passengerInitSystem = new PassengersInitSystem(_startQueuePoint, _cars, _passengerPrefab);
+        _passengers = passengerInitSystem.Passengers;
+
         _systems
-            .Add(new PassengersInitSystem(_passengers, _startQueuePoint))
+            .Add(passengerInitSystem)
             .Add(new PassengerMoveSystem())
             .Add(new AnimatedPassengerSystem());
     }
@@ -146,6 +128,28 @@ public class EcsStartup : MonoBehaviour
             .Add(new ParkingReservationInitSystem(_parkingSlots))
             .Add(new CarParkingSystem(_carHandler))
             .Add(new ParkingReservationSystem());
+    }
+
+    private void AddGameSystems()
+    {
+        _systems
+            .Add(new RaycastReaderSystem())
+            .Add(new PassengerBoardingSystem(_parkingTriggerHandler))
+            .Add(new ShiftQueuePassengersSystem())
+            .Add(new TimerSystem())
+            .Add(new DisableUnitSystem())
+            .Add(new CooldownSystem());
+    }
+
+    private void AddYGSystems()
+    {
+        _systems
+            .Add(new YGPlayerInitSystem())
+            .Add(new YGPlayerSaveProgressSystem())
+            .Add(new YGAdvShowSystem())
+            .Add(new YGLeaderboardShowInitSystem(_leaderboradShower))
+            .Add(new YGShowLeaderboardSystem())
+            .Add(new YGLeaderboardSystem());
     }
 
     private void AddLevelSoundSystems()
@@ -160,7 +164,8 @@ public class EcsStartup : MonoBehaviour
         _systems
             .Add(new LevelInitSystem())
             .Add(new LevelShowInitSystem(_levelCompleteShower, _levelLossShower, _levelCurrentShower))
-            .Add(new LevelProgressSystem(_passengers))
+            .Add(new LevelUIButtonsReaderSystem(_levelCompleteShower, _levelLossShower))
+            .Add(new LevelProgressSystem())
             .Add(new LoadNextLevelSystem())
             .Add(new LevelLossShowerSystem())
             .Add(new LevelRestartSystem());
@@ -203,7 +208,7 @@ public class EcsStartup : MonoBehaviour
     private void AddShuffleSystem()
     {
         _systems
-            .Add(new ShuffleInitSystem(_cars, _passengers))
+            .Add(new ShuffleInitSystem(_cars))
             .Add(new ShuffleSystem())
             .Add(new CarShuffleShowerInitSystem(_shopShower.BuyPassengerShuffleShower))
             .Add(new CarShuffleShowerSystem())
@@ -213,7 +218,7 @@ public class EcsStartup : MonoBehaviour
     private void AddPassengerCountShowerSystems()
     {
         _systems
-            .Add(new PassengersCountShowerInitSystem(_passengers, _passengersCountText))
+            .Add(new PassengersCountShowerInitSystem(_passengersCountText))
             .Add(new PassengersCountShowerSystem());
     }
 

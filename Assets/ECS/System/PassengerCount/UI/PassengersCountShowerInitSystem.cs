@@ -10,9 +10,8 @@ public class PassengersCountShowerInitSystem : IEcsInitSystem
     private List<Passenger> _passengers;
     private PassengersCountText _passengersCountText;
 
-    public PassengersCountShowerInitSystem(List<Passenger> passengers, PassengersCountText currentPassengersCount)
+    public PassengersCountShowerInitSystem(PassengersCountText currentPassengersCount)
     {
-        _passengers = passengers;
         _passengersCountText = currentPassengersCount;
     }
 

@@ -13,9 +13,8 @@ public class LevelProgressSystem : IEcsRunSystem
     private List<Passenger> _passengers;
     private bool _isTimerToCompltiteEnable;
 
-    public LevelProgressSystem(List<Passenger> passengers)
+    public LevelProgressSystem()
     {
-        _passengers = passengers;
         _isTimerToCompltiteEnable = false;
     }
 

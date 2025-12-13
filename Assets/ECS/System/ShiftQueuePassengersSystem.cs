@@ -5,11 +5,6 @@ public class ShiftQueuePassengersSystem : IEcsRunSystem
 {
     private List<Passenger> _passengers;
 
-    public ShiftQueuePassengersSystem(List<Passenger> passengers)
-    {
-        _passengers = passengers;
-    }
-
     public void Run()
     {
         ShiftFirstPassenger();

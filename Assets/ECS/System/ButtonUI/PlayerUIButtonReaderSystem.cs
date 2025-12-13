@@ -9,8 +9,6 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEc
 
     private SoundMuteToggle _soundMueToggle;
     private RestartButtonClickReader _restartButtonClickReader;
-    private LevelCompleteShower _levelCompleteShower;
-    private LevelLossShower _levelLossShower;
     private LeaderboradShower _leaderboradShower;
     private ShopShower _shopShower;
 
@@ -18,8 +16,6 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEc
     {
         _soundMueToggle = soundMuteToggle;
         _restartButtonClickReader = restartButtonClickReader;
-        _levelCompleteShower = levelCompleteShower;
-        _levelLossShower = levelLossShower;
         _leaderboradShower = leaderboradShower;
         _shopShower = shopShower;
     }
@@ -28,10 +24,8 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEc
     {
         _soundMueToggle.MuteSoundButtonClickReader.OnButtonClicked += OnButtonClickMuteSound;
         _soundMueToggle.UnmuteSoundButtonClickReader.OnButtonClicked += OnButtonClickUnmuteSound;
-        _restartButtonClickReader.OnButtonClicked += OnButtonClickRestart;
 
-        _levelCompleteShower.NextLevelButtonClickReader.OnButtonClicked += OnButtonCkickNextLevel;
-        _levelLossShower.RestartButtonClickReader.OnButtonClicked += OnButtonClickRestart;
+        _restartButtonClickReader.OnButtonClicked += OnButtonClickRestart;
 
         _leaderboradShower.LeaderboradOpenButtonClick.OnButtonClicked += OnButtonClickOpenLeaderboard;
         _leaderboradShower.LeaderboradCloseButtonClick.OnButtonClicked += OnButtonClickCloseLeaderboard;
@@ -44,10 +38,8 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEc
     {
         _soundMueToggle.MuteSoundButtonClickReader.OnButtonClicked -= OnButtonClickMuteSound;
         _soundMueToggle.UnmuteSoundButtonClickReader.OnButtonClicked -= OnButtonClickUnmuteSound;
-        _restartButtonClickReader.OnButtonClicked -= OnButtonClickRestart;
 
-        _levelCompleteShower.NextLevelButtonClickReader.OnButtonClicked -= OnButtonCkickNextLevel;
-        _levelLossShower.RestartButtonClickReader.OnButtonClicked -= OnButtonClickRestart;
+        _restartButtonClickReader.OnButtonClicked -= OnButtonClickRestart;
 
         _leaderboradShower.LeaderboradOpenButtonClick.OnButtonClicked -= OnButtonClickOpenLeaderboard;
         _leaderboradShower.LeaderboradCloseButtonClick.OnButtonClicked -= OnButtonClickCloseLeaderboard;
@@ -84,11 +76,6 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEc
     private void OnButtonClickRestart()
     {
         _ecsWorld.NewEntity().Get<RestartLevelEvent>();
-    }
-
-    private void OnButtonCkickNextLevel()
-    {
-        _ecsWorld.NewEntity().Get<LoadNextLevelEvent>();
     }
 
     private void OnButtonClickOpenLeaderboard()
