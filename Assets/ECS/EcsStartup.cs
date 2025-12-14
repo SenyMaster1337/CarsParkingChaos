@@ -13,11 +13,7 @@ public class EcsStartup : MonoBehaviour
     [SerializeField] private List<Vehicle> _cars;
     [SerializeField] private Passenger _passengerPrefab;
 
-    [SerializeField] private List<RotateTriggerHandler> _triggerHandlers;
-    [SerializeField] private CarEnterHandler _carHandler;
-
     [SerializeField] private List<ParkingSlot> _parkingSlots;
-    [SerializeField] private CarToParkingTriggerHandler _parkingTriggerHandler;
     [SerializeField] private StartQueuePoint _startQueuePoint;
 
     [SerializeField] private RestartButtonClickReader _restartButtonClickReader;
@@ -90,6 +86,17 @@ public class EcsStartup : MonoBehaviour
         _ecsWorld = null;
     }
 
+    private void AddYGSystems()
+    {
+        _systems
+            .Add(new YGPlayerInitSystem())
+            .Add(new YGPlayerSaveProgressSystem())
+            .Add(new YGAdvShowSystem())
+            .Add(new YGLeaderboardShowInitSystem(_leaderboradShower))
+            .Add(new YGShowLeaderboardSystem())
+            .Add(new YGLeaderboardSystem());
+    }
+
     private void AddInputSystem()
     {
         if (YG2.envir.isDesktop)
@@ -105,7 +112,7 @@ public class EcsStartup : MonoBehaviour
             .Add(new CarCrashHandlerSystem(_cars))
             .Add(new CarLeavingInitSystem(_cars))
             .Add(new CarLeavingSystem())
-            .Add(new CarRotatorSystem(_triggerHandlers))
+            .Add(new CarRotatorSystem(_cars))
             .Add(new AnimatedCarSystem())
             .Add(new CarSoundSystem())
             .Add(new CarEffectsSystem());
@@ -113,11 +120,12 @@ public class EcsStartup : MonoBehaviour
 
     private void AddPassengerSystems()
     {
-        var passengerInitSystem = new PassengersInitSystem(_startQueuePoint, _cars, _passengerPrefab);
-        _passengers = passengerInitSystem.Passengers;
+        var passengerSpawnSystem = new PassengerSpawnSystem(_cars, _passengerPrefab);
+        _passengers = passengerSpawnSystem.Passengers;
 
         _systems
-            .Add(passengerInitSystem)
+            .Add(passengerSpawnSystem)
+            .Add(new PassengersInitSystem(_startQueuePoint))
             .Add(new PassengerMoveSystem())
             .Add(new AnimatedPassengerSystem());
     }
@@ -126,7 +134,7 @@ public class EcsStartup : MonoBehaviour
     {
         _systems
             .Add(new ParkingReservationInitSystem(_parkingSlots))
-            .Add(new CarParkingSystem(_carHandler))
+            .Add(new CarParkingSystem(_cars))
             .Add(new ParkingReservationSystem());
     }
 
@@ -134,22 +142,11 @@ public class EcsStartup : MonoBehaviour
     {
         _systems
             .Add(new RaycastReaderSystem())
-            .Add(new PassengerBoardingSystem(_parkingTriggerHandler))
+            .Add(new PassengerBoardingSystem(_cars))
             .Add(new ShiftQueuePassengersSystem())
             .Add(new TimerSystem())
             .Add(new DisableUnitSystem())
             .Add(new CooldownSystem());
-    }
-
-    private void AddYGSystems()
-    {
-        _systems
-            .Add(new YGPlayerInitSystem())
-            .Add(new YGPlayerSaveProgressSystem())
-            .Add(new YGAdvShowSystem())
-            .Add(new YGLeaderboardShowInitSystem(_leaderboradShower))
-            .Add(new YGShowLeaderboardSystem())
-            .Add(new YGLeaderboardSystem());
     }
 
     private void AddLevelSoundSystems()

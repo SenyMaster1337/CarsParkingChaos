@@ -59,6 +59,8 @@ public class LevelProgressSystem : IEcsRunSystem
 
         _ecsWorld.NewEntity().Get<AddPointsWinningLeaderboardEvent>();
         _ecsWorld.NewEntity().Get<AddCoinsWinningEvent>();
+        _ecsWorld.NewEntity().Get<YGEnityComponentsEvent>();
+        _ecsWorld.NewEntity().Get<YGClearDataRewardParkingSlots>();
         _ecsWorld.NewEntity().Get<YGSaveProgressEvent>();
 
         ShowWinWindow(entity);

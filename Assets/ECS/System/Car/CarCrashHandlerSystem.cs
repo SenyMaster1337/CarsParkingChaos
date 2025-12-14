@@ -4,27 +4,27 @@ using System.Collections.Generic;
 public class CarCrashHandlerSystem : IEcsInitSystem, IEcsDestroySystem
 {
     private EcsWorld _ecsWorld;
-    private List<Vehicle> _crashHandler;
+    private List<Vehicle> _cars;
 
-    public CarCrashHandlerSystem(List<Vehicle> collisionHandler)
+    public CarCrashHandlerSystem(List<Vehicle> cars)
     {
-        _crashHandler = collisionHandler;
+        _cars = cars;
     }
 
     public void Init()
     {
-        for (int i = 0; i < _crashHandler.Count; i++)
+        for (int i = 0; i < _cars.Count; i++)
         {
-            _crashHandler[i].GetComponentInChildren<CrashHandler>().OnCollisionCar += ComeBack;
+            _cars[i].GetComponentInChildren<CrashHandler>().OnCollisionCar += ComeBack;
         }
     }
 
     public void Destroy()
     {
-        for (int i = 0; i < _crashHandler.Count; i++)
+        for (int i = 0; i < _cars.Count; i++)
         {
-            if (_crashHandler[i] != null)
-                _crashHandler[i].GetComponentInChildren<CrashHandler>().OnCollisionCar -= ComeBack;
+            if (_cars[i] != null)
+                _cars[i].GetComponentInChildren<CrashHandler>().OnCollisionCar -= ComeBack;
         }
     }
 

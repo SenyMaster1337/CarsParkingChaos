@@ -7,7 +7,7 @@ namespace YG
 
     public partial class SavesYG
     {
-        public int coins = 10000;
+        public int coins = 1000;
     }
 
     public partial class SavesYG
@@ -18,5 +18,10 @@ namespace YG
     public partial class SavesYG
     {
         public float masterSoundValue = 0;
+    }
+
+    public partial class SavesYG
+    {
+        public int additionalRewardParkingSlotsCount = 0;
     }
 }

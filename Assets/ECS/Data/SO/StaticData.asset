@@ -30,5 +30,5 @@ MonoBehaviour:
   <PriceSortPassengers>k__BackingField: 50
   <PriceShufflePassengers>k__BackingField: 25
   <TimeLeftInTimerToVerifyCarsInParking>k__BackingField: 5
-  <TimeDisableCarInScene>k__BackingField: 1.2
+  <TimeDisableCarInScene>k__BackingField: 0.8
   <AddScoreWinningValueToLeaderboard>k__BackingField: 100

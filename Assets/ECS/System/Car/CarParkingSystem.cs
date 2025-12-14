@@ -5,24 +5,30 @@ using UnityEngine;
 
 public class CarParkingSystem : IEcsInitSystem, IEcsDestroySystem
 {
-    private CarEnterHandler _carHandler;
+    private List<Vehicle> _cars;
 
-    public CarParkingSystem(CarEnterHandler carHandler)
+    public CarParkingSystem(List<Vehicle> cars)
     {
-        _carHandler = carHandler;
+        _cars = cars;
     }
 
     public void Init()
     {
-        _carHandler.OnCollisionCar += ParkCar;
+        for (int i = 0; i < _cars.Count; i++)
+        {
+            _cars[i].OnCollisionCar += ParkCar;
+        }
     }
 
     public void Destroy()
     {
-        _carHandler.OnCollisionCar -= ParkCar;
+        for (int i = 0; i < _cars.Count; i++)
+        {
+            _cars[i].OnCollisionCar -= ParkCar;
+        }
     }
 
-    private void ParkCar(Vehicle car)
+    private void ParkCar(CarParkingDirection caeEnter, Vehicle car)
     {
         ref var movable = ref car.Entity.Get<CarMovableComponent>();
         ref var component = ref car.Entity.Get<CarComponent>();

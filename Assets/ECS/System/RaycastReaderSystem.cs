@@ -80,7 +80,6 @@ public class RaycastReaderSystem : IEcsRunSystem
                     openADVParkingSlotUnlock = advParkingSlotHit
                 };
 
-                Debug.Log("open");
                 _ecsWorld.NewEntity().Get<OpenADVUnlockParkingSlotEvent>();
                 _ecsWorld.NewEntity().Get<DisableButtonsEvent>();
                 _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();

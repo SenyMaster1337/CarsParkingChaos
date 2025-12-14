@@ -1,5 +1,4 @@
 using Leopotam.Ecs;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,17 +10,11 @@ public class PassengersInitSystem : IEcsInitSystem
 
     private List<Passenger> _passengers;
     private StartQueuePoint _startQueuePoint;
-    private Passenger _passengerPrefab;
-    private List<Vehicle> _cars;
 
-    public List<Passenger> Passengers => _passengers;
-
-    public PassengersInitSystem(StartQueuePoint startQueuePoint, List<Vehicle> cars, Passenger passengerPrefab)
+    public PassengersInitSystem(StartQueuePoint startQueuePoint)
     {
-        _passengers = new List<Passenger>();
         _startQueuePoint = startQueuePoint;
-        _cars = cars;
-        _passengerPrefab = passengerPrefab;
+        _passengers = new List<Passenger>();
     }
 
     public void Init()
@@ -31,14 +24,6 @@ public class PassengersInitSystem : IEcsInitSystem
 
     private void InitPassengers()
     {
-        for (int i = 0; i < _cars.Count; i++)
-        {
-            for (int j = 0; j < _cars[i].Entity.Get<CarComponent>().maxPassengersSlots; j++)
-            {
-                _passengers.Add(GameObject.Instantiate(_passengerPrefab));
-            }
-        }
-
         for (int i = 0; i < _passengers.Count; i++)
         {
             var passengerNewEntity = _ecsWorld.NewEntity();

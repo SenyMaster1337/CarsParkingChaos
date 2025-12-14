@@ -201,9 +201,9 @@ public class ParkingReservationSystem : IEcsRunSystem
         for (int i = 0; i < parkingSlots.Count; i++)
         {
             ref var parkingComponent = ref parkingSlots[i].Entity.Get<ParkingComponent>();
-            ref var ReservedparkingComponent = ref _reservedParkingSlots[i].Entity.Get<ParkingComponent>();
+            ref var reservedParkingComponent = ref _reservedParkingSlots[i].Entity.Get<ParkingComponent>();
 
-            if (parkingComponent.car == ReservedparkingComponent.car)
+            if (parkingComponent.car == reservedParkingComponent.car)
             {
                 count++;
             }

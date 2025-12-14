@@ -9,6 +9,7 @@ public class UnlockParkingSlotSystem : IEcsRunSystem
     private EcsWorld _ecsWorld;
     private EcsFilter<SaveParkingSlotEvent> _saveFilter;
     private EcsFilter<ShowADVToUnlockParkingSlotEvent> _showAdvFilter;
+    private EcsFilter<LevelComponent> _levelFilter;
 
     private ParkingSlot _parkingSlot;
     private OpenADVParkingSlotUnlock _openADVParkingSlotUnlock;
@@ -24,16 +25,30 @@ public class UnlockParkingSlotSystem : IEcsRunSystem
 
         foreach (var showAdvEntity in _showAdvFilter)
         {
-            YG2.RewardedAdvShow(RewardID, () =>
+            foreach (var levelEntity in _levelFilter)
             {
-                if (RewardID == "UnlockParkingSlotRewardID")
-                {
-                    StartAddParkingSlotEvent();
-                }
-            });
+                ref var levelComponent = ref _levelFilter.Get1(levelEntity);
+                int currentLevel = levelComponent.currentLevel;
 
-            _showAdvFilter.GetEntity(showAdvEntity).Del<ShowADVToUnlockParkingSlotEvent>();
+                YG2.RewardedAdvShow(RewardID, () =>
+                {
+                    if (RewardID == "UnlockParkingSlotRewardID")
+                    {
+                        StartAddParkingSlotEvent();
+                        StartYGSaveParkingSlotsEvent(currentLevel);
+                    }
+                });
+
+                _showAdvFilter.GetEntity(showAdvEntity).Del<ShowADVToUnlockParkingSlotEvent>();
+            }
         }
+    }
+
+    private void SaveParkingSlot(EcsEntity saveEventEntity)
+    {
+        ref var saveParkingSlotEvent = ref saveEventEntity.Get<SaveParkingSlotEvent>();
+        _parkingSlot = saveParkingSlotEvent.parkingSlot;
+        _openADVParkingSlotUnlock = saveParkingSlotEvent.openADVParkingSlotUnlock;
     }
 
     private void StartAddParkingSlotEvent()
@@ -46,10 +61,9 @@ public class UnlockParkingSlotSystem : IEcsRunSystem
         _openADVParkingSlotUnlock.gameObject.SetActive(false);
     }
 
-    private void SaveParkingSlot(EcsEntity saveEventEntity)
+    private void StartYGSaveParkingSlotsEvent(int currentLevel)
     {
-        ref var saveParkingSlotEvent = ref saveEventEntity.Get<SaveParkingSlotEvent>();
-        _parkingSlot = saveParkingSlotEvent.parkingSlot;
-        _openADVParkingSlotUnlock = saveParkingSlotEvent.openADVParkingSlotUnlock;
+        _ecsWorld.NewEntity().Get<YGSaveRewardParkingSlotsEvent>();
+        _ecsWorld.NewEntity().Get<YGSaveProgressEvent>();
     }
 }

@@ -8,27 +8,37 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
     private EcsFilter<SendRequesGetDataInPassengerBoardingEvent> _sendRequestFilter;
 
     private List<Passenger> _passengers;
-    private CarToParkingTriggerHandler _carToParkingTriggerHandler;
 
-    private List<Vehicle> _cars;
-    private List<Vehicle> _carsToAdd;
+    private List<Vehicle> _allCars;
+    private List<Vehicle> _carsInParking;
+    private List<Vehicle> _carsToAddParking;
 
-    public PassengerBoardingSystem(CarToParkingTriggerHandler parkingTriggerHandler)
+    public PassengerBoardingSystem(List<Vehicle> allCars)
     {
-        _carToParkingTriggerHandler = parkingTriggerHandler;
-
-        _cars = new List<Vehicle>();
-        _carsToAdd = new List<Vehicle>();
+        _allCars = allCars;
+        _carsInParking = new List<Vehicle>();
+        _carsToAddParking = new List<Vehicle>();
     }
 
     public void Init()
     {
-        _carToParkingTriggerHandler.CarEnterParking += AddCar;
+        for (int i = 0; i < _allCars.Count; i++)
+        {
+            _allCars[i].CarEnterParking += AddCar;
+        }
+    }
+
+    public void Destroy()
+    {
+        for (int i = 0; i < _allCars.Count; i++)
+        {
+            _allCars[i].CarEnterParking -= AddCar;
+        }
     }
 
     private void AddCar(Vehicle car)
     {
-        _carsToAdd.Add(car);
+        _carsToAddParking.Add(car);
         TeleportCarToReservedParkingSlot(car);
     }
 
@@ -37,10 +47,6 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
         car.Entity.Get<CarParkingEvent>();
     }
 
-    public void Destroy()
-    {
-        _carToParkingTriggerHandler.CarEnterParking -= AddCar;
-    }
 
     public void Run()
     {
@@ -54,7 +60,7 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
         {
             var passengerSortingNewEntity = _ecsWorld.NewEntity();
             ref var passengerSortingDataEvent = ref passengerSortingNewEntity.Get<GetUnitsDataEvent>();
-            passengerSortingDataEvent.carsOnlyParkingZoneList = _cars;
+            passengerSortingDataEvent.carsOnlyParkingZoneList = _carsInParking;
             passengerSortingDataEvent.allPassengersInLevel = _passengers;
 
             passengerSortingNewEntity.Get<VerifyCarsToPassengerSortingEvent>();
@@ -65,16 +71,16 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
 
     private void MovePassengerToCar()
     {
-        if (_carsToAdd.Count > 0)
+        if (_carsToAddParking.Count > 0)
         {
-            _cars.AddRange(_carsToAdd);
-            _carsToAdd.Clear();
+            _carsInParking.AddRange(_carsToAddParking);
+            _carsToAddParking.Clear();
         }
 
-        if (_cars.Count == 0 || _passengers == null || _passengers.Count == 0)
+        if (_carsInParking.Count == 0 || _passengers == null || _passengers.Count == 0)
             return;
 
-        var carsArray = _cars.ToArray();
+        var carsArray = _carsInParking.ToArray();
         var passengersArray = _passengers.ToArray();
 
         for (int i = 0; i < carsArray.Length; i++)
@@ -111,7 +117,7 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
             }
             else
             {
-                _cars.Remove(carComponent.car);
+                _carsInParking.Remove(carComponent.car);
             }
         }
     }

@@ -6,6 +6,7 @@ public class SceneData : MonoBehaviour
     [field: SerializeField] public PassengerCounter PassengerCounter { get; private set; }
     [field: SerializeField] public List<Transform> QueuePositions { get; private set; }
     [field: SerializeField] public bool TutorialEnabe { get; private set; } = false;
+    [field: SerializeField] public int UnlockParkingSlotsCount { get; private set; } = 4;
 
     [Header("Система сортировки пассажиров")]
     [Tooltip("1 - сортировка с конца / 2 - сортировка через 4/8 пассажиров")]
