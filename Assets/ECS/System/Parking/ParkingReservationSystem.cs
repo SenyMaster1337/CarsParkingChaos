@@ -16,6 +16,7 @@ public class ParkingReservationSystem : IEcsRunSystem
     private List<ParkingSlot> _reservedParkingSlots;
     private bool _isParkingFull;
     private bool _isToggleSwitchRaycastReaderEventEnable;
+    private bool _isSavingDataActive;
     private StaticData _staticData;
 
     public ParkingReservationSystem()
@@ -23,6 +24,7 @@ public class ParkingReservationSystem : IEcsRunSystem
         _reservedParkingSlots = new List<ParkingSlot>();
         _isParkingFull = false;
         _isToggleSwitchRaycastReaderEventEnable = true;
+        _isSavingDataActive = false;
     }
 
     public void Run()
@@ -150,12 +152,14 @@ public class ParkingReservationSystem : IEcsRunSystem
             }
             else
             {
+                _isParkingFull = false;
                 _ecsWorld.NewEntity().Get<EnableRaycastReaderEvent>();
                 return;
             }
 
             if (maxReservedParkingSlot == parkingSlots.Count)
             {
+                _isParkingFull = true;
                 TrySaveCarInParkingData(entity, parkingSlots);
                 _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
                 return;
@@ -165,7 +169,7 @@ public class ParkingReservationSystem : IEcsRunSystem
 
     private void TrySaveCarInParkingData(int entity, List<ParkingSlot> parkingSlots)
     {
-        if (_isParkingFull == true)
+        if (_isSavingDataActive == true)
             return;
 
         if (_reservedParkingSlots.Count >= parkingSlots.Count)
@@ -184,19 +188,20 @@ public class ParkingReservationSystem : IEcsRunSystem
                 IsActive = true
             };
 
-            _isParkingFull = true;
+            _isSavingDataActive = true;
         }
     }
 
     private void VerifyCarsInParkingData(List<ParkingSlot> parkingSlots)
     {
-        int count = 0;
+        _isSavingDataActive = false;
 
-        if (_reservedParkingSlots == null || _reservedParkingSlots.Count < parkingSlots.Count)
+        if (_reservedParkingSlots == null || _reservedParkingSlots.Count < parkingSlots.Count || _isParkingFull == false)
         {
-            _isParkingFull = false;
             return;
         }
+
+        int count = 0;
 
         for (int i = 0; i < parkingSlots.Count; i++)
         {
@@ -209,7 +214,6 @@ public class ParkingReservationSystem : IEcsRunSystem
             }
             else
             {
-                _isParkingFull = false;
                 return;
             }
 

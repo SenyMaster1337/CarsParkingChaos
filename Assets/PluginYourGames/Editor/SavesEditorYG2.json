@@ -7,10 +7,10 @@
         false,
         false
     ],
-    "idSave": 2,
-    "level": 1,
-    "coins": 1000,
+    "idSave": 4,
+    "level": 4,
+    "coins": 1050,
     "leaderboardScore": 0,
     "masterSoundValue": 0.0,
-    "additionalParkingSlotsCount": 2
+    "additionalRewardParkingSlotsCount": 0
 }
