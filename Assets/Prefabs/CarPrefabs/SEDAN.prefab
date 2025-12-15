@@ -1168,6 +1168,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 4c407642dd6ec5e4cb4c6ff3b742a84e, type: 2}
+    - target: {fileID: -2183775519358337683, guid: 1d81ccc31fa23e34f92652d4dbc0c171, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.0189
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1d81ccc31fa23e34f92652d4dbc0c171, type: 3}
       propertyPath: m_Name
       value: Car-1-Edit

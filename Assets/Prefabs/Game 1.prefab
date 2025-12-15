@@ -580,8 +580,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 4
-  m_fontSizeBase: 4
+  m_fontSize: 3.5
+  m_fontSizeBase: 3.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -616,7 +616,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 3.9058158}
+  m_margin: {x: 1.2737465, y: 0, z: 1.1110134, w: 3.9058158}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3187,7 +3187,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.05
+  m_Intensity: 1.1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3910,13 +3910,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7725428311872595126}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.44178593, y: 0.15450928, z: -0.07754121, w: -0.8803065}
-  m_LocalPosition: {x: -8.802933, y: 63.90032, z: -41.810616}
+  m_LocalRotation: {x: -0.38425478, y: 0.18574189, z: -0.07922564, w: -0.90087265}
+  m_LocalPosition: {x: -7, y: 45, z: -46.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7658311956576422690}
-  m_LocalEulerAnglesHint: {x: 53.3, y: 340.09, z: 0}
+  m_LocalEulerAnglesHint: {x: 46.2, y: 336.7, z: 0}
 --- !u!20 &8269287015541866112
 Camera:
   m_ObjectHideFlags: 0
@@ -3950,7 +3950,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 37
+  field of view: 38
   orthographic: 0
   orthographic size: 35
   m_Depth: 0
