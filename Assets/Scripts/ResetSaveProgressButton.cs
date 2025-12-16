@@ -20,7 +20,7 @@ public class ResetSaveProgressButton : MonoBehaviour
     public void OnButtonClick()
     {
         YG2.saves.level = 1;
-        YG2.saves.coins = 1000;
+        YG2.saves.coins = 175;
         YG2.saves.leaderboardScore = 0;
         YG2.saves.masterSoundValue = 0;
         YG2.saves.additionalRewardParkingSlotsCount = 0;

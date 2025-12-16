@@ -15,10 +15,18 @@ public class ShuffleSystem : IEcsRunSystem
     private EcsFilter<ShowAdvToShuffleEvent> _showAdvToShuffleFilter;
 
     private System.Random _random;
+    private int _shuffleCarsIterationCount;
+    private int _firstIndexCars;
+    private int _minCarsCoint;
+    private bool _isPassengerSkipActive;
 
     public ShuffleSystem()
     {
         _random = new System.Random();
+        _shuffleCarsIterationCount = 3;
+        _firstIndexCars = 3;
+        _minCarsCoint = 5;
+        _isPassengerSkipActive = false;
     }
 
     public void Run()
@@ -29,14 +37,20 @@ public class ShuffleSystem : IEcsRunSystem
 
             foreach (var shuffleStartEntity in _SortPassengerInColorCarsFilter)
             {
+                _isPassengerSkipActive = false;
                 SortPassengerInColorCars(shuffleComponentEntity);
+                _isPassengerSkipActive = true;
                 _SortPassengerInColorCarsFilter.GetEntity(shuffleStartEntity).Del<SortPassengerInColorCarsEvent>();
             }
 
             foreach (var shuffleEventEntity in _shuffleEventfilter)
             {
-                if (shuffleComponent.cars.Count <= 1)
+                if (shuffleComponent.cars.Count < _minCarsCoint)
+                {
+                    _ecsWorld.NewEntity().Get<ShowNotEnoughCarsToShuffleEvent>();
+                    _shuffleEventfilter.GetEntity(shuffleEventEntity).Del<ShuffleEvent>();
                     return;
+                }
 
                 StartConfirmPayment();
                 ShuffleCars(shuffleComponentEntity);
@@ -47,8 +61,12 @@ public class ShuffleSystem : IEcsRunSystem
 
             foreach (var showAdvShuffleEntity in _showAdvToShuffleFilter)
             {
-                if (shuffleComponent.cars.Count <= 1)
+                if (shuffleComponent.cars.Count < _minCarsCoint)
+                {
+                    _ecsWorld.NewEntity().Get<ShowNotEnoughCarsToShuffleEvent>();
+                    _showAdvToShuffleFilter.GetEntity(showAdvShuffleEntity).Del<ShowAdvToShuffleEvent>();
                     return;
+                }
 
                 YG2.RewardedAdvShow(RewardID, () =>
                 {
@@ -77,6 +95,12 @@ public class ShuffleSystem : IEcsRunSystem
 
             for (int j = 0; j < carComponent.maxPassengersSlots && passengerIndex < shuffleComponent.passengers.Count; j++)
             {
+                if (_isPassengerSkipActive && i <= _firstIndexCars)
+                {
+                    passengerIndex++;
+                    continue;
+                }
+
                 ref var passengerComponent = ref shuffleComponent.passengers[passengerIndex].Entity.Get<PassengerComponent>();
                 passengerComponent.renderer.material.color = carComponent.renderer.material.color;
                 passengerIndex++;
@@ -90,18 +114,20 @@ public class ShuffleSystem : IEcsRunSystem
     {
         ref var shuffleComponent = ref _shuffleComponentFilter.Get1(shuffleComponentEntity);
 
-        for (int i = 0; i < shuffleComponent.cars.Count; i++)
+        for (int i = 0; i < _shuffleCarsIterationCount; i++)
         {
-            int randomIndex = _random.Next(i + 1);
+            for (int j = _firstIndexCars; j < shuffleComponent.cars.Count; j++)
+            {
+                int randomIndex = _random.Next(_firstIndexCars, j + 1);
+                ref var firstCarComponent = ref shuffleComponent.cars[j].Entity.Get<CarComponent>();
+                ref var secondCarComponent = ref shuffleComponent.cars[randomIndex].Entity.Get<CarComponent>();
 
-            ref var firstCarComponent = ref shuffleComponent.cars[i].Entity.Get<CarComponent>();
-            ref var secondCarComponent = ref shuffleComponent.cars[randomIndex].Entity.Get<CarComponent>();
+                Color tempFirstPassengerColor = firstCarComponent.renderer.material.color;
+                Color templastPassengerColor = secondCarComponent.renderer.material.color;
 
-            Color tempFirstPassengerColor = firstCarComponent.renderer.material.color;
-            Color templastPassengerColor = secondCarComponent.renderer.material.color;
-
-            firstCarComponent.renderer.material.color = templastPassengerColor;
-            secondCarComponent.renderer.material.color = tempFirstPassengerColor;
+                firstCarComponent.renderer.material.color = templastPassengerColor;
+                secondCarComponent.renderer.material.color = tempFirstPassengerColor;
+            }
         }
     }
 

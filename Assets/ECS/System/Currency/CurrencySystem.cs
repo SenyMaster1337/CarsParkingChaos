@@ -27,7 +27,7 @@ public class CurrencySystem : IEcsRunSystem
             foreach (var buySortingEntity in _buyPassengerSortingFilter)
             {
                 var sortingEvent = _buyPassengerSortingFilter.GetEntity(buySortingEntity);
-                TryToBuyPassengerSorting(currencyComponent, sortingEvent);
+                TryToBuy(currencyComponent, sortingEvent);
                 sortingEvent.Del<TryBuyEvent>();
             }
 
@@ -40,7 +40,7 @@ public class CurrencySystem : IEcsRunSystem
         }
     }
 
-    private void TryToBuyPassengerSorting(CurrencyComponent currencyComponent, EcsEntity confirmSortingEvent)
+    private void TryToBuy(CurrencyComponent currencyComponent, EcsEntity confirmSortingEvent)
     {
         if (confirmSortingEvent.Has<PassengerSortingComponent>())
         {
@@ -48,13 +48,21 @@ public class CurrencySystem : IEcsRunSystem
             {
                 _ecsWorld.NewEntity().Get<PassengerSortEvent>();
             }
+            else
+            {
+                _ecsWorld.NewEntity().Get<ShowNotEnoughMoneyWindowEvent>();
+            }
         }
 
         if (confirmSortingEvent.Has<ShuffleComponent>())
         {
-            if (currencyComponent.playerCoins >= _staticData.PriceSortPassengers)
+            if (currencyComponent.playerCoins >= _staticData.PriceShufflePassengers)
             {
                 _ecsWorld.NewEntity().Get<ShuffleEvent>();
+            }
+            else
+            {
+                _ecsWorld.NewEntity().Get<ShowNotEnoughMoneyWindowEvent>();
             }
         }
     }

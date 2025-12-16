@@ -15,11 +15,13 @@ public class PassengerSortingSystem : IEcsRunSystem
 
     private bool _isNeedConfirmToPay;
     private bool _isNeedAdvShow;
+    private bool _isSortingActive;
 
     public PassengerSortingSystem()
     {
         _isNeedConfirmToPay = false;
         _isNeedAdvShow = false;
+        _isSortingActive = false;
     }
 
     public void Run()
@@ -52,15 +54,24 @@ public class PassengerSortingSystem : IEcsRunSystem
                 {
                     TryConfirmPayment();
                     SortPassengers(dataEntity);
+                    _isSortingActive = true;
                     _ecsWorld.NewEntity().Get<DisableRaycastReaderToggleSwitchMethodEvent>();
                 }
 
-                if (dataEvent.carsOnlyParkingZoneList.Count == 0)
+                if (dataEvent.carsOnlyParkingZoneList.Count == 0 && _isSortingActive == false)
+                {
+                    _ecsWorld.NewEntity().Get<ShowNotCarsToSortingWindowEvent>();
+                    dataEntity.Del<GetUnitsDataEvent>();
+                    dataEntity.Del<VerifyCarsToPassengerSortingEvent>();
+                }
+
+                if (dataEntity.IsAlive() && dataEvent.carsOnlyParkingZoneList.Count == 0 && _isSortingActive == true)
                 {
                     _ecsWorld.NewEntity().Get<SortPassengerInColorCarsEvent>();
                     _ecsWorld.NewEntity().Get<EnableRaycastReaderEvent>();
                     _ecsWorld.NewEntity().Get<EnableButtonsEvent>();
                     _ecsWorld.NewEntity().Get<EnableRaycastReaderToggleSwitchMethodEvent>();
+                    _isSortingActive = false;
                     dataEntity.Del<GetUnitsDataEvent>();
                     dataEntity.Del<VerifyCarsToPassengerSortingEvent>();
                 }
@@ -100,6 +111,28 @@ public class PassengerSortingSystem : IEcsRunSystem
             confirmEventNewEntity.Get<ConfirmBuyingEvent>();
             confirmEventNewEntity.Get<PassengerSortingConfirmBuyingEvent>();
             _isNeedConfirmToPay = false;
+        }
+    }
+
+    private void PerformSortingIterationVersionTwo(EcsEntity dataEntity)
+    {
+        ref var dataEvent = ref dataEntity.Get<GetUnitsDataEvent>();
+
+        int passengerIndex = 0;
+
+        for (int carIndex = 0; carIndex < dataEvent.carsOnlyParkingZoneList.Count; carIndex++)
+        {
+            ref var carComponent = ref dataEvent.carsOnlyParkingZoneList[carIndex].Entity.Get<CarComponent>();
+
+            for (int currentPassengerIndex = 0; currentPassengerIndex < carComponent.maxPassengersSlots; currentPassengerIndex++)
+            {
+                ref var firstPassengerComponent = ref dataEvent.allPassengersInLevel[passengerIndex].Entity.Get<PassengerComponent>();
+
+                Color tempCarColor = carComponent.renderer.material.color;
+                firstPassengerComponent.renderer.material.color = tempCarColor;
+
+                passengerIndex++;
+            }
         }
     }
 
@@ -163,28 +196,6 @@ public class PassengerSortingSystem : IEcsRunSystem
         {
             ref var passengerComponent = ref dataEvent.allPassengersInLevel[z].Entity.Get<PassengerComponent>();
             passengerComponent.isSorted = false;
-        }
-    }
-
-    private void PerformSortingIterationVersionTwo(EcsEntity dataEntity)
-    {
-        ref var dataEvent = ref dataEntity.Get<GetUnitsDataEvent>();
-
-        int passengerIndex = 0;
-
-        for (int carIndex = 0; carIndex < dataEvent.carsOnlyParkingZoneList.Count; carIndex++)
-        {
-            ref var carComponent = ref dataEvent.carsOnlyParkingZoneList[carIndex].Entity.Get<CarComponent>();
-
-            for (int currentPassengerIndex = 0; currentPassengerIndex < carComponent.maxPassengersSlots; currentPassengerIndex++)
-            {
-                ref var firstPassengerComponent = ref dataEvent.allPassengersInLevel[passengerIndex].Entity.Get<PassengerComponent>();
-
-                Color tempCarColor = carComponent.renderer.material.color;
-                firstPassengerComponent.renderer.material.color = tempCarColor;
-
-                passengerIndex++;
-            }
         }
     }
 

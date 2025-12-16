@@ -1,11 +1,15 @@
 using Leopotam.Ecs;
 using UnityEngine;
+using DG.Tweening;
 
 public class ShopShowerSystem : IEcsRunSystem
 {
     private EcsFilter<ShopShowerComponent> _shopFilter;
     private EcsFilter<OpenShopEvent> _openFilter;
     private EcsFilter<CloseShopEvent> _closeFilter;
+    private EcsFilter<ShowNotCarsToSortingWindowEvent> _showNotCarsFilter;
+    private EcsFilter<ShowNotEnoughMoneyWindowEvent> _showNotEnoughMoneyFilter;
+    private EcsFilter<ShowNotEnoughCarsToShuffleEvent> _showNotEnoughCarsFilter;
 
     public void Run()
     {
@@ -26,7 +30,32 @@ public class ShopShowerSystem : IEcsRunSystem
                 CloseShop(shopShowerComponent);
                 closeEvent.Del<CloseShopEvent>();
             }
+
+            foreach (var notCarsEntity in _showNotCarsFilter)
+            {
+                ShowErrorInfo(shopShowerComponent.ShopShower.NotCarsToSortingWindow.WindowGroup);
+                _showNotCarsFilter.GetEntity(notCarsEntity).Del<ShowNotCarsToSortingWindowEvent>();
+            }
+
+            foreach (var notEnoughMoneyEntity in _showNotEnoughMoneyFilter)
+            {
+                ShowErrorInfo(shopShowerComponent.ShopShower.NotEnoughMoneyWindow.WindowGroup);
+                _showNotEnoughMoneyFilter.GetEntity(notEnoughMoneyEntity).Del<ShowNotEnoughMoneyWindowEvent>();
+            }
+
+            foreach (var notEnoughCarsEntity in _showNotEnoughCarsFilter)
+            {
+                ShowErrorInfo(shopShowerComponent.ShopShower.NotEnoughCarsToShuffleWindow.WindowGroup);
+                _showNotEnoughCarsFilter.GetEntity(notEnoughCarsEntity).Del<ShowNotEnoughCarsToShuffleEvent>();
+            }
         }
+    }
+
+    private void ShowErrorInfo(CanvasGroup windowGroup)
+    {
+        windowGroup.DOKill();
+        windowGroup.alpha = 1.0f;
+        windowGroup.DOFade(0f, 7f);
     }
 
     private void OpenShop(ShopShowerComponent shopShowerComponent)

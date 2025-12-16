@@ -9,18 +9,18 @@ public class YGSceneLoader : MonoBehaviour
 
     private void Start()
     {
-        //if (YG2.envir.isDesktop)
-        //{
-        //    _mainCamera.transform.position = new Vector3(-1.11000001f, 45f, -43.0999985f));
-        //    _mainCamera.transform.rotation = Quaternion.Euler(53.3000031f, 340.089966f, 1.42861074e-06f);
-        //    _mainCamera.fieldOfView = 37;
-        //}
-        //else
-        //{
-        //    _mainCamera.transform.position = new Vector3(4.4000001f, 88.5999985f, -38.5099983f);
-        //    _mainCamera.transform.rotation = Quaternion.Euler(54.5200005f, 335.199982f, -1.47096137e-06f);
-        //    _mainCamera.fieldOfView = 54;
-        //}
+        if (YG2.envir.isDesktop)
+        {
+            _mainCamera.transform.position = new Vector3(6.20293236f, 69.6996765f, -42.8993835f);
+            _mainCamera.transform.rotation = Quaternion.Euler(45.9999962f, 336.700012f, -1.2290551e-06f);
+            _mainCamera.fieldOfView = 39;
+        }
+        else
+        {
+            _mainCamera.transform.position = new Vector3(6.20293236f, 69.6996765f, -42.8993835f);
+            _mainCamera.transform.rotation = Quaternion.Euler(48.4000053f, 336f, -1.2859465e-06f);
+            _mainCamera.fieldOfView = 50;
+        }
 
         //SceneManager.LoadScene(SceneName + YG2.saves.level);
     }

@@ -7,4 +7,7 @@ public class ShopShower : MonoBehaviour
     [field: SerializeField] public CloseShopButton CloseShopButtonClickReader { get; private set; }
     [field: SerializeField] public BuyPassengerSortingShower BuyPassengerSortingShower { get; private set; }
     [field: SerializeField] public BuyShuffleShower BuyPassengerShuffleShower { get; private set; }
+    [field: SerializeField] public NotCarsToSortingWindow NotCarsToSortingWindow { get; private set; }
+    [field: SerializeField] public NotEnoughCarsToShuffle NotEnoughCarsToShuffleWindow { get; private set; }
+    [field: SerializeField] public NotEnoughMoneyWindow NotEnoughMoneyWindow { get; private set; }
 }

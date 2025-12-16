@@ -20,5 +20,17 @@ public class ShopShowerInitSystem : IEcsInitSystem
         shopShowerComponent.ShopShower.WindowGroup.alpha = 0f;
         shopShowerComponent.ShopShower.WindowGroup.interactable = false;
         shopShowerComponent.ShopShower.WindowGroup.blocksRaycasts = false;
+
+        shopShowerComponent.ShopShower.NotCarsToSortingWindow.WindowGroup.alpha = 0f;
+        shopShowerComponent.ShopShower.NotCarsToSortingWindow.WindowGroup.interactable = false;
+        shopShowerComponent.ShopShower.NotCarsToSortingWindow.WindowGroup.blocksRaycasts = false;
+
+        shopShowerComponent.ShopShower.NotEnoughMoneyWindow.WindowGroup.alpha = 0f;
+        shopShowerComponent.ShopShower.NotEnoughMoneyWindow.WindowGroup.interactable = false;
+        shopShowerComponent.ShopShower.NotEnoughMoneyWindow.WindowGroup.blocksRaycasts = false;
+
+        shopShowerComponent.ShopShower.NotEnoughCarsToShuffleWindow.WindowGroup.alpha = 0f;
+        shopShowerComponent.ShopShower.NotEnoughCarsToShuffleWindow.WindowGroup.interactable = false;
+        shopShowerComponent.ShopShower.NotEnoughCarsToShuffleWindow.WindowGroup.blocksRaycasts = false;
     }
 }
