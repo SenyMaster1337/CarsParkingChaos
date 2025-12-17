@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class YGPlayerSaveProgressSystem : IEcsRunSystem
 {
-    private EcsFilter<YGEnityComponentsEvent> _saveEnityComponentsFilter;
+    private EcsFilter<YGSaveEnityComponentsEvent> _saveEnityComponentsFilter;
     private EcsFilter<YGSaveRewardParkingSlotsEvent> _saveParkingSlotsFilter;
     private EcsFilter<YGClearDataRewardParkingSlots> _clearParkingSlotsFilter;
     private EcsFilter<YGSaveProgressEvent> _saveProgressFilter;
@@ -18,7 +18,7 @@ public class YGPlayerSaveProgressSystem : IEcsRunSystem
         {
             ref var saveProgressEvent = ref _saveEnityComponentsFilter.Get1(levelEntity);
             SaveEntityComponents();
-            _saveEnityComponentsFilter.GetEntity(levelEntity).Del<YGEnityComponentsEvent>();
+            _saveEnityComponentsFilter.GetEntity(levelEntity).Del<YGSaveEnityComponentsEvent>();
         }
 
         foreach (var saveParkingSlotsEntity  in _saveParkingSlotsFilter)

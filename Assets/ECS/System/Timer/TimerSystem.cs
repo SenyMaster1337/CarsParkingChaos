@@ -59,7 +59,7 @@ public class TimerSystem : IEcsRunSystem
     {
         if (entityNoTimeLeftEvent.Has<ParkingReservationComponent>())
         {
-            entityNoTimeLeftEvent.Get<CarsInParkingDataEvent>();
+            entityNoTimeLeftEvent.Get<VerifyCarsInParkingDataEvent>();
         }
     }
 

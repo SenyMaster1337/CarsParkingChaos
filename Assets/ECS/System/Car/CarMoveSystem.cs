@@ -90,10 +90,10 @@ public class CarMoveSystem : IEcsRunSystem
 
     private void TrySpeedUp(ref CarMovableComponent movable, ref CarComponent component)
     {
-        if (movable.moveSpeed < _staticData.MaxLinerCarSpeed && component.canCrashed == false)
+        if (movable.moveSpeed < _staticData.MaxCarSpeed && component.canCrashed == false)
         {
-            movable.moveSpeed += _staticData.MaxLinerCarSpeed * Time.deltaTime;
-            movable.moveSpeed = Mathf.Min(movable.moveSpeed, _staticData.MaxLinerCarSpeed);
+            movable.moveSpeed += _staticData.LinerCarSpeedUp * Time.deltaTime;
+            movable.moveSpeed = Mathf.Min(movable.moveSpeed, _staticData.MaxCarSpeed);
         }
     }
 

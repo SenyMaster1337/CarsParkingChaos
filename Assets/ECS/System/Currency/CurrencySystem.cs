@@ -86,7 +86,7 @@ public class CurrencySystem : IEcsRunSystem
     {
         currencyComponent.playerCoins -= value;
         StartChangeCurrentCoinShowerEvent(currencyComponent.playerCoins);
-        _ecsWorld.NewEntity().Get<YGEnityComponentsEvent>();
+        _ecsWorld.NewEntity().Get<YGSaveEnityComponentsEvent>();
         _ecsWorld.NewEntity().Get<YGSaveProgressEvent>();
     }
 

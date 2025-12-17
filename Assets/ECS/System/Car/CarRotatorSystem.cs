@@ -31,5 +31,6 @@ public class CarRotatorSystem : IEcsInitSystem, IEcsDestroySystem
     {
         ref var movable = ref car.Entity.Get<CarMovableComponent>();
         movable.currentTransform.rotation = quaternion;
+        movable.isSpeedUpEnable = true;
     }
 }

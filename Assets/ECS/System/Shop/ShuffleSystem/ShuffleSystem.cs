@@ -37,9 +37,9 @@ public class ShuffleSystem : IEcsRunSystem
 
             foreach (var shuffleStartEntity in _SortPassengerInColorCarsFilter)
             {
-                _isPassengerSkipActive = false;
+                //_isPassengerSkipActive = false;
                 SortPassengerInColorCars(shuffleComponentEntity);
-                _isPassengerSkipActive = true;
+                //_isPassengerSkipActive = true;
                 _SortPassengerInColorCarsFilter.GetEntity(shuffleStartEntity).Del<SortPassengerInColorCarsEvent>();
             }
 
@@ -95,11 +95,11 @@ public class ShuffleSystem : IEcsRunSystem
 
             for (int j = 0; j < carComponent.maxPassengersSlots && passengerIndex < shuffleComponent.passengers.Count; j++)
             {
-                if (_isPassengerSkipActive && i <= _firstIndexCars)
-                {
-                    passengerIndex++;
-                    continue;
-                }
+                //if (_isPassengerSkipActive && i <= _firstIndexCars)
+                //{
+                //    passengerIndex++;
+                //    continue;
+                //}
 
                 ref var passengerComponent = ref shuffleComponent.passengers[passengerIndex].Entity.Get<PassengerComponent>();
                 passengerComponent.renderer.material.color = carComponent.renderer.material.color;
@@ -116,9 +116,9 @@ public class ShuffleSystem : IEcsRunSystem
 
         for (int i = 0; i < _shuffleCarsIterationCount; i++)
         {
-            for (int j = _firstIndexCars; j < shuffleComponent.cars.Count; j++)
+            for (int j = 0; j < shuffleComponent.cars.Count; j++)
             {
-                int randomIndex = _random.Next(_firstIndexCars, j + 1);
+                int randomIndex = _random.Next(j + 1);
                 ref var firstCarComponent = ref shuffleComponent.cars[j].Entity.Get<CarComponent>();
                 ref var secondCarComponent = ref shuffleComponent.cars[randomIndex].Entity.Get<CarComponent>();
 

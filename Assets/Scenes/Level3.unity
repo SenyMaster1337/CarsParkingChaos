@@ -851,6 +851,10 @@ PrefabInstance:
       propertyPath: _cars.Array.data[19]
       value: 
       objectReference: {fileID: 1252236832}
+    - target: {fileID: 4600432843669656172, guid: ac5fd529db1def9449ad27b970f26c24, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4804393038481384704, guid: ac5fd529db1def9449ad27b970f26c24, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

@@ -26,6 +26,9 @@ public class LevelLossShowerSystem : IEcsRunSystem
         lossComponent.levelLossShower.WindowGroup.alpha = 1;
         lossComponent.levelLossShower.WindowGroup.interactable = true;
         lossComponent.levelLossShower.WindowGroup.blocksRaycasts = true;
+
+        lossComponent.levelLossShower.BlackBackground.WindowGroup.alpha = 1f;
+
         _ecsWorld.NewEntity().Get<DisableButtonsEvent>();
         _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
     }

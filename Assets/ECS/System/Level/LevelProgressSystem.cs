@@ -59,7 +59,7 @@ public class LevelProgressSystem : IEcsRunSystem
 
         _ecsWorld.NewEntity().Get<AddPointsWinningLeaderboardEvent>();
         _ecsWorld.NewEntity().Get<AddCoinsWinningEvent>();
-        _ecsWorld.NewEntity().Get<YGEnityComponentsEvent>();
+        _ecsWorld.NewEntity().Get<YGSaveEnityComponentsEvent>();
         _ecsWorld.NewEntity().Get<YGClearDataRewardParkingSlots>();
         _ecsWorld.NewEntity().Get<YGSaveProgressEvent>();
 
@@ -72,6 +72,9 @@ public class LevelProgressSystem : IEcsRunSystem
         completeLevelComponent.levelCompleteShower.WindowGroup.alpha = 1.0f;
         completeLevelComponent.levelCompleteShower.WindowGroup.interactable = true;
         completeLevelComponent.levelCompleteShower.WindowGroup.blocksRaycasts = true;
+
+        completeLevelComponent.levelCompleteShower.BlackBackground.WindowGroup.alpha = 1.0f;
+
         _ecsWorld.NewEntity().Get<DisableButtonsEvent>();
     }
 }

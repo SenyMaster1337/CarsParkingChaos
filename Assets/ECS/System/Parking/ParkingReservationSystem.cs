@@ -8,7 +8,7 @@ public class ParkingReservationSystem : IEcsRunSystem
     private EcsFilter<ParkingReservationComponent> _filter;
     private EcsFilter<ReservedParkingSlotEvent> _reservedSlot;
     private EcsFilter<ParkingCancelReservationEvent> _cancelParkingReserve;
-    private EcsFilter<CarsInParkingDataEvent> _verifyCarsInParkingData;
+    private EcsFilter<VerifyCarsInParkingDataEvent> _verifyCarsInParkingData;
     private EcsFilter<AddParkingSlotEvent> _addParkingSlotFilter;
     private EcsFilter<EnableRaycastReaderToggleSwitchMethodEvent> _enableRaycastReaderToggleSwitchFilter;
     private EcsFilter<DisableRaycastReaderToggleSwitchMethodEvent> _disableRaycastReaderToggleSwitchFilter;
@@ -63,7 +63,7 @@ public class ParkingReservationSystem : IEcsRunSystem
             {
                 var verifyEntityEvent = _verifyCarsInParkingData.GetEntity(verifyEntity);
                 VerifyCarsInParkingData(parkingReservationComponent.parkingSlots);
-                verifyEntityEvent.Del<CarsInParkingDataEvent>();
+                verifyEntityEvent.Del<VerifyCarsInParkingDataEvent>();
             }
 
             foreach (var addParkingSlotEntity in _addParkingSlotFilter)
@@ -135,53 +135,38 @@ public class ParkingReservationSystem : IEcsRunSystem
             parkingComponent1.isReserved = false;
 
             _reservedParkingSlots.Remove(cancelReservationEvent.parkingSlot);
+            _isParkingFull = false;
         }
     }
 
     public void ToggleSwitchRaycastReaderActiveEvent(List<ParkingSlot> parkingSlots, int entity)
     {
-        int maxReservedParkingSlot = 0;
-
-        for (int i = 0; i < parkingSlots.Count; i++)
+        if (_reservedParkingSlots.Count == parkingSlots.Count)
         {
-            ref var parkingComponent = ref parkingSlots[i].Entity.Get<ParkingComponent>();
-
-            if (parkingComponent.isReserved)
-            {
-                maxReservedParkingSlot++;
-            }
-            else
-            {
-                _isParkingFull = false;
-                _ecsWorld.NewEntity().Get<EnableRaycastReaderEvent>();
-                return;
-            }
-
-            if (maxReservedParkingSlot == parkingSlots.Count)
-            {
-                _isParkingFull = true;
-                TrySaveCarInParkingData(entity, parkingSlots);
-                _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
-                return;
-            }
+            _isParkingFull = true;
+            SaveCarInParkingData(entity, parkingSlots);
+            _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
+            _ecsWorld.NewEntity().Get<DisableButtonsEvent>();
+            return;
         }
+        else
+        {
+            _isParkingFull = false;
+            DeclineSaveCarInParkingData(entity);
+            _ecsWorld.NewEntity().Get<EnableRaycastReaderEvent>();
+            _ecsWorld.NewEntity().Get<EnableButtonsEvent>();
+            return;
+        }
+
     }
 
-    private void TrySaveCarInParkingData(int entity, List<ParkingSlot> parkingSlots)
+    private void SaveCarInParkingData(int entity, List<ParkingSlot> parkingSlots)
     {
         if (_isSavingDataActive == true)
             return;
 
-        if (_reservedParkingSlots.Count >= parkingSlots.Count)
+        if (_reservedParkingSlots.Count == parkingSlots.Count)
         {
-            for (int i = 0; i < parkingSlots.Count; i++)
-            {
-                ref var parkingComponent = ref parkingSlots[i].Entity.Get<ParkingComponent>();
-                ref var ReservedParkingComponent = ref _reservedParkingSlots[i].Entity.Get<ParkingComponent>();
-
-                ReservedParkingComponent.car = parkingComponent.car;
-            }
-
             _filter.GetEntity(entity).Get<TimerComponent>() = new TimerComponent
             {
                 TimeLeft = _staticData.TimeLeftInTimerToVerifyCarsInParking,
@@ -192,33 +177,23 @@ public class ParkingReservationSystem : IEcsRunSystem
         }
     }
 
+    private void DeclineSaveCarInParkingData(int entity)
+    {
+        _isSavingDataActive = false;
+
+        if (_filter.GetEntity(entity).Has<TimerComponent>())
+        {
+            _filter.GetEntity(entity).Del<TimerComponent>();
+        }
+    }
+
     private void VerifyCarsInParkingData(List<ParkingSlot> parkingSlots)
     {
         _isSavingDataActive = false;
 
         if (_reservedParkingSlots == null || _reservedParkingSlots.Count < parkingSlots.Count || _isParkingFull == false)
-        {
             return;
-        }
 
-        int count = 0;
-
-        for (int i = 0; i < parkingSlots.Count; i++)
-        {
-            ref var parkingComponent = ref parkingSlots[i].Entity.Get<ParkingComponent>();
-            ref var reservedParkingComponent = ref _reservedParkingSlots[i].Entity.Get<ParkingComponent>();
-
-            if (parkingComponent.car == reservedParkingComponent.car)
-            {
-                count++;
-            }
-            else
-            {
-                return;
-            }
-
-            if (count == parkingSlots.Count)
-                _ecsWorld.NewEntity().Get<ShowLossWindowEvent>();
-        }
+        _ecsWorld.NewEntity().Get<ShowLossWindowEvent>();
     }
 }

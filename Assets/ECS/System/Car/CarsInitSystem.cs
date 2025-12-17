@@ -60,6 +60,7 @@ public class CarsInitSystem : IEcsInitSystem
 
             carMovable.isMoving = false;
             carMovable.isReverseDirectionEnable = false;
+            carMovable.isSpeedUpEnable = false;
 
             ref var carAnimationComponent = ref carNewEntity.Get<CarAnimationComponent>();
             carAnimationComponent.animator = _cars[i].GetComponentInChildren<Animator>();
