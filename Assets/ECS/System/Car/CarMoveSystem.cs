@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CarMoveSystem : IEcsRunSystem
 {
+    private EcsWorld _ecsWorld;
     private EcsFilter<CarMovableComponent, CarComponent> _filter;
     private EcsFilter<ActivateCarMovableEvent> _activateCarMovableFilter;
     private EcsFilter<CarParkingEvent> _carParkingFilter;
@@ -30,10 +31,11 @@ public class CarMoveSystem : IEcsRunSystem
             {
                 if (movable.isReverseDirectionEnable == true)
                 {
-                    MoveToPosition(movable, movable.spawnPosition);
+                    MoveToStartPoint(movable, movable.spawnPosition);
 
                     if (movable.currentTransform.position == movable.spawnPosition)
                     {
+                        StartCancelParkingReserverEvent(component.parkingReservedSlot);
                         component.isCrashed = false;
                         movable.isMoving = false;
                         movable.isReverseDirectionEnable = false;
@@ -83,7 +85,7 @@ public class CarMoveSystem : IEcsRunSystem
         }
     }
 
-    private void MoveToPosition(CarMovableComponent movable, Vector3 targetPosition)
+    private void MoveToStartPoint(CarMovableComponent movable, Vector3 targetPosition)
     {
         movable.currentTransform.position = Vector3.MoveTowards(movable.currentTransform.position, targetPosition, movable.moveSpeed * Time.deltaTime);
     }
@@ -106,5 +108,13 @@ public class CarMoveSystem : IEcsRunSystem
             component.crashHandler.DisableBoxCollider();
             component.isParked = false;
         }
+    }
+
+    private void StartCancelParkingReserverEvent(ParkingSlot slot)
+    {
+        _ecsWorld.NewEntity().Get<ParkingCancelReservationEvent>() = new ParkingCancelReservationEvent
+        {
+            parkingSlot = slot
+        };
     }
 }
