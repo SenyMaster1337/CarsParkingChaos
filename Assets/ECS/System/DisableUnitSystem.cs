@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DisableUnitSystem : IEcsRunSystem
 {
-    private EcsFilter<DisableUnitEvent> _filter;
+    private EcsFilter<DisableUnitsEvent> _filter;
 
     public void Run()
     {
@@ -11,43 +11,23 @@ public class DisableUnitSystem : IEcsRunSystem
         {
             var entityDisableComponent = _filter.GetEntity(entity);
 
-            Vehicle car = null;
-            Passenger passenger = null;
-
-            if (entityDisableComponent.Has<CarComponent>())
+            if (entityDisableComponent.IsAlive() && entityDisableComponent.Has<CarComponent>())
             {
                 ref var carComponent = ref entityDisableComponent.Get<CarComponent>();
-                car = carComponent.car;
 
-                entityDisableComponent.Del<CarComponent>();
-                entityDisableComponent.Del<CarMovableComponent>();
-                entityDisableComponent.Del<CarAnimationComponent>();
+                entityDisableComponent.Del<DisableUnitsEvent>();
+                carComponent.car.gameObject.SetActive(false);
+                carComponent.car.Entity.Destroy();
             }
 
-            if (entityDisableComponent.Has<PassengerComponent>())
+            if (entityDisableComponent.IsAlive() && entityDisableComponent.Has<PassengerComponent>())
             {
                 ref var passengerComponent = ref entityDisableComponent.Get<PassengerComponent>();
-                passenger = passengerComponent.passenger;
 
-                entityDisableComponent.Del<PassengerComponent>();
-                entityDisableComponent.Del<PassengerMovableComponent>();
-                entityDisableComponent.Del<PassengerAnimationComponent>();
+                entityDisableComponent.Del<DisableUnitsEvent>();
+                passengerComponent.passenger.gameObject.SetActive(false);
+                passengerComponent.passenger.Entity.Destroy();
             }
-
-            entityDisableComponent.Del<DisableUnitEvent>();
-
-            if (car != null)
-            {
-                car.gameObject.SetActive(false);
-                car = null;
-            }
-
-            if (passenger != null)
-            {
-                passenger.gameObject.SetActive(false);
-                passenger = null;
-            }
-
         }
     }
 }

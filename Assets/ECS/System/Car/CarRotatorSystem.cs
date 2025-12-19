@@ -27,10 +27,15 @@ public class CarRotatorSystem : IEcsInitSystem, IEcsDestroySystem
         }
     }
 
-    private void RotateCar(Quaternion quaternion, Vehicle car)
+    private void RotateCar(CarRotate carRotate, Vehicle car)
     {
         ref var movable = ref car.Entity.Get<CarMovableComponent>();
-        movable.currentTransform.rotation = quaternion;
-        movable.isSpeedUpEnable = true;
+
+        if (movable.carRotates.Contains(carRotate) == false)
+        {
+            movable.carRotates.Add(carRotate);
+            movable.rigidbody.MoveRotation(carRotate.transform.rotation);
+            movable.isSpeedUpEnable = true;
+        }
     }
 }

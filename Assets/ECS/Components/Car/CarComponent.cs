@@ -4,11 +4,9 @@ using UnityEngine;
 public struct CarComponent
 {
     public Vehicle car;
-    public ParkingSlot parkingReservedSlot;
     public CrashHandler crashHandler;
 
     public Renderer renderer;
-    public Renderer renderer2;
 
     public int maxPassengersSlots;
     public List<PassengerComponent> passengers;
@@ -22,7 +20,7 @@ public struct CarComponent
     public bool canClickable;
     public bool canCrashed;
     public bool isCrashed;
-
-    public Quaternion rorationCarInParking;
     public float distanceToDisableCrashHandler;
+    public Quaternion rorationCarInParking;
+    public ParkingSlot parkingReservedSlot;
 }

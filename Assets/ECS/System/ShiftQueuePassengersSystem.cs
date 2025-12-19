@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class ShiftQueuePassengersSystem : IEcsRunSystem
 {
     private List<Passenger> _passengers;
+    private SceneData _sceneData;
 
     public void Run()
     {
@@ -33,9 +34,13 @@ public class ShiftQueuePassengersSystem : IEcsRunSystem
         for (int j = 1; j < _passengers.Count; j++)
         {
             ref var previousPassengerMovable = ref _passengers[j - 1].Entity.Get<PassengerMovableComponent>();
+            ref var previousPassengerComponent = ref _passengers[j - 1].Entity.Get<PassengerComponent>();
 
             if (previousPassengerMovable.isPositionStartQueuePosition == true)
                 continue;
+
+            if (previousPassengerMovable.queuePointPosition != _sceneData.QueuePositions[_sceneData.QueuePositions.Count - 1].position)
+                previousPassengerComponent.passenger.gameObject.SetActive(true);
 
             StartMoveQueuePointEvent(_passengers[j], previousPassengerMovable);
         }

@@ -102,7 +102,7 @@ public class PassengerBoardingSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRu
                     {
                         firstPassengerComponent.carComponent = carComponent;
                         firstPassengerMovable.isMoving = true;
-                        firstPassengerMovable.targetCarPosition = carMovable.currentTransform.position;
+                        firstPassengerMovable.targetCarPosition = carMovable.rigidbody.position;
                         carComponent.reservedSeats.Add(firstPassengerComponent);
                         _passengers.RemoveAt(0);
 

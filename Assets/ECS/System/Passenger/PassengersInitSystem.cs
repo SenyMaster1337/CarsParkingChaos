@@ -43,12 +43,16 @@ public class PassengersInitSystem : IEcsInitSystem
                 passengerMovable.currentTransform.rotation = _sceneData.QueuePositions[i].rotation;
                 passengerMovable.queuePointPosition = _sceneData.QueuePositions[i].position;
             }
-            else
+            else 
             {
                 int lastIndex = _sceneData.QueuePositions.Count - 1;
+                passengerComponent.passenger.gameObject.SetActive(false);
                 passengerMovable.currentTransform.position = _sceneData.QueuePositions[lastIndex].position;
                 passengerMovable.currentTransform.rotation = _sceneData.QueuePositions[lastIndex].rotation;
                 passengerMovable.queuePointPosition = _sceneData.QueuePositions[lastIndex].position;
+
+                if (i == _passengers.Count - 1)
+                    passengerComponent.passenger.gameObject.SetActive(true);
             }
 
             passengerMovable.moveSpeed = _staticData.PassengerSpeed;

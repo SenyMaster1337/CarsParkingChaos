@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1963939560898544834}
   - component: {fileID: 3340355254990003863}
   - component: {fileID: 2061606080207260491}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: CrashHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,8 +52,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.8235896, y: 1.4993463, z: 0.30315495}
-  m_Center: {x: -0.0051460564, y: 0.5311432, z: -0.34842253}
+  m_Size: {x: 2.3174515, y: 1.4993463, z: 0.30315495}
+  m_Center: {x: 0.010191739, y: 0.5311432, z: -0.34842253}
 --- !u!114 &2061606080207260491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,7 +386,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8829948043810586774}
   - component: {fileID: 3235318056962472712}
-  - component: {fileID: 590785310364827004}
+  - component: {fileID: 1793610170036403226}
   - component: {fileID: 1112103954655508921}
   - component: {fileID: 3861696868943649234}
   m_Layer: 6
@@ -439,7 +439,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.3302035, y: 4.3290005, z: 5.6213217}
   m_Center: {x: 0.00927043, y: -0.39909637, z: -0.0061483383}
---- !u!54 &590785310364827004
+--- !u!54 &1793610170036403226
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -463,8 +463,8 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
+  m_Interpolate: 1
+  m_Constraints: 80
   m_CollisionDetection: 2
 --- !u!114 &1112103954655508921
 MonoBehaviour:

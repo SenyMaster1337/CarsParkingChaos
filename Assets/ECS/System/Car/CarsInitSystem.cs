@@ -27,19 +27,20 @@ public class CarsInitSystem : IEcsInitSystem
 
             ref var carComponent = ref carNewEntity.Get<CarComponent>();
             carComponent.car = _cars[i];
-            carComponent.renderer = _cars[i].gameObject.GetComponentInChildren<CarRenderer>().Renderer;
-            carComponent.crashHandler = _cars[i].GetComponentInChildren<CrashHandler>();
+            carComponent.renderer = _cars[i].GetComponentInChildren<CarRenderer>().Renderer;
 
             carComponent.passengers = new List<PassengerComponent>();
             carComponent.reservedSeats = new List<PassengerComponent>();
 
-            carComponent.isNotEmptySeats = false;
-            carComponent.isAllPassengersBoarded = false;
+            carComponent.crashHandler = _cars[i].GetComponentInChildren<CrashHandler>();
             carComponent.isCrashHandlerEnabled = true;
             carComponent.canClickable = true;
             carComponent.canCrashed = true;
             carComponent.isCrashed = false;
             carComponent.isParked = true;
+
+            carComponent.isNotEmptySeats = false;
+            carComponent.isAllPassengersBoarded = false;
 
             carComponent.rorationCarInParking = _staticData.RotationCarInParking;
             carComponent.distanceToDisableCrashHandler = _staticData.DistanceToDisableCrashHandler;
@@ -50,17 +51,6 @@ public class CarsInitSystem : IEcsInitSystem
                 carComponent.maxPassengersSlots = _staticData.CoopeCarSlots;
             else
                 carComponent.maxPassengersSlots = _staticData.DefaultCarSlots;
-
-            ref var carMovable = ref carNewEntity.Get<CarMovableComponent>();
-            carMovable.currentTransform = _cars[i].gameObject.transform;
-            carMovable.spawnPosition = _cars[i].gameObject.transform.position;
-            carMovable.targetPoint = Vector3.zero;
-
-            carMovable.moveSpeed = _staticData.CarSpeed;
-
-            carMovable.isMoving = false;
-            carMovable.isReverseDirectionEnable = false;
-            carMovable.isSpeedUpEnable = false;
 
             ref var carAnimationComponent = ref carNewEntity.Get<CarAnimationComponent>();
             carAnimationComponent.animator = _cars[i].GetComponentInChildren<Animator>();

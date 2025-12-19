@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 5176430023449263639}
   - component: {fileID: 55569763248035973}
   - component: {fileID: 5474349441727461438}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: CrashHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,8 +278,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.7765088, y: 1.4059061, z: 0.30315495}
-  m_Center: {x: -0.010669321, y: 0.6959974, z: -0.34842253}
+  m_Size: {x: 2.1895602, y: 1.4059061, z: 0.30315495}
+  m_Center: {x: 0.0070399046, y: 0.6959974, z: -0.34842253}
 --- !u!114 &5474349441727461438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -604,8 +604,8 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
+  m_Interpolate: 1
+  m_Constraints: 80
   m_CollisionDetection: 2
 --- !u!114 &5788397620880084997
 MonoBehaviour:

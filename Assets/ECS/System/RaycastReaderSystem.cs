@@ -30,16 +30,14 @@ public class RaycastReaderSystem : IEcsRunSystem
 
         foreach (var entityDisable in _raycastEnable)
         {
-            var entityDisableEvent = _raycastEnable.GetEntity(entityDisable);
             _isRaycastSystemActive = true;
-            entityDisableEvent.Del<EnableRaycastReaderEvent>();
+            _raycastEnable.GetEntity(entityDisable).Del<EnableRaycastReaderEvent>();
         }
 
         foreach (var entityDisable in _raycastDisable)
         {
-            var entityDisableEvent = _raycastDisable.GetEntity(entityDisable);
             _isRaycastSystemActive = false;
-            entityDisableEvent.Del<RaycastReaderDisableEvent>();
+            _raycastDisable.GetEntity(entityDisable).Del<RaycastReaderDisableEvent>();
         }
     }
 
@@ -72,7 +70,7 @@ public class RaycastReaderSystem : IEcsRunSystem
                 TryStartHandTutorialHideEvent(carComponent);
             }
 
-            if(advParkingSlotHit != null)
+            if (advParkingSlotHit != null)
             {
                 _ecsWorld.NewEntity().Get<SaveParkingSlotEvent>() = new SaveParkingSlotEvent
                 {

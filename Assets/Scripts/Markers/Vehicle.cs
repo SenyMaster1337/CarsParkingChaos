@@ -2,11 +2,11 @@ using Leopotam.Ecs;
 using System;
 using UnityEngine;
 
-public class Vehicle : BoxTriggerHandler
+public class Vehicle : MonoBehaviour 
 {
     public EcsEntity Entity;
 
-    public event Action<Quaternion, Vehicle> OnTriggerCar;
+    public event Action<CarRotate, Vehicle> OnTriggerCar;
     public event Action<CarParkingDirection, Vehicle> OnCollisionCar;
     public event Action<Vehicle> CarEnterParking;
 
@@ -14,7 +14,7 @@ public class Vehicle : BoxTriggerHandler
     {
         if (other.gameObject.TryGetComponent(out CarRotate rotateTriggerHandler))
         {
-            OnTriggerCar?.Invoke(rotateTriggerHandler.gameObject.transform.rotation, this);
+            OnTriggerCar?.Invoke(rotateTriggerHandler, this);
         }
 
         if (other.gameObject.TryGetComponent(out CarParkingDirection carEnter))

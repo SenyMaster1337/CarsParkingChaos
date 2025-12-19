@@ -12,7 +12,7 @@ public class YGPlayerInitSystem : IEcsInitSystem
         if (YG2.envir.isDesktop)
         {
             _mainCamera.transform.position = new Vector3(6.20293236f, 69.6996765f, -42.8993835f);
-            _mainCamera.transform.rotation = Quaternion.Euler(45.9999962f, 338f, 0f);
+            _mainCamera.transform.rotation = Quaternion.Euler(45.9999962f, 340f, 0f);
             _mainCamera.fieldOfView = 39;
             _sceneData.PassengerCounter.transform.position = _sceneData.PassengerCounter.DesktopPointPassengerCounter.transform.position;
         }

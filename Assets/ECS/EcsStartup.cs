@@ -31,12 +31,14 @@ public class EcsStartup : MonoBehaviour
     private List<Passenger> _passengers;
 
     private EcsWorld _ecsWorld;
-    private EcsSystems _systems;
+    private EcsSystems _updateSystems;
+    private EcsSystems _fixedUpdateSystems;
 
     private void Start()
     {
         _ecsWorld = new EcsWorld();
-        _systems = new EcsSystems(_ecsWorld);
+        _updateSystems = new EcsSystems(_ecsWorld);
+        _fixedUpdateSystems = new EcsSystems(_ecsWorld);
 
         AddYGSystems();
 
@@ -64,31 +66,42 @@ public class EcsStartup : MonoBehaviour
 
         TryAddTutorial();
 
-        _systems
+        _updateSystems
             .Inject(_staticData)
             .Inject(_sceneData)
             .Inject(_passengers)
             .Inject(_mainCamera);
 
-        _systems.Init();
+        _fixedUpdateSystems
+            .Inject(_staticData);
+
+        _updateSystems.Init();
+        _fixedUpdateSystems.Init();
     }
 
     private void Update()
     {
-        _systems.Run();
+        _updateSystems.Run();
+    }
+
+    private void FixedUpdate()
+    {
+        _fixedUpdateSystems.Run();
     }
 
     private void OnDestroy()
     {
-        _systems?.Destroy();
-        _systems = null;
+        _updateSystems?.Destroy();
+        _updateSystems = null;
+        _fixedUpdateSystems?.Destroy();
+        _fixedUpdateSystems = null;
         _ecsWorld?.Destroy();
         _ecsWorld = null;
     }
 
     private void AddYGSystems()
     {
-        _systems
+        _updateSystems
             .Add(new YGPlayerInitSystem())
             .Add(new YGPlayerSaveProgressSystem())
             .Add(new YGAdvShowSystem())
@@ -100,15 +113,14 @@ public class EcsStartup : MonoBehaviour
     private void AddInputSystem()
     {
         if (YG2.envir.isDesktop)
-            _systems.Add(new DesktopInputSystem());
+            _updateSystems.Add(new DesktopInputSystem());
         else
-            _systems.Add(new MobileInputSystem());
+            _updateSystems.Add(new MobileInputSystem());
     }
     private void AddCarSystems()
     {
-        _systems
+        _updateSystems
             .Add(new CarsInitSystem(_cars))
-            .Add(new CarMoveSystem())
             .Add(new CarCrashHandlerSystem(_cars))
             .Add(new CarLeavingInitSystem(_cars))
             .Add(new CarLeavingSystem())
@@ -116,6 +128,10 @@ public class EcsStartup : MonoBehaviour
             .Add(new AnimatedCarSystem())
             .Add(new CarSoundSystem())
             .Add(new CarEffectsSystem());
+
+        _fixedUpdateSystems
+            .Add(new CarMoveInitSystem(_cars))
+            .Add(new CarMoveSystem());
     }
 
     private void AddPassengerSystems()
@@ -123,7 +139,7 @@ public class EcsStartup : MonoBehaviour
         var passengerSpawnSystem = new PassengerSpawnSystem(_cars, _passengerPrefab);
         _passengers = passengerSpawnSystem.Passengers;
 
-        _systems
+        _updateSystems
             .Add(passengerSpawnSystem)
             .Add(new PassengersInitSystem(_startQueuePoint))
             .Add(new PassengerMoveSystem())
@@ -132,7 +148,7 @@ public class EcsStartup : MonoBehaviour
 
     private void AddParkingSystems()
     {
-        _systems
+        _updateSystems
             .Add(new ParkingReservationInitSystem(_parkingSlots))
             .Add(new CarParkingSystem(_cars))
             .Add(new ParkingReservationSystem());
@@ -140,7 +156,7 @@ public class EcsStartup : MonoBehaviour
 
     private void AddGameSystems()
     {
-        _systems
+        _updateSystems
             .Add(new RaycastReaderSystem())
             .Add(new PassengerBoardingSystem(_cars))
             .Add(new ShiftQueuePassengersSystem())
@@ -151,14 +167,14 @@ public class EcsStartup : MonoBehaviour
 
     private void AddLevelSoundSystems()
     {
-        _systems
+        _updateSystems
             .Add(new LevelSoundInitSystem(_gameSounds))
             .Add(new LevelSoundSystem());
     }
 
     private void AddLevelSystems()
     {
-        _systems
+        _updateSystems
             .Add(new LevelInitSystem())
             .Add(new LevelShowInitSystem(_levelCompleteShower, _levelLossShower, _levelCurrentShower))
             .Add(new LevelUIButtonsReaderSystem(_levelCompleteShower, _levelLossShower))
@@ -170,41 +186,41 @@ public class EcsStartup : MonoBehaviour
 
     private void AddButtonsUISystems()
     {
-        _systems
+        _updateSystems
             .Add(new PlayerUIButtonReaderSystem(_soundMuteToggle, _restartButtonClickReader, _levelCompleteShower, _levelLossShower, _leaderboradShower, _shopShower));
     }
 
     private void AddSettingSystems()
     {
-        _systems
+        _updateSystems
             .Add(new SoundMuteToggleInitSystem(_soundMuteToggle))
             .Add(new SoundMuteToggleSystem());
     }
 
     private void AddShowCurrencySystems()
     {
-        _systems
+        _updateSystems
             .Add(new CurrencyShowInitSystem(_coinCountText))
             .Add(new CurrencyShowSystem());
     }
 
     private void AddCurrencySystems()
     {
-        _systems
+        _updateSystems
             .Add(new CurrencyInitSystem())
             .Add(new CurrencySystem());
     }
 
     private void AddShopSystem()
     {
-        _systems
+        _updateSystems
             .Add(new ShopShowerInitSystem(_shopShower))
             .Add(new ShopShowerSystem());
     }
 
     private void AddShuffleSystem()
     {
-        _systems
+        _updateSystems
             .Add(new ShuffleInitSystem(_cars))
             .Add(new ShuffleSystem())
             .Add(new CarShuffleShowerInitSystem(_shopShower.BuyPassengerShuffleShower))
@@ -214,14 +230,14 @@ public class EcsStartup : MonoBehaviour
 
     private void AddPassengerCountShowerSystems()
     {
-        _systems
+        _updateSystems
             .Add(new PassengersCountShowerInitSystem(_passengersCountText))
             .Add(new PassengersCountShowerSystem());
     }
 
     private void AddUnlcokParkingSlotSystems()
     {
-        _systems
+        _updateSystems
             .Add(new UnlockParkingSlotSystem())
             .Add(new UnlockParkingSlotShowerInitSystem(_advUnlockParkingSlotShower))
             .Add(new UnlockParkingSlotShowerButtonReaderSystem(_advUnlockParkingSlotShower))
@@ -230,7 +246,7 @@ public class EcsStartup : MonoBehaviour
 
     private void AddPassengerSortingSystems()
     {
-        _systems
+        _updateSystems
             .Add(new PassengerSortingSystem())
             .Add(new PassengerSortingUIButtonsReader(_shopShower.BuyPassengerSortingShower))
             .Add(new PassengerSortingShowerInitSystem(_shopShower.BuyPassengerSortingShower))
@@ -241,7 +257,7 @@ public class EcsStartup : MonoBehaviour
     {
         if (_sceneData.TutorialEnabe)
         {
-            _systems
+            _updateSystems
                 .Add(new TutorialInitSystem(_cars))
                 .Add(new TutorialSystem(_cars));
         }

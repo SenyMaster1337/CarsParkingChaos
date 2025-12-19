@@ -51,7 +51,7 @@ public class TimerSystem : IEcsRunSystem
     {
         if (entityNoTimeLeftEvent.Has<CarComponent>())
         {
-            entityNoTimeLeftEvent.Get<DisableUnitEvent>();
+            entityNoTimeLeftEvent.Get<DisableUnitsEvent>();
         }
     }
 

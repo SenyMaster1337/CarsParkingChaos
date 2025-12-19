@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PassengerMoveSystem : IEcsRunSystem
 {
+    private EcsWorld _ecsWorld;
     private EcsFilter<PassengerMovableComponent, PassengerComponent> _filter;
 
     public void Run()
@@ -87,6 +88,6 @@ public class PassengerMoveSystem : IEcsRunSystem
 
     private void AddDisableComponent(int entity)
     {
-        _filter.GetEntity(entity).Get<DisableUnitEvent>();
+        _filter.GetEntity(entity).Get<DisableUnitsEvent>();
     }
 }

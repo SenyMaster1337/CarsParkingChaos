@@ -9,6 +9,12 @@ public class CarMoveSystem : IEcsRunSystem
     private EcsFilter<CarParkingEvent> _carParkingFilter;
 
     private StaticData _staticData;
+    private float _stopSqrDistance;
+
+    public CarMoveSystem()
+    {
+        _stopSqrDistance = 0.05f;
+    }
 
     public void Run()
     {
@@ -31,10 +37,16 @@ public class CarMoveSystem : IEcsRunSystem
             {
                 if (movable.isReverseDirectionEnable == true)
                 {
-                    MoveToStartPoint(movable, movable.spawnPosition);
+                    MoveToStartPointWithoutPhysics(ref movable);
 
-                    if (movable.currentTransform.position == movable.spawnPosition)
+                    if (movable.rigidbody.position.SqrDistance(movable.spawnPosition) < _stopSqrDistance)
                     {
+                        movable.rigidbody.interpolation = RigidbodyInterpolation.None;
+                        movable.rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
+
+                        movable.rigidbody.velocity = Vector3.zero;
+                        movable.rigidbody.angularVelocity = Vector3.zero;
+
                         StartCancelParkingReserverEvent(component.parkingReservedSlot);
                         component.isCrashed = false;
                         movable.isMoving = false;
@@ -44,18 +56,33 @@ public class CarMoveSystem : IEcsRunSystem
                 }
                 else
                 {
-                    movable.currentTransform.Translate(Vector3.forward * movable.moveSpeed * Time.deltaTime);
+                    //movable.currentTransform.Translate(Vector3.forward * movable.moveSpeed * Time.deltaTime);
+                    //movable.rigidbody.MovePosition(movable.rigidbody.position + movable.transform.forward * movable.moveSpeed * Time.fixedDeltaTime);
+                    MoveForwardPhysics(ref movable);
                     TryDisableCrashHandler(ref movable, ref component);
                     TrySpeedUp(ref movable, ref component);
                 }
 
                 if (movable.targetPoint != Vector3.zero)
                 {
-                    movable.currentTransform.LookAt(movable.targetPoint);
+                    //movable.transform.LookAt(movable.targetPoint);
+                    //movable.rigidbody.MoveRotation(Quaternion.LookRotation((movable.targetPoint - movable.rigidbody.position).normalized));
+                    movable.rigidbody.rotation = Quaternion.LookRotation((movable.targetPoint - movable.rigidbody.position).normalized);
+                    movable.rigidbody.angularVelocity = Vector3.zero;
                     movable.targetPoint = Vector3.zero;
                 }
             }
         }
+    }
+
+    private void MoveForwardPhysics(ref CarMovableComponent movable)
+    {
+        movable.rigidbody.velocity = movable.transform.forward * movable.moveSpeed;
+    }
+
+    private void MoveToStartPointWithoutPhysics(ref CarMovableComponent movable)
+    {
+        movable.rigidbody.MovePosition(movable.rigidbody.position + (-movable.transform.forward) * movable.moveSpeed * Time.fixedDeltaTime);
     }
 
     private void TryMovableActivated(int entity, ref CarMovableComponent movable, ref CarComponent carComponent)
@@ -64,6 +91,8 @@ public class CarMoveSystem : IEcsRunSystem
 
         if (entityMovableEvent.Has<ActivateCarMovableEvent>())
         {
+            movable.rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+            movable.rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             carComponent.canClickable = false;
             movable.isMoving = true;
             entityMovableEvent.Del<ActivateCarMovableEvent>();
@@ -76,32 +105,33 @@ public class CarMoveSystem : IEcsRunSystem
 
         if (entityParkingEvent.Has<CarParkingEvent>())
         {
+            movable.rigidbody.interpolation = RigidbodyInterpolation.None;
+            movable.rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
+
+            movable.rigidbody.velocity = Vector3.zero;
+            movable.rigidbody.angularVelocity = Vector3.zero;
+
             movable.isMoving = false;
             movable.targetPoint = Vector3.zero;
-            movable.currentTransform.position = component.parkingReservedSlot.transform.position;
-            movable.currentTransform.rotation = component.rorationCarInParking;
+            movable.rigidbody.position = component.parkingReservedSlot.transform.position;
+            movable.rigidbody.rotation = component.rorationCarInParking;
             component.isParked = true;
             entityParkingEvent.Del<CarParkingEvent>();
         }
-    }
-
-    private void MoveToStartPoint(CarMovableComponent movable, Vector3 targetPosition)
-    {
-        movable.currentTransform.position = Vector3.MoveTowards(movable.currentTransform.position, targetPosition, movable.moveSpeed * Time.deltaTime);
     }
 
     private void TrySpeedUp(ref CarMovableComponent movable, ref CarComponent component)
     {
         if (movable.moveSpeed < _staticData.MaxCarSpeed && component.canCrashed == false)
         {
-            movable.moveSpeed += _staticData.LinerCarSpeedUp * Time.deltaTime;
+            movable.moveSpeed += _staticData.LinerCarSpeedUp * Time.fixedDeltaTime;
             movable.moveSpeed = Mathf.Min(movable.moveSpeed, _staticData.MaxCarSpeed);
         }
     }
 
     private void TryDisableCrashHandler(ref CarMovableComponent movable, ref CarComponent component)
     {
-        if (movable.currentTransform.position.SqrDistance(movable.spawnPosition) > component.distanceToDisableCrashHandler && component.canCrashed == true)
+        if (movable.rigidbody.position.SqrDistance(movable.spawnPosition) > component.distanceToDisableCrashHandler && component.canCrashed == true)
         {
             component.canCrashed = false;
             component.crashHandler.enabled = false;
