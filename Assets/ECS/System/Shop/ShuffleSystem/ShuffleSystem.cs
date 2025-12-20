@@ -109,9 +109,8 @@ public class ShuffleSystem : IEcsRunSystem
         {
             for (int j = 0; j < shuffleComponent.cars.Count; j++)
             {
-                int randomIndex = _random.Next(j + 1);
                 ref var firstCarComponent = ref shuffleComponent.cars[j].Entity.Get<CarComponent>();
-                ref var secondCarComponent = ref shuffleComponent.cars[randomIndex].Entity.Get<CarComponent>();
+                ref var secondCarComponent = ref shuffleComponent.cars[_random.Next(j + 1)].Entity.Get<CarComponent>();
 
                 Color tempFirstPassengerColor = firstCarComponent.renderer.material.color;
                 Color templastPassengerColor = secondCarComponent.renderer.material.color;

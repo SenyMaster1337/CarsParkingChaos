@@ -33,3 +33,9 @@ MonoBehaviour:
   <TimeLeftInTimerToVerifyCarsInParking>k__BackingField: 6
   <TimeDisableCarInScene>k__BackingField: 0.8
   <AddScoreWinningValueToLeaderboard>k__BackingField: 100
+  <AllMaterialsUnit>k__BackingField:
+  - {fileID: 2100000, guid: 53a03a1bd2d84d44dbfb0dab1200b8fe, type: 2}
+  - {fileID: 2100000, guid: b955a159d4b07284f8823aaa79d1c8c0, type: 2}
+  - {fileID: 2100000, guid: edc2b15e86600e94bb70197105ba80e2, type: 2}
+  - {fileID: 2100000, guid: 15e2279d1c17ac7469894f97520a549c, type: 2}
+  - {fileID: 2100000, guid: 3a7540d3608cb3243892c9cda4bcaae0, type: 2}

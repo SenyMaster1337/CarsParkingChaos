@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Data", menuName = "Data/Create new StaticData")]
@@ -24,4 +25,5 @@ public class StaticData : ScriptableObject
     [field: SerializeField] public float TimeLeftInTimerToVerifyCarsInParking { get; private set; } = 3f;
     [field: SerializeField] public float TimeDisableCarInScene { get; private set; } = 1.2f;
     [field: SerializeField] public int AddScoreWinningValueToLeaderboard { get; private set; } = 100;
+    [field: SerializeField] public List<Material> AllMaterialsUnit { get; private set; }
 }

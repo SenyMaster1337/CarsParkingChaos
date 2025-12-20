@@ -7,6 +7,7 @@ public class CarsInitSystem : IEcsInitSystem
 {
     private EcsWorld _ecsWorld;
     private StaticData _staticData;
+    private SceneData _sceneData;
     private List<Vehicle> _cars;
 
     public CarsInitSystem(List<Vehicle> cars)
@@ -74,6 +75,15 @@ public class CarsInitSystem : IEcsInitSystem
             carEffectComponent.isDriveEffectActive = false;
 
             _cars[i].Entity = carNewEntity;
+        }
+
+        if (_sceneData?.LevelCarsMaterial != null && _sceneData.LevelCarsMaterial.CarsMaterial != null && _sceneData.LevelCarsMaterial.CarsMaterial.Count > 0)
+        {
+            for (int i = 0; i < _cars.Count; i++)
+            {
+                ref var carComponent = ref _cars[i].Entity.Get<CarComponent>();
+                carComponent.renderer.material = _sceneData.LevelCarsMaterial.CarsMaterial[i];
+            }
         }
     }
 }

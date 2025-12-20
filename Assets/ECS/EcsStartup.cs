@@ -27,6 +27,7 @@ public class EcsStartup : MonoBehaviour
     [SerializeField] private ADVUnlockParkingSlotShower _advUnlockParkingSlotShower;
     [SerializeField] private PassengersCountText _passengersCountText;
     [SerializeField] private GameSounds _gameSounds;
+    [SerializeField] private LevelCarsMaterial _levelCarsMaterial;
 
     private List<Passenger> _passengers;
 
@@ -132,6 +133,13 @@ public class EcsStartup : MonoBehaviour
         _fixedUpdateSystems
             .Add(new CarMoveInitSystem(_cars))
             .Add(new CarMoveSystem());
+
+        if (_sceneData.RandomColorCarsEnabled)
+        {
+            _updateSystems
+                .Add(new CarsRandomMaterialInitSystem(_cars))
+                .Add(new CarsRandomMaterialSystem());
+        }
     }
 
     private void AddPassengerSystems()
@@ -255,7 +263,7 @@ public class EcsStartup : MonoBehaviour
 
     private void TryAddTutorial()
     {
-        if (_sceneData.TutorialEnabe)
+        if (_sceneData.TutorialEnabed)
         {
             _updateSystems
                 .Add(new TutorialInitSystem(_cars))
