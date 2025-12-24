@@ -37,7 +37,7 @@ public class TimerSystem : IEcsRunSystem
             TryVerifyCarsCointToPassengerSorting(entityNoTimeLeftEvent);
             entityNoTimeLeftEvent.Del<NoTimeLeftEvent>();
         }
-    }    
+    }
 
     private void TryCompleteLevel(EcsEntity entityNoTimeLeftEvent)
     {
