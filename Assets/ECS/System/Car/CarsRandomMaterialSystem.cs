@@ -1,6 +1,4 @@
 using Leopotam.Ecs;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CarsRandomMaterialSystem : IEcsRunSystem
@@ -20,8 +18,6 @@ public class CarsRandomMaterialSystem : IEcsRunSystem
     {
         foreach (var randomColorEntity in _randomColorFilter)
         {
-            Debug.Log("‡‡‡");
-
             ref var randomColorComponent = ref _randomColorFilter.Get1(randomColorEntity);
 
             for (int i = 0; i < randomColorComponent.cars.Count; i++)

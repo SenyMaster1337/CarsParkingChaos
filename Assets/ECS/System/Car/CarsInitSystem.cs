@@ -77,7 +77,7 @@ public class CarsInitSystem : IEcsInitSystem
             _cars[i].Entity = carNewEntity;
         }
 
-        if (_sceneData?.LevelCarsMaterial != null && _sceneData.LevelCarsMaterial.CarsMaterial != null && _sceneData.LevelCarsMaterial.CarsMaterial.Count > 0)
+        if (_sceneData.LevelCarsMaterial != null && _sceneData.LevelCarsMaterial.CarsMaterial != null && _sceneData.LevelCarsMaterial.CarsMaterial.Count > 0)
         {
             for (int i = 0; i < _cars.Count; i++)
             {
