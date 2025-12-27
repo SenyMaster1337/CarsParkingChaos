@@ -2,7 +2,7 @@ using Leopotam.Ecs;
 using UnityEngine;
 using YG;
 
-public class YGPlayerInitSystem : IEcsInitSystem
+public class YGPlayerDeviceInitSystem : IEcsInitSystem
 {
     private Camera _mainCamera;
     private SceneData _sceneData;

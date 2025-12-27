@@ -103,7 +103,7 @@ public class EcsStartup : MonoBehaviour
     private void AddYGSystems()
     {
         _updateSystems
-            .Add(new YGPlayerInitSystem())
+            .Add(new YGPlayerDeviceInitSystem())
             .Add(new YGPlayerSaveProgressSystem())
             .Add(new YGAdvShowSystem())
             .Add(new YGLeaderboardShowInitSystem(_leaderboradShower))

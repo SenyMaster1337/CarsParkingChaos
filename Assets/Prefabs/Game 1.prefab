@@ -5810,6 +5810,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MAP
       objectReference: {fileID: 0}
+    - target: {fileID: 4803999274375859628, guid: a63516c0ae622fe4da6ad6baf040db15, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5152521847354829901, guid: a63516c0ae622fe4da6ad6baf040db15, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
@@ -6125,6 +6129,18 @@ PrefabInstance:
     - target: {fileID: 4645016415807388123, guid: d571eb5f87d2a2b488618652e543c865, type: 3}
       propertyPath: m_Name
       value: UIGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 6622045239403929030, guid: d571eb5f87d2a2b488618652e543c865, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7133813910507325030, guid: d571eb5f87d2a2b488618652e543c865, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7279796367500948418, guid: d571eb5f87d2a2b488618652e543c865, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8853723322196126264, guid: d571eb5f87d2a2b488618652e543c865, type: 3}
       propertyPath: m_AnchorMax.y
