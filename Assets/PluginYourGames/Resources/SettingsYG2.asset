@@ -372,14 +372,14 @@ MonoBehaviour:
     autoApplySettings: 1
     autoPauseGame: 1
     editEventSystem: 1
-    autoGRA: 1
+    autoGRA: 0
     logInEditor: 1
     archivingBuild: 1
     syncInitSDK: 0
     loadSceneIfSDKLate: 0
     loadSceneIndex: 0
     initDelaySimulation: 0
-    buildNumber: 106
+    buildNumber: 110
   Simulation:
     device: 0
     language: ru
@@ -416,7 +416,7 @@ MonoBehaviour:
       color2: {r: 0.36, g: 0.09, b: 1, a: 1}
     pixelRatioEnable: 1
     pixelRatioValue: 1.3
-    developerBuild: 1
+    developerBuild: 0
   platformInfo:
     ownHost: 0
   platformToggles:

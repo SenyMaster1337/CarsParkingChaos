@@ -4988,7 +4988,6 @@ MonoBehaviour:
   _advUnlockParkingSlotShower: {fileID: 3214813736737317395}
   _passengersCountText: {fileID: 1356252828241132946}
   _gameSounds: {fileID: 1205393869809566044}
-  _levelCarsMaterial: {fileID: 0}
 --- !u!1 &8007288358893515278
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,5 +23,6 @@ public class YGPlayerLoader : MonoBehaviour
         }
 
         SceneManager.LoadScene(SceneName + YG2.saves.level);
+        YG2.GameReadyAPI();
     }
 }

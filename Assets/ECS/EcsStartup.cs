@@ -27,7 +27,6 @@ public class EcsStartup : MonoBehaviour
     [SerializeField] private ADVUnlockParkingSlotShower _advUnlockParkingSlotShower;
     [SerializeField] private PassengersCountText _passengersCountText;
     [SerializeField] private GameSounds _gameSounds;
-    [SerializeField] private LevelCarsMaterial _levelCarsMaterial;
 
     private List<Passenger> _passengers;
 
