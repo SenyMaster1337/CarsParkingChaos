@@ -16,7 +16,6 @@ public class LevelSoundInitSystem : IEcsInitSystem
 
         ref var audioComponent = ref soundsNewEntity.Get<GameAudioComponent>();
         audioComponent.winSound = _gameSounds.WinSound;
-        audioComponent.lossSound = _gameSounds.LossSound;
 
         audioComponent.isWinSoundEnable = false;
         audioComponent.isLossSoundEnable = false;
