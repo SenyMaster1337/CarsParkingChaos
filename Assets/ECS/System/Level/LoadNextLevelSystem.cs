@@ -1,11 +1,11 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine.SceneManagement;
-using UnityEngine;
 
 public class LoadNextLevelSystem : IEcsRunSystem
 {
     private const string SceneLevelName = "Level";
     private const string EndGameSceneName = "EndGame";
+
     private EcsWorld _ecsWorld;
     private EcsFilter<LevelComponent> _filter;
     private EcsFilter<LoadNextLevelEvent> _nextLevelEvent;
@@ -56,6 +56,7 @@ public class LoadNextLevelSystem : IEcsRunSystem
                 return true;
             }
         }
+
         return false;
     }
 }

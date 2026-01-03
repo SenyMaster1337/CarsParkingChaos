@@ -1,5 +1,5 @@
 
-public class ShowAdvUnclockParkingSlotButton : ButtonClickReader
+public class ShowAdvUnclockParkingSlotButton : BaseButtonClickReader
 {
     
 }

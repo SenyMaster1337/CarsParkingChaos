@@ -4,10 +4,10 @@ public class PassengerSortingShowerInitSystem : IEcsInitSystem
 {
     private EcsWorld _ecsWorld;
 
-    private BuyPassengerSortingShower _buyPassengerSortingShower;
+    private PassengerSortingShower _buyPassengerSortingShower;
     private StaticData _staticData;
 
-    public PassengerSortingShowerInitSystem(BuyPassengerSortingShower buyPassengerSortingShower)
+    public PassengerSortingShowerInitSystem(PassengerSortingShower buyPassengerSortingShower)
     {
         _buyPassengerSortingShower = buyPassengerSortingShower;
     }

@@ -1,6 +1,5 @@
 using Leopotam.Ecs;
 using UnityEngine.SceneManagement;
-using YG;
 
 public class LevelRestartSystem : IEcsRunSystem
 {

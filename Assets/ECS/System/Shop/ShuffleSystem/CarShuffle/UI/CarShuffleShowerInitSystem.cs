@@ -4,10 +4,10 @@ public class CarShuffleShowerInitSystem : IEcsInitSystem
 {
     private EcsWorld _ecsWorld;
 
-    private BuyShuffleShower _buyPassengerShuffle;
+    private CarShuffleShower _buyPassengerShuffle;
     private StaticData _staticData;
 
-    public CarShuffleShowerInitSystem(BuyShuffleShower buyPassengerShuffleShower)
+    public CarShuffleShowerInitSystem(CarShuffleShower buyPassengerShuffleShower)
     {
         _buyPassengerShuffle = buyPassengerShuffleShower;
     }

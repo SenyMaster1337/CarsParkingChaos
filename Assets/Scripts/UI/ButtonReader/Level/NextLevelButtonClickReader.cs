@@ -1,5 +1,5 @@
 
-public class NextLevelButtonClickReader : ButtonClickReader
+public class NextLevelButtonClickReader : BaseButtonClickReader
 {
     
 }

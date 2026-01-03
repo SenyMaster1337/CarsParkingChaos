@@ -1,6 +1,4 @@
 using Leopotam.Ecs;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using YG;
 
@@ -33,7 +31,7 @@ public class ShuffleSystem : IEcsRunSystem
 
             foreach (var shuffleStartEntity in _SortPassengerInColorCarsFilter)
             {
-                SortPassengerInColorCars(shuffleComponentEntity);
+                SortPassengerInColorAllCars(shuffleComponentEntity);
                 _SortPassengerInColorCarsFilter.GetEntity(shuffleStartEntity).Del<SortPassengerInColorCarsEvent>();
             }
 
@@ -47,8 +45,8 @@ public class ShuffleSystem : IEcsRunSystem
                 }
 
                 StartConfirmPayment();
-                ShuffleCars(shuffleComponentEntity);
-                SortPassengerInColorCars(shuffleComponentEntity);
+                ShuffleColorCars(shuffleComponentEntity);
+                SortPassengerInColorAllCars(shuffleComponentEntity);
 
                 _shuffleEventfilter.GetEntity(shuffleEventEntity).Del<ShuffleEvent>();
             }
@@ -66,8 +64,8 @@ public class ShuffleSystem : IEcsRunSystem
                 {
                     if (RewardID == "ShuffleRewardID")
                     {
-                        ShuffleCars(shuffleComponentEntity);
-                        SortPassengerInColorCars(shuffleComponentEntity);
+                        ShuffleColorCars(shuffleComponentEntity);
+                        SortPassengerInColorAllCars(shuffleComponentEntity);
                     }
                 });
 
@@ -77,7 +75,7 @@ public class ShuffleSystem : IEcsRunSystem
         }
     }
 
-    private void SortPassengerInColorCars(int shuffleComponentEntity)
+    private void SortPassengerInColorAllCars(int shuffleComponentEntity)
     {
         ref var shuffleComponent = ref _shuffleComponentFilter.Get1(shuffleComponentEntity);
 
@@ -98,10 +96,10 @@ public class ShuffleSystem : IEcsRunSystem
             }
         }
 
-        StartEnabledEvent();
+        StartEnableInteractionGameEvents();
     }
 
-    private void ShuffleCars(int shuffleComponentEntity)
+    private void ShuffleColorCars(int shuffleComponentEntity)
     {
         ref var shuffleComponent = ref _shuffleComponentFilter.Get1(shuffleComponentEntity);
 
@@ -128,7 +126,7 @@ public class ShuffleSystem : IEcsRunSystem
         confirmEventNewEntity.Get<PassengerShuffleConfirmBuyingEvent>();
     }
 
-    private void StartEnabledEvent()
+    private void StartEnableInteractionGameEvents()
     {
         _ecsWorld.NewEntity().Get<EnableRaycastReaderEvent>();
         _ecsWorld.NewEntity().Get<EnableButtonsEvent>();

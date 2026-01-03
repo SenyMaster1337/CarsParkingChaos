@@ -1,6 +1,5 @@
 using Leopotam.Ecs;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class CarRotatorSystem : IEcsInitSystem, IEcsDestroySystem
 {
@@ -35,7 +34,6 @@ public class CarRotatorSystem : IEcsInitSystem, IEcsDestroySystem
         {
             movable.carRotates.Add(carRotate);
             movable.rigidbody.MoveRotation(carRotate.transform.rotation);
-            movable.isSpeedUpEnable = true;
         }
     }
 }

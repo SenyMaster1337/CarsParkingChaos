@@ -1,5 +1,5 @@
 
-public class LeaderboradOpenButton : ButtonClickReader
+public class LeaderboradOpenButton : BaseButtonClickReader
 {
     
 }

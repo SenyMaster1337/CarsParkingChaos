@@ -304,7 +304,7 @@ GameObject:
   - component: {fileID: 3235318056962472712}
   - component: {fileID: 1793610170036403226}
   - component: {fileID: 1112103954655508921}
-  - component: {fileID: 3861696868943649234}
+  - component: {fileID: 437654035148824656}
   m_Layer: 6
   m_Name: KABRIK (2)
   m_TagString: Untagged
@@ -394,7 +394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60fd08e872307074d8f31aba89f78ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3861696868943649234
+--- !u!114 &437654035148824656
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -403,7 +403,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5026617041786121070}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6815b02e73182e418fa65377b5edacd, type: 3}
+  m_Script: {fileID: 11500000, guid: 35085d27140ef2a4e9b09bc8d0e8ebbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7731508498170318850

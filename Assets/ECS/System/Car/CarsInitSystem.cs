@@ -1,5 +1,4 @@
 using Leopotam.Ecs;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,9 +45,9 @@ public class CarsInitSystem : IEcsInitSystem
             carComponent.rorationCarInParking = _staticData.RotationCarInParking;
             carComponent.distanceToDisableCrashHandler = _staticData.DistanceToDisableCrashHandler;
 
-            if (_cars[i].TryGetComponent(out Minivan minivan))
+            if (_cars[i].TryGetComponent(out CarMinivan minivan))
                 carComponent.maxPassengersSlots = _staticData.MinivanCarSlots;
-            else if (_cars[i].TryGetComponent(out Coope coope))
+            else if (_cars[i].TryGetComponent(out CarCoope coope))
                 carComponent.maxPassengersSlots = _staticData.CoopeCarSlots;
             else
                 carComponent.maxPassengersSlots = _staticData.DefaultCarSlots;

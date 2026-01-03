@@ -1,5 +1,5 @@
 
-public class MuteSoundButtonClickReader : ButtonClickReader
+public class MuteSoundButtonClickReader : BaseButtonClickReader
 {
     
 }

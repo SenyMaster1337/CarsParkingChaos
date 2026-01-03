@@ -1673,7 +1673,7 @@ GameObject:
   - component: {fileID: 8316206979239024638}
   - component: {fileID: 5138387327687492419}
   - component: {fileID: 7110412139320356071}
-  - component: {fileID: 3774433106442376125}
+  - component: {fileID: 2684534166297565231}
   m_Layer: 5
   m_Name: AcceptButton
   m_TagString: Untagged
@@ -1783,7 +1783,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3774433106442376125
+--- !u!114 &2684534166297565231
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1792,7 +1792,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1879946455472510899}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad2028e4812909c42a0562361598b94c, type: 3}
+  m_Script: {fileID: 11500000, guid: c7fe1e63711531e49a1ce0795f94fb56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Button: {fileID: 7110412139320356071}
@@ -2337,7 +2337,7 @@ GameObject:
   - component: {fileID: 1745992770094397940}
   - component: {fileID: 2112543021521920662}
   - component: {fileID: 3668513434829118968}
-  - component: {fileID: 6876902601122249939}
+  - component: {fileID: 5848473850013241421}
   m_Layer: 5
   m_Name: BuyingCarShuffle
   m_TagString: Untagged
@@ -2420,7 +2420,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &6876902601122249939
+--- !u!114 &5848473850013241421
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2429,16 +2429,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2751577811069580172}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91eb1be6d4c2a504f8d94da2c3e7c006, type: 3}
+  m_Script: {fileID: 11500000, guid: ca7fb46be8ecd79489e386869c93cc74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <WindowGroup>k__BackingField: {fileID: 3668513434829118968}
   <PriceBuyingCarShuffleText>k__BackingField: {fileID: 6511267519038139288}
   <PriceBuyingCarShuffleShopAsssortmentMenuText>k__BackingField: {fileID: 3451520621181628269}
-  <OpenBuyingCarShuffleButton>k__BackingField: {fileID: 2655601823711031328}
-  <AcceptBuyingCarShuffleButton>k__BackingField: {fileID: 3502107105448208877}
+  <OpenBuyingCarShuffleButton>k__BackingField: {fileID: 236758489732736233}
+  <AcceptBuyingCarShuffleButton>k__BackingField: {fileID: 862095512033648455}
   <RewardShuffleButton>k__BackingField: {fileID: 3854016880680106530}
-  <DeclineBuyingCarShuffleButton>k__BackingField: {fileID: 6890858226658384872}
+  <DeclineBuyingCarShuffleButton>k__BackingField: {fileID: 5354965755439759422}
 --- !u!1 &2791826972494603399
 GameObject:
   m_ObjectHideFlags: 0
@@ -5379,7 +5379,7 @@ GameObject:
   - component: {fileID: 4618288444962989458}
   - component: {fileID: 7388577780022765759}
   - component: {fileID: 5680115962401217762}
-  - component: {fileID: 2869503542928100881}
+  - component: {fileID: 2863521095148494990}
   m_Layer: 5
   m_Name: BuyingPassengerSorting
   m_TagString: Untagged
@@ -5462,7 +5462,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &2869503542928100881
+--- !u!114 &2863521095148494990
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5471,16 +5471,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6793117161560443254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2b1e1ace81d53847b75269a708d1e0b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9724d029208b89e46b6a4bcc89965c89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <WindowGroup>k__BackingField: {fileID: 5680115962401217762}
   <PriceBuyingPassengerSortingText>k__BackingField: {fileID: 8962335479717160617}
   <PriceBuyingPassengerSortingShopAsssortmentMenuText>k__BackingField: {fileID: 3474922777549607386}
-  <OpenBuyingPassengerSortingButton>k__BackingField: {fileID: 6723871653343647867}
-  <AcceptBuyingPassengersSortingButton>k__BackingField: {fileID: 3774433106442376125}
+  <OpenBuyingPassengerSortingButton>k__BackingField: {fileID: 5187530354202274059}
+  <AcceptBuyingPassengersSortingButton>k__BackingField: {fileID: 2684534166297565231}
   <RewardPassengerSortingButton>k__BackingField: {fileID: 8415920821481608024}
-  <DeclineBuyingPassengerSortingButton>k__BackingField: {fileID: 3072707570545186934}
+  <DeclineBuyingPassengerSortingButton>k__BackingField: {fileID: 8772503989831575188}
 --- !u!1 &6802902385186823759
 GameObject:
   m_ObjectHideFlags: 0
@@ -5596,7 +5596,7 @@ GameObject:
   - component: {fileID: 3953887602582857458}
   - component: {fileID: 1298982435407976533}
   - component: {fileID: 5285456743465708296}
-  - component: {fileID: 3502107105448208877}
+  - component: {fileID: 862095512033648455}
   m_Layer: 5
   m_Name: AcceptButton
   m_TagString: Untagged
@@ -5706,7 +5706,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3502107105448208877
+--- !u!114 &862095512033648455
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5715,7 +5715,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6942867146544900752}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fce787c3e7eb01c48a65583123ed3e40, type: 3}
+  m_Script: {fileID: 11500000, guid: 031a2c54bb4c9674ca885513550ad27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Button: {fileID: 5285456743465708296}
@@ -5931,8 +5931,8 @@ MonoBehaviour:
   <WindowGroup>k__BackingField: {fileID: 8064274665511783285}
   <OpenShopButtonClickReader>k__BackingField: {fileID: 3064511423704630982}
   <CloseShopButtonClickReader>k__BackingField: {fileID: 4723796086295703868}
-  <BuyPassengerSortingShower>k__BackingField: {fileID: 2869503542928100881}
-  <BuyPassengerShuffleShower>k__BackingField: {fileID: 6876902601122249939}
+  <BuyPassengerSortingShower>k__BackingField: {fileID: 2863521095148494990}
+  <BuyPassengerShuffleShower>k__BackingField: {fileID: 5848473850013241421}
   <NotCarsToSortingWindow>k__BackingField: {fileID: 5397315234467993625}
   <NotEnoughCarsToShuffleWindow>k__BackingField: {fileID: 866684585203520152}
   <NotEnoughMoneyWindow>k__BackingField: {fileID: 6139277240068894033}
@@ -7336,7 +7336,7 @@ PrefabInstance:
       addedObject: {fileID: 5331442047838332244}
     - targetCorrespondingSourceObject: {fileID: 5520699925731651093, guid: f5c2679886ea94c5f999dc55b059c39b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3072707570545186934}
+      addedObject: {fileID: 8772503989831575188}
   m_SourcePrefab: {fileID: 100100000, guid: f5c2679886ea94c5f999dc55b059c39b, type: 3}
 --- !u!1 &5598343779300385520 stripped
 GameObject:
@@ -7387,7 +7387,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3072707570545186934
+--- !u!114 &8772503989831575188
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7396,7 +7396,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5598343779300385520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ac2eab3b86465444991a5e03fc2c234, type: 3}
+  m_Script: {fileID: 11500000, guid: b5f005b7bb855e743a436dec26a8cb80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Button: {fileID: 5331442047838332244}
@@ -10308,7 +10308,7 @@ PrefabInstance:
       addedObject: {fileID: 8284938963072302337}
     - targetCorrespondingSourceObject: {fileID: 5520699925731651093, guid: f5c2679886ea94c5f999dc55b059c39b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6890858226658384872}
+      addedObject: {fileID: 5354965755439759422}
   m_SourcePrefab: {fileID: 100100000, guid: f5c2679886ea94c5f999dc55b059c39b, type: 3}
 --- !u!114 &7617050420129440592 stripped
 MonoBehaviour:
@@ -10370,7 +10370,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6890858226658384872
+--- !u!114 &5354965755439759422
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10379,7 +10379,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7617050420129440598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d33d40eb76115f44bbf9ab3558506ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 13a777f48c9ad9d4fae38a5371cb2774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Button: {fileID: 8284938963072302337}
@@ -12555,7 +12555,7 @@ PrefabInstance:
       addedObject: {fileID: 327904353750570909}
     - targetCorrespondingSourceObject: {fileID: 191281306699547919, guid: 98d3092aa5868474685730b082065a22, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2655601823711031328}
+      addedObject: {fileID: 236758489732736233}
   m_SourcePrefab: {fileID: 100100000, guid: 98d3092aa5868474685730b082065a22, type: 3}
 --- !u!1 &5523114759403647040 stripped
 GameObject:
@@ -12606,7 +12606,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2655601823711031328
+--- !u!114 &236758489732736233
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12615,7 +12615,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5523114759403647040}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1bbed73352bd5a41ae3c0e5b94f4262, type: 3}
+  m_Script: {fileID: 11500000, guid: aeb436aac8a4bf04681a5f846854fd3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Button: {fileID: 327904353750570909}
@@ -14464,7 +14464,7 @@ PrefabInstance:
       addedObject: {fileID: 5749410150676873399}
     - targetCorrespondingSourceObject: {fileID: 191281306699547919, guid: 98d3092aa5868474685730b082065a22, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6723871653343647867}
+      addedObject: {fileID: 5187530354202274059}
   m_SourcePrefab: {fileID: 100100000, guid: 98d3092aa5868474685730b082065a22, type: 3}
 --- !u!224 &7023539003738006966 stripped
 RectTransform:
@@ -14520,7 +14520,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6723871653343647867
+--- !u!114 &5187530354202274059
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14529,7 +14529,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7023539003738006967}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f783005976856cc418a478856d97c340, type: 3}
+  m_Script: {fileID: 11500000, guid: 329095c9041f5214e9cc6f4027bed16b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Button: {fileID: 5749410150676873399}

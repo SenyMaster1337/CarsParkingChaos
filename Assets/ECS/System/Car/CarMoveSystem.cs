@@ -9,11 +9,11 @@ public class CarMoveSystem : IEcsRunSystem
     private EcsFilter<CarParkingEvent> _carParkingFilter;
 
     private StaticData _staticData;
-    private float _stopSqrDistance;
+    private float _stopCarSqrDistance;
 
     public CarMoveSystem()
     {
-        _stopSqrDistance = 0.05f;
+        _stopCarSqrDistance = 0.05f;
     }
 
     public void Run()
@@ -39,7 +39,7 @@ public class CarMoveSystem : IEcsRunSystem
                 {
                     MoveToStartPointWithoutPhysics(ref movable);
 
-                    if (movable.rigidbody.position.SqrDistance(movable.spawnPosition) < _stopSqrDistance)
+                    if (movable.rigidbody.position.SqrDistance(movable.spawnPosition) < _stopCarSqrDistance)
                     {
                         movable.rigidbody.interpolation = RigidbodyInterpolation.None;
                         movable.rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
@@ -56,8 +56,6 @@ public class CarMoveSystem : IEcsRunSystem
                 }
                 else
                 {
-                    //movable.currentTransform.Translate(Vector3.forward * movable.moveSpeed * Time.deltaTime);
-                    //movable.rigidbody.MovePosition(movable.rigidbody.position + movable.transform.forward * movable.moveSpeed * Time.fixedDeltaTime);
                     MoveForwardPhysics(ref movable);
                     TryDisableCrashHandler(ref movable, ref component);
                     TrySpeedUp(ref movable, ref component);
@@ -65,8 +63,6 @@ public class CarMoveSystem : IEcsRunSystem
 
                 if (movable.targetPoint != Vector3.zero)
                 {
-                    //movable.transform.LookAt(movable.targetPoint);
-                    //movable.rigidbody.MoveRotation(Quaternion.LookRotation((movable.targetPoint - movable.rigidbody.position).normalized));
                     movable.rigidbody.rotation = Quaternion.LookRotation((movable.targetPoint - movable.rigidbody.position).normalized);
                     movable.rigidbody.angularVelocity = Vector3.zero;
                     movable.targetPoint = Vector3.zero;

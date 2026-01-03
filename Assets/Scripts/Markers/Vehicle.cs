@@ -22,7 +22,7 @@ public class Vehicle : MonoBehaviour
             OnCollisionCar?.Invoke(carEnter, this);
         }
 
-        if (other.gameObject.TryGetComponent(out CarParking carToParkingTriggerHandler))
+        if (other.gameObject.TryGetComponent(out ParkingCars carToParkingTriggerHandler))
         {
             CarEnterParking?.Invoke(this);
         }

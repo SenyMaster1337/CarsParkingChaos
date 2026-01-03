@@ -1,5 +1,5 @@
 
 public struct PassengerSortingShowerComponent
 {
-    public BuyPassengerSortingShower buyPassengerSortingShower;
+    public PassengerSortingShower buyPassengerSortingShower;
 }

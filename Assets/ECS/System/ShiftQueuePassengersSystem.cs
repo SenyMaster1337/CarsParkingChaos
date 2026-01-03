@@ -8,10 +8,10 @@ public class ShiftQueuePassengersSystem : IEcsRunSystem
 
     public void Run()
     {
-        ShiftFirstPassenger();
+        MoveFirstPassenger();
     }
 
-    private void ShiftFirstPassenger()
+    private void MoveFirstPassenger()
     {
         if (_passengers.Count == 0)
             return;
@@ -22,11 +22,11 @@ public class ShiftQueuePassengersSystem : IEcsRunSystem
         if (passengerMovable.isPositionStartQueuePosition == false && passengerMovable.isMoving == false)
         {
             _passengers[0].Entity.Get<PassengerMoveStartQueuePointEvent>();
-            ShiftQueue();
+            MoveQueue();
         }
     }
 
-    private void ShiftQueue()
+    private void MoveQueue()
     {
         if (_passengers.Count <= 1)
             return;
@@ -42,15 +42,10 @@ public class ShiftQueuePassengersSystem : IEcsRunSystem
             if (previousPassengerMovable.queuePointPosition != _sceneData.QueuePositions[_sceneData.QueuePositions.Count - 1].position)
                 previousPassengerComponent.passenger.gameObject.SetActive(true);
 
-            StartMoveQueuePointEvent(_passengers[j], previousPassengerMovable);
+            _passengers[j].Entity.Get<PassengerMoveInQueuePointEvent>() = new PassengerMoveInQueuePointEvent
+            {
+                queuePointPosition = previousPassengerMovable.currentTransform.position
+            };
         }
-    }
-
-    private void StartMoveQueuePointEvent(Passenger passenger, PassengerMovableComponent previousPassengerMovable)
-    {
-        passenger.Entity.Get<PassengerMoveInQueuePointEvent>() = new PassengerMoveInQueuePointEvent
-        {
-            queuePointPosition = previousPassengerMovable.currentTransform.position
-        };
     }
 }

@@ -1,5 +1,4 @@
 using Leopotam.Ecs;
-using UnityEngine;
 
 public class CurrencySystem : IEcsRunSystem
 {
@@ -34,7 +33,7 @@ public class CurrencySystem : IEcsRunSystem
             foreach (var confirmSortingBuyingEntity in _confirmBuyingPassengerSortingFilter)
             {
                 var confirmSortingEvent = _confirmBuyingPassengerSortingFilter.GetEntity(confirmSortingBuyingEntity);
-                ConfirmBuying(ref currencyComponent, confirmSortingEvent);
+                ConfirmPurchase(ref currencyComponent, confirmSortingEvent);
                 confirmSortingEvent.Del<ConfirmBuyingEvent>();
             }
         }
@@ -67,26 +66,26 @@ public class CurrencySystem : IEcsRunSystem
         }
     }
 
-    private void ConfirmBuying(ref CurrencyComponent currencyComponent, EcsEntity confirmSortingEvent)
+    private void ConfirmPurchase(ref CurrencyComponent currencyComponent, EcsEntity confirmSortingEvent)
     {
         if (confirmSortingEvent.Has<PassengerSortingConfirmBuyingEvent>())
         {
-            TakeCoins(ref currencyComponent, _staticData.PriceSortPassengers);
+            PayPurchase(ref currencyComponent, _staticData.PriceSortPassengers);
             _ecsWorld.NewEntity().Get<ClosePassengerSortingInfoShowerEvent>();
         }
 
         if (confirmSortingEvent.Has<PassengerShuffleConfirmBuyingEvent>())
         {
-            TakeCoins(ref currencyComponent, _staticData.PriceShufflePassengers);
+            PayPurchase(ref currencyComponent, _staticData.PriceShufflePassengers);
             _ecsWorld.NewEntity().Get<CloseShuffleInfoShowerEvent>();
         }
     }
 
-    private void TakeCoins(ref CurrencyComponent currencyComponent, int value)
+    private void PayPurchase(ref CurrencyComponent currencyComponent, int value)
     {
         currencyComponent.playerCoins -= value;
         StartChangeCurrentCoinShowerEvent(currencyComponent.playerCoins);
-        _ecsWorld.NewEntity().Get<YGSaveEnityComponentsEvent>();
+        _ecsWorld.NewEntity().Get<YGSavePlayerCoinsCountEvent>();
         _ecsWorld.NewEntity().Get<YGSaveProgressEvent>();
     }
 

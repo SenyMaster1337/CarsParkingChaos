@@ -1,7 +1,5 @@
 using Leopotam.Ecs;
-using System.ComponentModel;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class RaycastReaderSystem : IEcsRunSystem
 {
@@ -64,9 +62,7 @@ public class RaycastReaderSystem : IEcsRunSystem
                     return;
 
                 StartParkingReservedEvent(carComponent);
-
                 StartCooldownEvent();
-
                 TryStartHandTutorialHideEvent(carComponent);
             }
 
@@ -88,18 +84,12 @@ public class RaycastReaderSystem : IEcsRunSystem
 
     private void StartParkingReservedEvent(CarComponent component)
     {
-        _ecsWorld.NewEntity().Get<ReservedParkingSlotEvent>() = new ReservedParkingSlotEvent
-        {
-            carEntity = component.car.Entity
-        };
+        _ecsWorld.NewEntity().Get<ReservedParkingSlotEvent>() = new ReservedParkingSlotEvent { carEntity = component.car.Entity };
     }
 
     private void TryStartHandTutorialHideEvent(CarComponent component)
     {
-        _ecsWorld.NewEntity().Get<TutorialHideHandEvent>() = new TutorialHideHandEvent
-        {
-            ecsEntity = component.car.Entity
-        };
+        _ecsWorld.NewEntity().Get<TutorialHideHandEvent>() = new TutorialHideHandEvent { ecsEntity = component.car.Entity };
     }
 
     private void StartCooldownEvent()

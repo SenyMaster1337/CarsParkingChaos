@@ -1,6 +1,5 @@
 using Leopotam.Ecs;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class LevelProgressSystem : IEcsRunSystem
 {
@@ -57,9 +56,10 @@ public class LevelProgressSystem : IEcsRunSystem
         levelComponent.isLevelCompleted = true;
         levelComponent.currentLevel++;
 
+        _ecsWorld.NewEntity().Get<YGSavePlayerLevelEvent>();
         _ecsWorld.NewEntity().Get<AddPointsWinningLeaderboardEvent>();
         _ecsWorld.NewEntity().Get<AddCoinsWinningEvent>();
-        _ecsWorld.NewEntity().Get<YGSaveEnityComponentsEvent>();
+        _ecsWorld.NewEntity().Get<YGSavePlayerCoinsCountEvent>();
         _ecsWorld.NewEntity().Get<YGClearDataRewardParkingSlots>();
         _ecsWorld.NewEntity().Get<YGSaveProgressEvent>();
 

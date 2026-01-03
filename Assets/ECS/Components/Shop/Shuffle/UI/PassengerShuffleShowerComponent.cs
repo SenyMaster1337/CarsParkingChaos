@@ -1,5 +1,5 @@
 
 public struct PassengerShuffleShowerComponent
 {
-    public BuyShuffleShower buyPassengerShuffleShower;
+    public CarShuffleShower buyPassengerShuffleShower;
 }

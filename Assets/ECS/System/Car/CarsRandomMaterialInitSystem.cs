@@ -1,6 +1,5 @@
 using Leopotam.Ecs;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class CarsRandomMaterialInitSystem : IEcsInitSystem
 {

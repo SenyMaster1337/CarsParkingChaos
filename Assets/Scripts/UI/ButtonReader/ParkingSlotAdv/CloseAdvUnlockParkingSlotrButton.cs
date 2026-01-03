@@ -1,5 +1,5 @@
 
-public class CloseAdvUnlockParkingSlotrButton : ButtonClickReader
+public class CloseAdvUnlockParkingSlotrButton : BaseButtonClickReader
 {
 
 }

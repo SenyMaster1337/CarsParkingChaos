@@ -6,8 +6,6 @@ public class PassengerSortingSystem : IEcsRunSystem
 {
     public string RewardID = "PassengerSortingRewardID";
 
-    private const float TimeLeftToVerifyCarsCountInParking = 1f;
-
     private EcsWorld _ecsWorld;
     private EcsFilter<PassengerSortEvent> _sortEventFilter;
     private EcsFilter<GetUnitsDataEvent> _unitsDataFilter;
@@ -53,7 +51,7 @@ public class PassengerSortingSystem : IEcsRunSystem
                 if (dataEvent.carsOnlyParkingZoneList.Count > 0)
                 {
                     TryConfirmPayment();
-                    SortPassengers(dataEntity);
+                    SortByPaymentMethod(dataEntity);
                     _isSortingActive = true;
                     _ecsWorld.NewEntity().Get<DisableRaycastReaderToggleSwitchMethodEvent>();
                 }
@@ -79,7 +77,7 @@ public class PassengerSortingSystem : IEcsRunSystem
         }
     }
 
-    private void SortPassengers(EcsEntity dataEntity)
+    private void SortByPaymentMethod(EcsEntity dataEntity)
     {
         if (_isNeedAdvShow == true)
         {
@@ -87,7 +85,7 @@ public class PassengerSortingSystem : IEcsRunSystem
             {
                 if (RewardID == "PassengerSortingRewardID")
                 {
-                    PerformSortingIterationVersionTwo(dataEntity);
+                    PerformPassengerSortingColorIteration(dataEntity);
                 }
             });
 
@@ -99,7 +97,7 @@ public class PassengerSortingSystem : IEcsRunSystem
 
         if (_isNeedConfirmToPay == false)
         {
-            PerformSortingIterationVersionTwo(dataEntity);
+            PerformPassengerSortingColorIteration(dataEntity);
         }
     }
 
@@ -114,7 +112,7 @@ public class PassengerSortingSystem : IEcsRunSystem
         }
     }
 
-    private void PerformSortingIterationVersionTwo(EcsEntity dataEntity)
+    private void PerformPassengerSortingColorIteration(EcsEntity dataEntity)
     {
         ref var dataEvent = ref dataEntity.Get<GetUnitsDataEvent>();
 
@@ -134,112 +132,5 @@ public class PassengerSortingSystem : IEcsRunSystem
                 passengerIndex++;
             }
         }
-    }
-
-    private void StartTimerToAnotherVerify(EcsEntity dataEntity)
-    {
-        ref var timerToVerifyCars = ref dataEntity.Get<TimerComponent>();
-        timerToVerifyCars.TimeLeft = TimeLeftToVerifyCarsCountInParking;
-        timerToVerifyCars.IsActive = true;
-    }
-
-    private void PerformSortingIteration(EcsEntity dataEntity)
-    {
-        ref var dataEvent = ref dataEntity.Get<GetUnitsDataEvent>();
-
-        for (int carIndex = 0; carIndex < dataEvent.carsOnlyParkingZoneList.Count; carIndex++)
-        {
-            ref var carComponent = ref dataEvent.carsOnlyParkingZoneList[carIndex].Entity.Get<CarComponent>();
-            int count = 0;
-            bool isCountMax = false;
-
-            for (int firstPassengerIndex = 0; firstPassengerIndex < dataEvent.allPassengersInLevel.Count && isCountMax == false; firstPassengerIndex++)
-            {
-                ref var firstPassengerComponent = ref dataEvent.allPassengersInLevel[firstPassengerIndex].Entity.Get<PassengerComponent>();
-                bool isSwapColor = false;
-
-                if (carComponent.renderer.material.color == firstPassengerComponent.renderer.material.color)
-                    continue;
-
-                for (int lastPassengerIndex = dataEvent.allPassengersInLevel.Count - 1; lastPassengerIndex >= 0 && isSwapColor == false; lastPassengerIndex--)
-                {
-                    ref var lastPassengerComponent = ref dataEvent.allPassengersInLevel[lastPassengerIndex].Entity.Get<PassengerComponent>();
-
-                    if (carComponent.renderer.material.color != lastPassengerComponent.renderer.material.color)
-                        continue;
-
-                    if (firstPassengerComponent.isSorted)
-                        continue;
-
-                    if (firstPassengerIndex == lastPassengerIndex)
-                        continue;
-
-                    Color tempFirstPassengerColor = firstPassengerComponent.renderer.material.color;
-                    Color templastPassengerColor = lastPassengerComponent.renderer.material.color;
-
-                    firstPassengerComponent.renderer.material.color = templastPassengerColor;
-                    lastPassengerComponent.renderer.material.color = tempFirstPassengerColor;
-
-                    firstPassengerComponent.isSorted = true;
-
-                    isSwapColor = true;
-                }
-
-                count++;
-
-                if (count == carComponent.maxPassengersSlots)
-                    isCountMax = true;
-            }
-        }
-
-        for (int z = 0; z < dataEvent.allPassengersInLevel.Count; z++)
-        {
-            ref var passengerComponent = ref dataEvent.allPassengersInLevel[z].Entity.Get<PassengerComponent>();
-            passengerComponent.isSorted = false;
-        }
-    }
-
-    private void SortPassengersSecondVariable(EcsEntity dataEntity)
-    {
-        ref var dataEvent = ref dataEntity.Get<GetUnitsDataEvent>();
-
-        if (dataEvent.carsOnlyParkingZoneList.Count == 0 || dataEvent.allPassengersInLevel.Count == 0)
-            return;
-
-        for (int carIndex = 0; carIndex < dataEvent.carsOnlyParkingZoneList.Count; carIndex++)
-        {
-            ref var carComponent = ref dataEvent.carsOnlyParkingZoneList[carIndex].Entity.Get<CarComponent>();
-            int count = 0;
-            bool isCountMax = false;
-
-            for (int passengerIndex = 0; passengerIndex < dataEvent.allPassengersInLevel.Count && isCountMax == false; passengerIndex++)
-            {
-                ref var firstPassengerComponent = ref dataEvent.allPassengersInLevel[passengerIndex].Entity.Get<PassengerComponent>();
-
-                if (carComponent.renderer.material.color == firstPassengerComponent.renderer.material.color)
-                    continue;
-
-                if (passengerIndex + carComponent.maxPassengersSlots >= dataEvent.allPassengersInLevel.Count)
-                    continue;
-
-                ref var lastPassengerComponent = ref dataEvent.allPassengersInLevel[passengerIndex + carComponent.maxPassengersSlots].Entity.Get<PassengerComponent>();
-
-                if (carComponent.renderer.material.color != lastPassengerComponent.renderer.material.color)
-                    continue;
-
-                Color tempFirstPassengerColor = firstPassengerComponent.renderer.material.color;
-                Color templastPassengerColor = lastPassengerComponent.renderer.material.color;
-
-                firstPassengerComponent.renderer.material.color = templastPassengerColor;
-                lastPassengerComponent.renderer.material.color = tempFirstPassengerColor;
-
-                count++;
-
-                if (count == carComponent.maxPassengersSlots)
-                    isCountMax = true;
-            }
-        }
-
-        _ecsWorld.NewEntity().Get<ConfirmBuyingEvent>();
     }
 }

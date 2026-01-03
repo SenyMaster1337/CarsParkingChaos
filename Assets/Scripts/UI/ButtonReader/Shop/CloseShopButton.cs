@@ -1,5 +1,5 @@
 
-public class CloseShopButton : ButtonClickReader
+public class CloseShopButton : BaseButtonClickReader
 {
     
 }

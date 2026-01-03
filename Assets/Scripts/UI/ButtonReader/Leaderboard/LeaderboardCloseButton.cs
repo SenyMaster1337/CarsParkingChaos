@@ -1,5 +1,5 @@
 
-public class LeaderboardCloseButton : ButtonClickReader
+public class LeaderboardCloseButton : BaseButtonClickReader
 {
     
 }

@@ -1,6 +1,5 @@
 using Leopotam.Ecs;
 using YG;
-using UnityEngine;
 
 public class SoundMuteToggleInitSystem : IEcsInitSystem
 {

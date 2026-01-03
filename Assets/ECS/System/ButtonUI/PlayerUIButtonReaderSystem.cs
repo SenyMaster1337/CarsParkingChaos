@@ -1,5 +1,4 @@
 using Leopotam.Ecs;
-using UnityEngine;
 
 public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
 {
@@ -12,7 +11,7 @@ public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEc
     private LeaderboradShower _leaderboradShower;
     private ShopShower _shopShower;
 
-    public PlayerUIButtonReaderSystem(SoundMuteToggle soundMuteToggle, RestartButtonClickReader restartButtonClickReader, LevelCompleteShower levelCompleteShower, LevelLossShower levelLossShower, LeaderboradShower leaderboradShower, ShopShower shopShower)
+    public PlayerUIButtonReaderSystem(SoundMuteToggle soundMuteToggle, RestartButtonClickReader restartButtonClickReader, LeaderboradShower leaderboradShower, ShopShower shopShower)
     {
         _soundMueToggle = soundMuteToggle;
         _restartButtonClickReader = restartButtonClickReader;

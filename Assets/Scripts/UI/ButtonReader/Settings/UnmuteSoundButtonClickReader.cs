@@ -1,5 +1,5 @@
 
-public class UnmuteSoundButtonClickReader : ButtonClickReader
+public class UnmuteSoundButtonClickReader : BaseButtonClickReader
 {
     
 }

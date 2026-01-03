@@ -15,7 +15,7 @@ public class CarCrashHandlerSystem : IEcsInitSystem, IEcsDestroySystem
     {
         for (int i = 0; i < _cars.Count; i++)
         {
-            _cars[i].GetComponentInChildren<CrashHandler>().OnCollisionCar += ComeBack;
+            _cars[i].GetComponentInChildren<CrashHandler>().OnCollisionCar += ProcessCrash;
         }
     }
 
@@ -24,11 +24,11 @@ public class CarCrashHandlerSystem : IEcsInitSystem, IEcsDestroySystem
         for (int i = 0; i < _cars.Count; i++)
         {
             if (_cars[i] != null)
-                _cars[i].GetComponentInChildren<CrashHandler>().OnCollisionCar -= ComeBack;
+                _cars[i].GetComponentInChildren<CrashHandler>().OnCollisionCar -= ProcessCrash;
         }
     }
 
-    private void ComeBack(Vehicle crashHandlerCar, Vehicle carCrashed)
+    private void ProcessCrash(Vehicle crashHandlerCar, Vehicle carCrashed)
     {
         ref var componentcrashHandlerCar = ref crashHandlerCar.Entity.Get<CarComponent>();
         ref var componentCarCrashed = ref carCrashed.Entity.Get<CarComponent>();

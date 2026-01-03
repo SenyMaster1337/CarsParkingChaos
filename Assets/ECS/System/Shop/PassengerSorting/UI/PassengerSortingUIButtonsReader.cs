@@ -1,13 +1,12 @@
 using Leopotam.Ecs;
-using UnityEngine;
 
 public class PassengerSortingUIButtonsReader : IEcsInitSystem, IEcsDestroySystem
 {
     private EcsWorld _ecsWorld;
 
-    private BuyPassengerSortingShower _buyPassengerSortingShower;
+    private PassengerSortingShower _buyPassengerSortingShower;
 
-    public PassengerSortingUIButtonsReader(BuyPassengerSortingShower buyPassengerSortingShower)
+    public PassengerSortingUIButtonsReader(PassengerSortingShower buyPassengerSortingShower)
     {
         _buyPassengerSortingShower = buyPassengerSortingShower;
     }

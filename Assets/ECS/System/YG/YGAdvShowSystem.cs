@@ -1,5 +1,4 @@
 using Leopotam.Ecs;
-using UnityEngine;
 using YG;
 
 public class YGAdvShowSystem : IEcsRunSystem

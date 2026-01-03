@@ -2,7 +2,6 @@ using Leopotam.Ecs;
 using System.Collections.Generic;
 using YG;
 using UnityEngine;
-using System;
 
 public class EcsStartup : MonoBehaviour
 {
@@ -194,7 +193,7 @@ public class EcsStartup : MonoBehaviour
     private void AddButtonsUISystems()
     {
         _updateSystems
-            .Add(new PlayerUIButtonReaderSystem(_soundMuteToggle, _restartButtonClickReader, _levelCompleteShower, _levelLossShower, _leaderboradShower, _shopShower));
+            .Add(new PlayerUIButtonReaderSystem(_soundMuteToggle, _restartButtonClickReader, _leaderboradShower, _shopShower));
     }
 
     private void AddSettingSystems()

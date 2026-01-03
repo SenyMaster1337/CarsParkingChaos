@@ -1,12 +1,11 @@
 using Leopotam.Ecs;
-using UnityEngine;
 
 public class CarShuffleUIButtonsReader : IEcsInitSystem, IEcsDestroySystem
 {
     private EcsWorld _ecsWorld;
-    private BuyShuffleShower _buyPassengerShuffleShower;
+    private CarShuffleShower _buyPassengerShuffleShower;
 
-    public CarShuffleUIButtonsReader(BuyShuffleShower buyPassengerShuffleShower)
+    public CarShuffleUIButtonsReader(CarShuffleShower buyPassengerShuffleShower)
     {
         _buyPassengerShuffleShower = buyPassengerShuffleShower;
     }

@@ -1,5 +1,5 @@
 
-public class RestartButtonClickReader : ButtonClickReader
+public class RestartButtonClickReader : BaseButtonClickReader
 {
     
 }

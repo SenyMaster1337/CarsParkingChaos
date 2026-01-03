@@ -1,5 +1,4 @@
 using Leopotam.Ecs;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,7 +26,6 @@ public class CarMoveInitSystem : IEcsInitSystem
 
             carMovable.isMoving = false;
             carMovable.isReverseDirectionEnable = false;
-            carMovable.isSpeedUpEnable = false;
 
             carMovable.rigidbody = _cars[i].GetComponent<Rigidbody>();
             carMovable.rigidbody.drag = 5f;
@@ -37,7 +35,6 @@ public class CarMoveInitSystem : IEcsInitSystem
             carMovable.rigidbody.constraints |= RigidbodyConstraints.FreezeRotationX;
             carMovable.rigidbody.constraints |= RigidbodyConstraints.FreezeRotationZ;
             carMovable.carRotates = new();
-            //carMovable.rigidbody.isKinematic = true;
         }
     }
 }
