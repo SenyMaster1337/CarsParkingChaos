@@ -31,15 +31,15 @@ public class TimerSystem : IEcsRunSystem
         foreach (var entityEvent in _noTimeLeft)
         {
             var entityNoTimeLeftEvent = _noTimeLeft.GetEntity(entityEvent);
-            TryAddDisableComponentToCar(entityNoTimeLeftEvent);
-            TryAddRestartWindow(entityNoTimeLeftEvent);
-            TryCompleteLevel(entityNoTimeLeftEvent);
-            TryVerifyCarsCointToPassengerSorting(entityNoTimeLeftEvent);
+            AddDisableComponentToCar(entityNoTimeLeftEvent);
+            AddRestartWindow(entityNoTimeLeftEvent);
+            CompleteLevel(entityNoTimeLeftEvent);
+            VerifyCarsCointToPassengerSorting(entityNoTimeLeftEvent);
             entityNoTimeLeftEvent.Del<NoTimeLeftEvent>();
         }
     }
 
-    private void TryCompleteLevel(EcsEntity entityNoTimeLeftEvent)
+    private void CompleteLevel(EcsEntity entityNoTimeLeftEvent)
     {
         if (entityNoTimeLeftEvent.Has<LevelComponent>())
         {
@@ -47,7 +47,7 @@ public class TimerSystem : IEcsRunSystem
         }
     }
 
-    private void TryAddDisableComponentToCar(EcsEntity entityNoTimeLeftEvent)
+    private void AddDisableComponentToCar(EcsEntity entityNoTimeLeftEvent)
     {
         if (entityNoTimeLeftEvent.Has<CarComponent>())
         {
@@ -55,7 +55,7 @@ public class TimerSystem : IEcsRunSystem
         }
     }
 
-    private void TryAddRestartWindow(EcsEntity entityNoTimeLeftEvent)
+    private void AddRestartWindow(EcsEntity entityNoTimeLeftEvent)
     {
         if (entityNoTimeLeftEvent.Has<ParkingReservationComponent>())
         {
@@ -63,7 +63,7 @@ public class TimerSystem : IEcsRunSystem
         }
     }
 
-    private void TryVerifyCarsCointToPassengerSorting(EcsEntity entityNoTimeLeftEvent)
+    private void VerifyCarsCointToPassengerSorting(EcsEntity entityNoTimeLeftEvent)
     {
         if (entityNoTimeLeftEvent.Has<GetUnitsDataEvent>())
         {

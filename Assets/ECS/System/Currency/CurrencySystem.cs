@@ -26,7 +26,7 @@ public class CurrencySystem : IEcsRunSystem
             foreach (var buySortingEntity in _buyPassengerSortingFilter)
             {
                 var sortingEvent = _buyPassengerSortingFilter.GetEntity(buySortingEntity);
-                TryToBuy(currencyComponent, sortingEvent);
+                MakePurchase(currencyComponent, sortingEvent);
                 sortingEvent.Del<TryBuyEvent>();
             }
 
@@ -39,7 +39,7 @@ public class CurrencySystem : IEcsRunSystem
         }
     }
 
-    private void TryToBuy(CurrencyComponent currencyComponent, EcsEntity confirmSortingEvent)
+    private void MakePurchase(CurrencyComponent currencyComponent, EcsEntity confirmSortingEvent)
     {
         if (confirmSortingEvent.Has<PassengerSortingComponent>())
         {

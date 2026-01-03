@@ -45,7 +45,7 @@ public class ShuffleSystem : IEcsRunSystem
                 }
 
                 StartConfirmPayment();
-                ShuffleColorCars(shuffleComponentEntity);
+                ReplaceColorCars(shuffleComponentEntity);
                 SortPassengerInColorAllCars(shuffleComponentEntity);
 
                 _shuffleEventfilter.GetEntity(shuffleEventEntity).Del<ShuffleEvent>();
@@ -64,7 +64,7 @@ public class ShuffleSystem : IEcsRunSystem
                 {
                     if (RewardID == "ShuffleRewardID")
                     {
-                        ShuffleColorCars(shuffleComponentEntity);
+                        ReplaceColorCars(shuffleComponentEntity);
                         SortPassengerInColorAllCars(shuffleComponentEntity);
                     }
                 });
@@ -99,7 +99,7 @@ public class ShuffleSystem : IEcsRunSystem
         StartEnableInteractionGameEvents();
     }
 
-    private void ShuffleColorCars(int shuffleComponentEntity)
+    private void ReplaceColorCars(int shuffleComponentEntity)
     {
         ref var shuffleComponent = ref _shuffleComponentFilter.Get1(shuffleComponentEntity);
 

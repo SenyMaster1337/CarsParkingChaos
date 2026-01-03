@@ -50,8 +50,8 @@ public class PassengerSortingSystem : IEcsRunSystem
 
                 if (dataEvent.carsOnlyParkingZoneList.Count > 0)
                 {
-                    TryConfirmPayment();
-                    SortByPaymentMethod(dataEntity);
+                    ConfirmPayment();
+                    PerformInerationDependingPaymentMethod(dataEntity);
                     _isSortingActive = true;
                     _ecsWorld.NewEntity().Get<DisableRaycastReaderToggleSwitchMethodEvent>();
                 }
@@ -77,7 +77,7 @@ public class PassengerSortingSystem : IEcsRunSystem
         }
     }
 
-    private void SortByPaymentMethod(EcsEntity dataEntity)
+    private void PerformInerationDependingPaymentMethod(EcsEntity dataEntity)
     {
         if (_isNeedAdvShow == true)
         {
@@ -85,7 +85,7 @@ public class PassengerSortingSystem : IEcsRunSystem
             {
                 if (RewardID == "PassengerSortingRewardID")
                 {
-                    PerformPassengerSortingColorIteration(dataEntity);
+                    ReplaceColorCars(dataEntity);
                 }
             });
 
@@ -97,11 +97,11 @@ public class PassengerSortingSystem : IEcsRunSystem
 
         if (_isNeedConfirmToPay == false)
         {
-            PerformPassengerSortingColorIteration(dataEntity);
+            ReplaceColorCars(dataEntity);
         }
     }
 
-    private void TryConfirmPayment()
+    private void ConfirmPayment()
     {
         if (_isNeedConfirmToPay == true)
         {
@@ -112,7 +112,7 @@ public class PassengerSortingSystem : IEcsRunSystem
         }
     }
 
-    private void PerformPassengerSortingColorIteration(EcsEntity dataEntity)
+    private void ReplaceColorCars(EcsEntity dataEntity)
     {
         ref var dataEvent = ref dataEntity.Get<GetUnitsDataEvent>();
 
