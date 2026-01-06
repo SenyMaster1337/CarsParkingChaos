@@ -1,68 +1,72 @@
 using Leopotam.Ecs;
 using YG;
+using CarParkingChaos.Markers;
 
-public class UnlockParkingSlotSystem : IEcsRunSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    public string RewardID = "UnlockParkingSlotRewardID";
-
-    private EcsWorld _ecsWorld;
-    private EcsFilter<SaveParkingSlotEvent> _saveFilter;
-    private EcsFilter<ShowADVToUnlockParkingSlotEvent> _showAdvFilter;
-    private EcsFilter<LevelComponent> _levelFilter;
-
-    private ParkingSlot _parkingSlot;
-    private OpenADVParkingSlotUnlock _openADVParkingSlotUnlock;
-
-    public void Run()
+    public class UnlockParkingSlotSystem : IEcsRunSystem
     {
-        foreach (var saveEntity in _saveFilter)
-        {
-            var saveEventEntity = _saveFilter.GetEntity(saveEntity);
-            SaveParkingSlot(saveEventEntity);
-            saveEventEntity.Del<SaveParkingSlotEvent>();
-        }
+        public string RewardID = "UnlockParkingSlotRewardID";
 
-        foreach (var showAdvEntity in _showAdvFilter)
+        private EcsWorld _ecsWorld;
+        private EcsFilter<SaveParkingSlotEvent> _saveFilter;
+        private EcsFilter<ShowADVToUnlockParkingSlotEvent> _showAdvFilter;
+        private EcsFilter<LevelComponent> _levelFilter;
+
+        private ParkingSlot _parkingSlot;
+        private OpenADVParkingSlotUnlock _openADVParkingSlotUnlock;
+
+        public void Run()
         {
-            foreach (var levelEntity in _levelFilter)
+            foreach (var saveEntity in _saveFilter)
             {
-                ref var levelComponent = ref _levelFilter.Get1(levelEntity);
-                int currentLevel = levelComponent.CurrentLevel;
+                var saveEventEntity = _saveFilter.GetEntity(saveEntity);
+                SaveParkingSlot(saveEventEntity);
+                saveEventEntity.Del<SaveParkingSlotEvent>();
+            }
 
-                YG2.RewardedAdvShow(RewardID, () =>
+            foreach (var showAdvEntity in _showAdvFilter)
+            {
+                foreach (var levelEntity in _levelFilter)
                 {
-                    if (RewardID == "UnlockParkingSlotRewardID")
-                    {
-                        StartAddParkingSlotEvent();
-                        StartYGSaveParkingSlotsEvent(currentLevel);
-                    }
-                });
+                    ref var levelComponent = ref _levelFilter.Get1(levelEntity);
+                    int currentLevel = levelComponent.CurrentLevel;
 
-                _showAdvFilter.GetEntity(showAdvEntity).Del<ShowADVToUnlockParkingSlotEvent>();
+                    YG2.RewardedAdvShow(RewardID, () =>
+                    {
+                        if (RewardID == "UnlockParkingSlotRewardID")
+                        {
+                            StartAddParkingSlotEvent();
+                            StartYGSaveParkingSlotsEvent(currentLevel);
+                        }
+                    });
+
+                    _showAdvFilter.GetEntity(showAdvEntity).Del<ShowADVToUnlockParkingSlotEvent>();
+                }
             }
         }
-    }
 
-    private void SaveParkingSlot(EcsEntity saveEventEntity)
-    {
-        ref var saveParkingSlotEvent = ref saveEventEntity.Get<SaveParkingSlotEvent>();
-        _parkingSlot = saveParkingSlotEvent.ParkingSlot;
-        _openADVParkingSlotUnlock = saveParkingSlotEvent.OpenADVParkingSlotUnlock;
-    }
-
-    private void StartAddParkingSlotEvent()
-    {
-        _ecsWorld.NewEntity().Get<AddParkingSlotEvent>() = new AddParkingSlotEvent
+        private void SaveParkingSlot(EcsEntity saveEventEntity)
         {
-            ParkingSlot = _parkingSlot,
-        };
+            ref var saveParkingSlotEvent = ref saveEventEntity.Get<SaveParkingSlotEvent>();
+            _parkingSlot = saveParkingSlotEvent.ParkingSlot;
+            _openADVParkingSlotUnlock = saveParkingSlotEvent.OpenADVParkingSlotUnlock;
+        }
 
-        _openADVParkingSlotUnlock.gameObject.SetActive(false);
-    }
+        private void StartAddParkingSlotEvent()
+        {
+            _ecsWorld.NewEntity().Get<AddParkingSlotEvent>() = new AddParkingSlotEvent
+            {
+                ParkingSlot = _parkingSlot,
+            };
 
-    private void StartYGSaveParkingSlotsEvent(int currentLevel)
-    {
-        _ecsWorld.NewEntity().Get<YGSaveRewardParkingSlotsEvent>();
-        _ecsWorld.NewEntity().Get<YGSaveProgressEvent>();
+            _openADVParkingSlotUnlock.gameObject.SetActive(false);
+        }
+
+        private void StartYGSaveParkingSlotsEvent(int currentLevel)
+        {
+            _ecsWorld.NewEntity().Get<YGSaveRewardParkingSlotsEvent>();
+            _ecsWorld.NewEntity().Get<YGSaveProgressEvent>();
+        }
     }
 }

@@ -1,3 +1,6 @@
-public class RestartButtonClickReader : BaseButtonClickReader
+namespace CarParkingChaos.UI.Buttons
 {
+    public class RestartButtonClickReader : BaseButtonClickReader
+    {
+    }
 }

@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public struct InputEvent
+namespace CarParkingChaos.ECS.Systems
 {
-    public Ray Ray;
+    public struct InputEvent
+    {
+        public Ray Ray;
+    }
 }

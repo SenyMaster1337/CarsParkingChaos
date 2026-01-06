@@ -1,73 +1,76 @@
 using Leopotam.Ecs;
 using UnityEngine;
 
-public class TimerSystem : IEcsRunSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsFilter<TimerComponent> _filter;
-    private EcsFilter<NoTimeLeftEvent> _noTimeLeft;
-
-    public void Run()
+    public class TimerSystem : IEcsRunSystem
     {
-        foreach (var entity in _filter)
+        private EcsFilter<TimerComponent> _filter;
+        private EcsFilter<NoTimeLeftEvent> _noTimeLeft;
+
+        public void Run()
         {
-            ref var timer = ref _filter.Get1(entity);
-            var entityComponent = _filter.GetEntity(entity);
-
-            if (timer.IsActive == false)
-                continue;
-
-            timer.TimeLeft -= Time.deltaTime;
-
-            if (timer.TimeLeft <= 0f)
+            foreach (var entity in _filter)
             {
-                timer.IsActive = false;
-                timer.TimeLeft = 0f;
+                ref var timer = ref _filter.Get1(entity);
+                var entityComponent = _filter.GetEntity(entity);
 
-                entityComponent.Get<NoTimeLeftEvent>();
-                entityComponent.Del<TimerComponent>();
+                if (timer.IsActive == false)
+                    continue;
+
+                timer.TimeLeft -= Time.deltaTime;
+
+                if (timer.TimeLeft <= 0f)
+                {
+                    timer.IsActive = false;
+                    timer.TimeLeft = 0f;
+
+                    entityComponent.Get<NoTimeLeftEvent>();
+                    entityComponent.Del<TimerComponent>();
+                }
+            }
+
+            foreach (var entityEvent in _noTimeLeft)
+            {
+                var entityNoTimeLeftEvent = _noTimeLeft.GetEntity(entityEvent);
+                AddDisableComponentToCar(entityNoTimeLeftEvent);
+                AddRestartWindow(entityNoTimeLeftEvent);
+                CompleteLevel(entityNoTimeLeftEvent);
+                VerifyCarsCointToPassengerSorting(entityNoTimeLeftEvent);
+                entityNoTimeLeftEvent.Del<NoTimeLeftEvent>();
             }
         }
 
-        foreach (var entityEvent in _noTimeLeft)
+        private void CompleteLevel(EcsEntity entityNoTimeLeftEvent)
         {
-            var entityNoTimeLeftEvent = _noTimeLeft.GetEntity(entityEvent);
-            AddDisableComponentToCar(entityNoTimeLeftEvent);
-            AddRestartWindow(entityNoTimeLeftEvent);
-            CompleteLevel(entityNoTimeLeftEvent);
-            VerifyCarsCointToPassengerSorting(entityNoTimeLeftEvent);
-            entityNoTimeLeftEvent.Del<NoTimeLeftEvent>();
+            if (entityNoTimeLeftEvent.Has<LevelComponent>())
+            {
+                entityNoTimeLeftEvent.Get<LevelCompleteEvent>();
+            }
         }
-    }
 
-    private void CompleteLevel(EcsEntity entityNoTimeLeftEvent)
-    {
-        if (entityNoTimeLeftEvent.Has<LevelComponent>())
+        private void AddDisableComponentToCar(EcsEntity entityNoTimeLeftEvent)
         {
-            entityNoTimeLeftEvent.Get<LevelCompleteEvent>();
+            if (entityNoTimeLeftEvent.Has<CarComponent>())
+            {
+                entityNoTimeLeftEvent.Get<DisableUnitsEvent>();
+            }
         }
-    }
 
-    private void AddDisableComponentToCar(EcsEntity entityNoTimeLeftEvent)
-    {
-        if (entityNoTimeLeftEvent.Has<CarComponent>())
+        private void AddRestartWindow(EcsEntity entityNoTimeLeftEvent)
         {
-            entityNoTimeLeftEvent.Get<DisableUnitsEvent>();
+            if (entityNoTimeLeftEvent.Has<ParkingReservationComponent>())
+            {
+                entityNoTimeLeftEvent.Get<VerifyCarsInParkingDataEvent>();
+            }
         }
-    }
 
-    private void AddRestartWindow(EcsEntity entityNoTimeLeftEvent)
-    {
-        if (entityNoTimeLeftEvent.Has<ParkingReservationComponent>())
+        private void VerifyCarsCointToPassengerSorting(EcsEntity entityNoTimeLeftEvent)
         {
-            entityNoTimeLeftEvent.Get<VerifyCarsInParkingDataEvent>();
-        }
-    }
-
-    private void VerifyCarsCointToPassengerSorting(EcsEntity entityNoTimeLeftEvent)
-    {
-        if (entityNoTimeLeftEvent.Has<GetUnitsDataEvent>())
-        {
-            entityNoTimeLeftEvent.Get<VerifyCarsToPassengerSortingEvent>();
+            if (entityNoTimeLeftEvent.Has<GetUnitsDataEvent>())
+            {
+                entityNoTimeLeftEvent.Get<VerifyCarsToPassengerSortingEvent>();
+            }
         }
     }
 }

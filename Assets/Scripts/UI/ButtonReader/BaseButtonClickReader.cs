@@ -2,24 +2,27 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class BaseButtonClickReader : MonoBehaviour
+namespace CarParkingChaos.UI.Buttons
 {
-    [field: SerializeField] public Button Button { get; private set; }
-
-    public event Action OnButtonClicked;
-
-    private void OnEnable()
+    public abstract class BaseButtonClickReader : MonoBehaviour
     {
-        Button.onClick.AddListener(OnButtonClick);
-    }
+        [field: SerializeField] public Button Button { get; private set; }
 
-    private void OnDisable()
-    {
-        Button.onClick.RemoveListener(OnButtonClick);
-    }
+        public event Action OnButtonClicked;
 
-    public void OnButtonClick()
-    {
-        OnButtonClicked?.Invoke();
+        private void OnEnable()
+        {
+            Button.onClick.AddListener(OnButtonClick);
+        }
+
+        private void OnDisable()
+        {
+            Button.onClick.RemoveListener(OnButtonClick);
+        }
+
+        public void OnButtonClick()
+        {
+            OnButtonClicked?.Invoke();
+        }
     }
 }

@@ -1,3 +1,5 @@
+using CarParkingChaos.Effects;
+
 public struct CarEffectsComponent
 {
     public CarFilledPassengersEffect CarEffectFilledPassengers;

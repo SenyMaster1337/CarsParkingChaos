@@ -1,37 +1,41 @@
 using Leopotam.Ecs;
+using CarParkingChaos.UI.Markers;
 
-public class LevelUIButtonsReaderSystem : IEcsInitSystem, IEcsDestroySystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsWorld _ecsWorld;
-
-    private LevelCompleteShower _levelCompleteShower;
-    private LevelLossShower _levelLossShower;
-
-    public LevelUIButtonsReaderSystem(LevelCompleteShower levelCompleteShower, LevelLossShower levelLossShower)
+    public class LevelUIButtonsReaderSystem : IEcsInitSystem, IEcsDestroySystem
     {
-        _levelCompleteShower = levelCompleteShower;
-        _levelLossShower = levelLossShower;
-    }
+        private EcsWorld _ecsWorld;
 
-    public void Init()
-    {
-        _levelCompleteShower.NextLevelButtonClickReader.OnButtonClicked += OnButtonCkickNextLevel;
-        _levelLossShower.RestartButtonClickReader.OnButtonClicked += OnButtonClickRestart;
-    }
+        private LevelCompleteShower _levelCompleteShower;
+        private LevelLossShower _levelLossShower;
 
-    public void Destroy()
-    {
-        _levelCompleteShower.NextLevelButtonClickReader.OnButtonClicked -= OnButtonCkickNextLevel;
-        _levelLossShower.RestartButtonClickReader.OnButtonClicked -= OnButtonClickRestart;
-    }
+        public LevelUIButtonsReaderSystem(LevelCompleteShower levelCompleteShower, LevelLossShower levelLossShower)
+        {
+            _levelCompleteShower = levelCompleteShower;
+            _levelLossShower = levelLossShower;
+        }
 
-    private void OnButtonCkickNextLevel()
-    {
-        _ecsWorld.NewEntity().Get<LoadNextLevelEvent>();
-    }
+        public void Init()
+        {
+            _levelCompleteShower.NextLevelButtonClickReader.OnButtonClicked += OnButtonCkickNextLevel;
+            _levelLossShower.RestartButtonClickReader.OnButtonClicked += OnButtonClickRestart;
+        }
 
-    private void OnButtonClickRestart()
-    {
-        _ecsWorld.NewEntity().Get<RestartLevelEvent>();
+        public void Destroy()
+        {
+            _levelCompleteShower.NextLevelButtonClickReader.OnButtonClicked -= OnButtonCkickNextLevel;
+            _levelLossShower.RestartButtonClickReader.OnButtonClicked -= OnButtonClickRestart;
+        }
+
+        private void OnButtonCkickNextLevel()
+        {
+            _ecsWorld.NewEntity().Get<LoadNextLevelEvent>();
+        }
+
+        private void OnButtonClickRestart()
+        {
+            _ecsWorld.NewEntity().Get<RestartLevelEvent>();
+        }
     }
 }

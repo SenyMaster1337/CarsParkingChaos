@@ -1,4 +1,5 @@
 using UnityEngine;
+using CarParkingChaos.Markers;
 
 public struct PassengerComponent
 {

@@ -1,21 +1,25 @@
 using System.Collections.Generic;
 using Leopotam.Ecs;
+using CarParkingChaos.Markers;
 
-public class CarLeavingInitSystem : IEcsInitSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsWorld _ecsWorld;
-    private List<Vehicle> _cars;
-
-    public CarLeavingInitSystem(List<Vehicle> cars)
+    public class CarLeavingInitSystem : IEcsInitSystem
     {
-        _cars = cars;
-    }
+        private EcsWorld _ecsWorld;
+        private List<Vehicle> _cars;
 
-    public void Init()
-    {
-        var carLeavingNewEntity = _ecsWorld.NewEntity();
+        public CarLeavingInitSystem(List<Vehicle> cars)
+        {
+            _cars = cars;
+        }
 
-        ref var carLeavingComponent = ref carLeavingNewEntity.Get<CarLeavingComponent>();
-        carLeavingComponent.Cars = _cars;
+        public void Init()
+        {
+            var carLeavingNewEntity = _ecsWorld.NewEntity();
+
+            ref var carLeavingComponent = ref carLeavingNewEntity.Get<CarLeavingComponent>();
+            carLeavingComponent.Cars = _cars;
+        }
     }
 }

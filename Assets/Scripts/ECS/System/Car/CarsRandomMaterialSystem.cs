@@ -1,33 +1,37 @@
 using Leopotam.Ecs;
 using UnityEngine;
+using CarParkingChaos.ECS.Data;
 
-public class CarsRandomMaterialSystem : IEcsRunSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsFilter<CarsRandomColorComponent> _randomColorFilter;
-
-    private System.Random _random;
-    private StaticData _staticData;
-    private SceneData _sceneData;
-
-    public CarsRandomMaterialSystem()
+    public class CarsRandomMaterialSystem : IEcsRunSystem
     {
-        _random = new System.Random();
-    }
+        private EcsFilter<CarsRandomColorComponent> _randomColorFilter;
 
-    public void Run()
-    {
-        foreach (var randomColorEntity in _randomColorFilter)
+        private global::System.Random _random;
+        private StaticData _staticData;
+        private SceneData _sceneData;
+
+        public CarsRandomMaterialSystem()
         {
-            ref var randomColorComponent = ref _randomColorFilter.Get1(randomColorEntity);
+            _random = new global::System.Random();
+        }
 
-            for (int i = 0; i < randomColorComponent.Cars.Count; i++)
+        public void Run()
+        {
+            foreach (var randomColorEntity in _randomColorFilter)
             {
-                Material randomMaterial = _staticData.AllMaterialsUnit[_random.Next(0, _staticData.AllMaterialsUnit.Count)];
-                randomColorComponent.Cars[i].Entity.Get<CarComponent>().Renderer.material = randomMaterial;
-                _sceneData.LevelCarsMaterial.CarsMaterial.Add(randomMaterial);
-            }
+                ref var randomColorComponent = ref _randomColorFilter.Get1(randomColorEntity);
 
-            _randomColorFilter.GetEntity(randomColorEntity).Del<CarsRandomColorComponent>();
+                for (int i = 0; i < randomColorComponent.Cars.Count; i++)
+                {
+                    Material randomMaterial = _staticData.AllMaterialsUnit[_random.Next(0, _staticData.AllMaterialsUnit.Count)];
+                    randomColorComponent.Cars[i].Entity.Get<CarComponent>().Renderer.material = randomMaterial;
+                    _sceneData.LevelCarsMaterial.CarsMaterial.Add(randomMaterial);
+                }
+
+                _randomColorFilter.GetEntity(randomColorEntity).Del<CarsRandomColorComponent>();
+            }
         }
     }
 }

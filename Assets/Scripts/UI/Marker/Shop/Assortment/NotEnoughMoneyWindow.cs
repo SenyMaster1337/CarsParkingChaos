@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class NotEnoughMoneyWindow : MonoBehaviour
+namespace CarParkingChaos.UI.Markers
 {
-    [field: SerializeField] public CanvasGroup WindowGroup { get; private set; }
+    public class NotEnoughMoneyWindow : MonoBehaviour
+    {
+        [field: SerializeField] public CanvasGroup WindowGroup { get; private set; }
+    }
 }

@@ -1,3 +1,6 @@
-public class OpenShopButton : BaseButtonClickReader
+namespace CarParkingChaos.UI.Buttons
 {
+    public class OpenShopButton : BaseButtonClickReader
+    {
+    }
 }

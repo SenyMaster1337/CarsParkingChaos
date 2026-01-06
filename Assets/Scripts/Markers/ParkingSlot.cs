@@ -1,7 +1,10 @@
 using Leopotam.Ecs;
 using UnityEngine;
 
-public class ParkingSlot : MonoBehaviour
+namespace CarParkingChaos.Markers
 {
-    public EcsEntity Entity;
+    public class ParkingSlot : MonoBehaviour
+    {
+        public EcsEntity Entity;
+    }
 }

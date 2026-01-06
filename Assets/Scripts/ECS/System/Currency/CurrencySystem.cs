@@ -1,102 +1,106 @@
 using Leopotam.Ecs;
+using CarParkingChaos.ECS.Data;
 
-public class CurrencySystem : IEcsRunSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsWorld _ecsWorld;
-    private EcsFilter<CurrencyComponent> _filter;
-    private EcsFilter<AddCoinsWinningEvent> _filterWinning;
-    private EcsFilter<TryBuyEvent> _buyPassengerSortingFilter;
-    private EcsFilter<ConfirmBuyingEvent> _confirmBuyingPassengerSortingFilter;
-
-    private StaticData _staticData;
-
-    public void Run()
+    public class CurrencySystem : IEcsRunSystem
     {
-        foreach (var entity in _filter)
+        private EcsWorld _ecsWorld;
+        private EcsFilter<CurrencyComponent> _filter;
+        private EcsFilter<AddCoinsWinningEvent> _filterWinning;
+        private EcsFilter<TryBuyEvent> _buyPassengerSortingFilter;
+        private EcsFilter<ConfirmBuyingEvent> _confirmBuyingPassengerSortingFilter;
+
+        private StaticData _staticData;
+
+        public void Run()
         {
-            ref var currencyComponent = ref _filter.Get1(entity);
+            foreach (var entity in _filter)
+            {
+                ref var currencyComponent = ref _filter.Get1(entity);
 
-            foreach (var winningEntity in _filterWinning)
-            {
-                var winningEvent = _filterWinning.GetEntity(winningEntity);
-                AddCoinsWinningEvent(ref currencyComponent);
-                winningEvent.Del<AddCoinsWinningEvent>();
-            }
+                foreach (var winningEntity in _filterWinning)
+                {
+                    var winningEvent = _filterWinning.GetEntity(winningEntity);
+                    AddCoinsWinningEvent(ref currencyComponent);
+                    winningEvent.Del<AddCoinsWinningEvent>();
+                }
 
-            foreach (var buySortingEntity in _buyPassengerSortingFilter)
-            {
-                var sortingEvent = _buyPassengerSortingFilter.GetEntity(buySortingEntity);
-                MakePurchase(currencyComponent, sortingEvent);
-                sortingEvent.Del<TryBuyEvent>();
-            }
+                foreach (var buySortingEntity in _buyPassengerSortingFilter)
+                {
+                    var sortingEvent = _buyPassengerSortingFilter.GetEntity(buySortingEntity);
+                    MakePurchase(currencyComponent, sortingEvent);
+                    sortingEvent.Del<TryBuyEvent>();
+                }
 
-            foreach (var confirmSortingBuyingEntity in _confirmBuyingPassengerSortingFilter)
-            {
-                var confirmSortingEvent = _confirmBuyingPassengerSortingFilter.GetEntity(confirmSortingBuyingEntity);
-                ConfirmPurchase(ref currencyComponent, confirmSortingEvent);
-                confirmSortingEvent.Del<ConfirmBuyingEvent>();
-            }
-        }
-    }
-
-    private void MakePurchase(CurrencyComponent currencyComponent, EcsEntity confirmSortingEvent)
-    {
-        if (confirmSortingEvent.Has<PassengerSortingComponent>())
-        {
-            if (currencyComponent.PlayerCoins >= _staticData.PriceSortPassengers)
-            {
-                _ecsWorld.NewEntity().Get<PassengerSortEvent>();
-            }
-            else
-            {
-                _ecsWorld.NewEntity().Get<ShowNotEnoughMoneyWindowEvent>();
+                foreach (var confirmSortingBuyingEntity in _confirmBuyingPassengerSortingFilter)
+                {
+                    var confirmSortingEvent = _confirmBuyingPassengerSortingFilter.GetEntity(confirmSortingBuyingEntity);
+                    ConfirmPurchase(ref currencyComponent, confirmSortingEvent);
+                    confirmSortingEvent.Del<ConfirmBuyingEvent>();
+                }
             }
         }
 
-        if (confirmSortingEvent.Has<ShuffleComponent>())
+        private void MakePurchase(CurrencyComponent currencyComponent, EcsEntity confirmSortingEvent)
         {
-            if (currencyComponent.PlayerCoins >= _staticData.PriceShufflePassengers)
+            if (confirmSortingEvent.Has<PassengerSortingComponent>())
             {
-                _ecsWorld.NewEntity().Get<ShuffleEvent>();
+                if (currencyComponent.PlayerCoins >= _staticData.PriceSortPassengers)
+                {
+                    _ecsWorld.NewEntity().Get<PassengerSortEvent>();
+                }
+                else
+                {
+                    _ecsWorld.NewEntity().Get<ShowNotEnoughMoneyWindowEvent>();
+                }
             }
-            else
+
+            if (confirmSortingEvent.Has<ShuffleComponent>())
             {
-                _ecsWorld.NewEntity().Get<ShowNotEnoughMoneyWindowEvent>();
+                if (currencyComponent.PlayerCoins >= _staticData.PriceShufflePassengers)
+                {
+                    _ecsWorld.NewEntity().Get<ShuffleEvent>();
+                }
+                else
+                {
+                    _ecsWorld.NewEntity().Get<ShowNotEnoughMoneyWindowEvent>();
+                }
             }
         }
-    }
 
-    private void ConfirmPurchase(ref CurrencyComponent currencyComponent, EcsEntity confirmSortingEvent)
-    {
-        if (confirmSortingEvent.Has<PassengerSortingConfirmBuyingEvent>())
+        private void ConfirmPurchase(ref CurrencyComponent currencyComponent, EcsEntity confirmSortingEvent)
         {
-            PayPurchase(ref currencyComponent, _staticData.PriceSortPassengers);
-            _ecsWorld.NewEntity().Get<ClosePassengerSortingInfoShowerEvent>();
+            if (confirmSortingEvent.Has<PassengerSortingConfirmBuyingEvent>())
+            {
+                PayPurchase(ref currencyComponent, _staticData.PriceSortPassengers);
+                _ecsWorld.NewEntity().Get<ClosePassengerSortingInfoShowerEvent>();
+            }
+
+            if (confirmSortingEvent.Has<PassengerShuffleConfirmBuyingEvent>())
+            {
+                PayPurchase(ref currencyComponent, _staticData.PriceShufflePassengers);
+                _ecsWorld.NewEntity().Get<CloseShuffleInfoShowerEvent>();
+            }
         }
 
-        if (confirmSortingEvent.Has<PassengerShuffleConfirmBuyingEvent>())
+        private void PayPurchase(ref CurrencyComponent currencyComponent, int value)
         {
-            PayPurchase(ref currencyComponent, _staticData.PriceShufflePassengers);
-            _ecsWorld.NewEntity().Get<CloseShuffleInfoShowerEvent>();
+            currencyComponent.PlayerCoins -= value;
+            StartChangeCurrentCoinShowerEvent(currencyComponent.PlayerCoins);
+            _ecsWorld.NewEntity().Get<YGSavePlayerCoinsCountEvent>();
+            _ecsWorld.NewEntity().Get<YGSaveProgressEvent>();
         }
-    }
 
-    private void PayPurchase(ref CurrencyComponent currencyComponent, int value)
-    {
-        currencyComponent.PlayerCoins -= value;
-        StartChangeCurrentCoinShowerEvent(currencyComponent.PlayerCoins);
-        _ecsWorld.NewEntity().Get<YGSavePlayerCoinsCountEvent>();
-        _ecsWorld.NewEntity().Get<YGSaveProgressEvent>();
-    }
+        private void AddCoinsWinningEvent(ref CurrencyComponent currencyComponent)
+        {
+            currencyComponent.PlayerCoins += _staticData.NumberCointAddedPerWin;
+            StartChangeCurrentCoinShowerEvent(currencyComponent.PlayerCoins);
+        }
 
-    private void AddCoinsWinningEvent(ref CurrencyComponent currencyComponent)
-    {
-        currencyComponent.PlayerCoins += _staticData.NumberCointAddedPerWin;
-        StartChangeCurrentCoinShowerEvent(currencyComponent.PlayerCoins);
-    }
-
-    private void StartChangeCurrentCoinShowerEvent(int newCurrentCoins)
-    {
-        _ecsWorld.NewEntity().Get<ChangeShowCoinsValueEvent>() = new ChangeShowCoinsValueEvent { CurrentCoinsValue = newCurrentCoins };
+        private void StartChangeCurrentCoinShowerEvent(int newCurrentCoins)
+        {
+            _ecsWorld.NewEntity().Get<ChangeShowCoinsValueEvent>() = new ChangeShowCoinsValueEvent { CurrentCoinsValue = newCurrentCoins };
+        }
     }
 }

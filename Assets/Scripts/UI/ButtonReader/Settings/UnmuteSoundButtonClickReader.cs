@@ -1,3 +1,6 @@
-public class UnmuteSoundButtonClickReader : BaseButtonClickReader
+namespace CarParkingChaos.UI.Buttons
 {
+    public class UnmuteSoundButtonClickReader : BaseButtonClickReader
+    {
+    }
 }

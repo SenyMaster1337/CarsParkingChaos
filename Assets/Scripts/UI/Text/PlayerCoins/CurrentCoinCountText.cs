@@ -1,3 +1,6 @@
-public class CurrentCoinCountText : BaseText
+namespace CarParkingChaos.UI.Text
 {
+    public class CurrentCoinCountText : BaseText
+    {
+    }
 }

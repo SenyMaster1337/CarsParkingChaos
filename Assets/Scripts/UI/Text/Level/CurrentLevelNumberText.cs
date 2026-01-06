@@ -1,3 +1,6 @@
-public class CurrentLevelNumberText : BaseText
+namespace CarParkingChaos.UI.Text
 {
+    public class CurrentLevelNumberText : BaseText
+    {
+    }
 }

@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class OpenADVParkingSlotUnlock : MonoBehaviour
+namespace CarParkingChaos.Markers
 {
-    [field: SerializeField] public ParkingSlot ParkingSlot { get; private set; }
+    public class OpenADVParkingSlotUnlock : MonoBehaviour
+    {
+        [field: SerializeField] public ParkingSlot ParkingSlot { get; private set; }
+    }
 }

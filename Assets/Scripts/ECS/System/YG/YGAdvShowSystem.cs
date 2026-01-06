@@ -1,17 +1,20 @@
 using Leopotam.Ecs;
 using YG;
 
-public class YGAdvShowSystem : IEcsRunSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsFilter<YGInterstitialAdvShowEvent> _interstitialAdv;
-
-    public void Run()
+    public class YGAdvShowSystem : IEcsRunSystem
     {
-        foreach (var interstitialEntity in _interstitialAdv)
+        private EcsFilter<YGInterstitialAdvShowEvent> _interstitialAdv;
+
+        public void Run()
         {
-            var interstitialEvent = _interstitialAdv.GetEntity(interstitialEntity);
-            YG2.InterstitialAdvShow();
-            interstitialEvent.Del<YGInterstitialAdvShowEvent>();
+            foreach (var interstitialEntity in _interstitialAdv)
+            {
+                var interstitialEvent = _interstitialAdv.GetEntity(interstitialEntity);
+                YG2.InterstitialAdvShow();
+                interstitialEvent.Del<YGInterstitialAdvShowEvent>();
+            }
         }
     }
 }

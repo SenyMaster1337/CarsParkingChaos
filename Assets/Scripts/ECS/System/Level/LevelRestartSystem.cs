@@ -1,22 +1,25 @@
 using Leopotam.Ecs;
 using UnityEngine.SceneManagement;
 
-public class LevelRestartSystem : IEcsRunSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsFilter<RestartLevelEvent> _filter;
-
-    public void Run()
+    public class LevelRestartSystem : IEcsRunSystem
     {
-        foreach (var entity in _filter)
+        private EcsFilter<RestartLevelEvent> _filter;
+
+        public void Run()
         {
-            var restartEvent = _filter.GetEntity(entity);
-            Restart();
-            restartEvent.Del<RestartLevelEvent>();
+            foreach (var entity in _filter)
+            {
+                var restartEvent = _filter.GetEntity(entity);
+                Restart();
+                restartEvent.Del<RestartLevelEvent>();
+            }
         }
-    }
 
-    private void Restart()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        private void Restart()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }

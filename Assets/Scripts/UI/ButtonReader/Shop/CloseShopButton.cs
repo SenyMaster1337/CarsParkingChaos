@@ -1,3 +1,6 @@
-public class CloseShopButton : BaseButtonClickReader
+namespace CarParkingChaos.UI.Buttons
 {
+    public class CloseShopButton : BaseButtonClickReader
+    {
+    }
 }

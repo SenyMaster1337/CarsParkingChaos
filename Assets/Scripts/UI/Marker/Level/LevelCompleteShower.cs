@@ -1,9 +1,14 @@
 using UnityEngine;
+using CarParkingChaos.UI.Buttons;
+using CarParkingChaos.UI.Text;
 
-public class LevelCompleteShower : MonoBehaviour
+namespace CarParkingChaos.UI.Markers
 {
-    [field: SerializeField] public CanvasGroup WindowGroup { get; private set; }
-    [field: SerializeField] public NextLevelButtonClickReader NextLevelButtonClickReader { get; private set; }
-    [field: SerializeField] public CoinsNumberToWinText CoinsNumberToWinText { get; private set; }
-    [field: SerializeField] public BlackBackground BlackBackground { get; private set; }
+    public class LevelCompleteShower : MonoBehaviour
+    {
+        [field: SerializeField] public CanvasGroup WindowGroup { get; private set; }
+        [field: SerializeField] public NextLevelButtonClickReader NextLevelButtonClickReader { get; private set; }
+        [field: SerializeField] public CoinsNumberToWinText CoinsNumberToWinText { get; private set; }
+        [field: SerializeField] public BlackBackground BlackBackground { get; private set; }
+    }
 }

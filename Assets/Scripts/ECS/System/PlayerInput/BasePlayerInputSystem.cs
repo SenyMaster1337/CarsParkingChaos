@@ -2,24 +2,27 @@ using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public abstract class BasePlayerInputSystem : IEcsInitSystem, IEcsDestroySystem
+namespace CarParkingChaos.ECS.Systems
 {
-    protected EcsWorld EcsWorld;
-    protected PlayerInput PlayerInput;
-    protected Camera MainCamera;
-
-    public void Init()
+    public abstract class BasePlayerInputSystem : IEcsInitSystem, IEcsDestroySystem
     {
-        PlayerInput = new PlayerInput();
-        PlayerInput.Enable();
-        PlayerInput.Player.Move.performed += OnButtonClick;
-    }
+        protected EcsWorld EcsWorld;
+        protected PlayerInput PlayerInput;
+        protected Camera MainCamera;
 
-    public void Destroy()
-    {
-        PlayerInput.Disable();
-        PlayerInput.Player.Move.performed -= OnButtonClick;
-    }
+        public void Init()
+        {
+            PlayerInput = new PlayerInput();
+            PlayerInput.Enable();
+            PlayerInput.Player.Move.performed += OnButtonClick;
+        }
 
-    protected abstract void OnButtonClick(InputAction.CallbackContext context);
+        public void Destroy()
+        {
+            PlayerInput.Disable();
+            PlayerInput.Player.Move.performed -= OnButtonClick;
+        }
+
+        protected abstract void OnButtonClick(InputAction.CallbackContext context);
+    }
 }

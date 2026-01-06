@@ -2,29 +2,32 @@ using System;
 using Leopotam.Ecs;
 using UnityEngine;
 
-public class Vehicle : MonoBehaviour 
+namespace CarParkingChaos.Markers
 {
-    public EcsEntity Entity;
-
-    public event Action<CarRotate, Vehicle> OnTriggerCar;
-    public event Action<CarParkingDirection, Vehicle> OnCollisionCar;
-    public event Action<Vehicle> CarEnterParking;
-
-    private void OnTriggerEnter(Collider other)
+    public class Vehicle : MonoBehaviour
     {
-        if (other.gameObject.TryGetComponent(out CarRotate rotateTriggerHandler))
-        {
-            OnTriggerCar?.Invoke(rotateTriggerHandler, this);
-        }
+        public EcsEntity Entity;
 
-        if (other.gameObject.TryGetComponent(out CarParkingDirection carEnter))
-        {
-            OnCollisionCar?.Invoke(carEnter, this);
-        }
+        public event Action<CarRotate, Vehicle> OnTriggerCar;
+        public event Action<CarParkingDirection, Vehicle> OnCollisionCar;
+        public event Action<Vehicle> CarEnterParking;
 
-        if (other.gameObject.TryGetComponent(out ParkingCars carToParkingTriggerHandler))
+        private void OnTriggerEnter(Collider other)
         {
-            CarEnterParking?.Invoke(this);
+            if (other.gameObject.TryGetComponent(out CarRotate rotateTriggerHandler))
+            {
+                OnTriggerCar?.Invoke(rotateTriggerHandler, this);
+            }
+
+            if (other.gameObject.TryGetComponent(out CarParkingDirection carEnter))
+            {
+                OnCollisionCar?.Invoke(carEnter, this);
+            }
+
+            if (other.gameObject.TryGetComponent(out ParkingCars carToParkingTriggerHandler))
+            {
+                CarEnterParking?.Invoke(this);
+            }
         }
     }
 }

@@ -1,19 +1,22 @@
 using Leopotam.Ecs;
 
-public class EndGameShowerSystem : IEcsRunSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsFilter<EndGameShowerComponent> _endGameShowerFilter;
-    private EcsFilter<ShowEndGameWindowEvent> _showWindowEvent;
-
-    public void Run()
+    public class EndGameShowerSystem : IEcsRunSystem
     {
-        foreach (var endGameEntity in _endGameShowerFilter)
-        {
-            ref var endGameShowerComponent = ref _endGameShowerFilter.Get1(endGameEntity);
+        private EcsFilter<EndGameShowerComponent> _endGameShowerFilter;
+        private EcsFilter<ShowEndGameWindowEvent> _showWindowEvent;
 
-            foreach (var showWindowEntity in _showWindowEvent)
+        public void Run()
+        {
+            foreach (var endGameEntity in _endGameShowerFilter)
             {
-                _showWindowEvent.GetEntity(showWindowEntity).Del<ShowEndGameWindowEvent>();
+                ref var endGameShowerComponent = ref _endGameShowerFilter.Get1(endGameEntity);
+
+                foreach (var showWindowEntity in _showWindowEvent)
+                {
+                    _showWindowEvent.GetEntity(showWindowEntity).Del<ShowEndGameWindowEvent>();
+                }
             }
         }
     }

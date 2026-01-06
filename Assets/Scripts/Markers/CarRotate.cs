@@ -1,5 +1,8 @@
 using UnityEngine;
 
-public class CarRotate : MonoBehaviour
+namespace CarParkingChaos.Markers
 {
+    public class CarRotate : MonoBehaviour
+    {
+    }
 }

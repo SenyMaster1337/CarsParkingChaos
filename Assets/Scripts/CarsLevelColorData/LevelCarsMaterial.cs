@@ -1,20 +1,22 @@
-using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "LevelMaterial", menuName = "LevelMaterial/Create new CarsColor")]
-public class LevelCarsMaterial : ScriptableObject
+namespace CarParkingChaos.CarsLevelColorData
 {
-    public List<Material> CarsMaterial;
+    [CreateAssetMenu(fileName = "LevelMaterial", menuName = "LevelMaterial/Create new CarsColor")]
+    public class LevelCarsMaterial : ScriptableObject
+    {
+        public List<Material> CarsMaterial;
 
 #if UNITY_EDITOR
-    void OnValidate()
-    {
-        if (!EditorApplication.isPlaying && !EditorApplication.isCompiling)
+        void OnValidate()
         {
-            EditorUtility.SetDirty(this);
+            if (!EditorApplication.isPlaying && !EditorApplication.isCompiling)
+            {
+                EditorUtility.SetDirty(this);
+            }
         }
-    }
 #endif
+    }
 }

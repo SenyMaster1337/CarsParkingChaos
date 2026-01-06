@@ -1,3 +1,5 @@
+using CarParkingChaos.Markers;
+
 public struct SaveParkingSlotEvent
 {
     public ParkingSlot ParkingSlot;

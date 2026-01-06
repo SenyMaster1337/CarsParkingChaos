@@ -1,13 +1,16 @@
 using Leopotam.Ecs;
 using UnityEngine.InputSystem;
 
-public class DesktopInputSystem : BasePlayerInputSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    protected override void OnButtonClick(InputAction.CallbackContext context)
+    public class DesktopInputSystem : BasePlayerInputSystem
     {
-        EcsWorld.NewEntity().Get<InputEvent>() = new InputEvent
+        protected override void OnButtonClick(InputAction.CallbackContext context)
         {
-            Ray = MainCamera.ScreenPointToRay(Mouse.current.position.ReadValue()),
-        };
+            EcsWorld.NewEntity().Get<InputEvent>() = new InputEvent
+            {
+                Ray = MainCamera.ScreenPointToRay(Mouse.current.position.ReadValue()),
+            };
+        }
     }
 }

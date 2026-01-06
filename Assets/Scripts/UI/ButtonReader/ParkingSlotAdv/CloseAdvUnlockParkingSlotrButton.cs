@@ -1,3 +1,7 @@
-public class CloseAdvUnlockParkingSlotrButton : BaseButtonClickReader
+
+namespace CarParkingChaos.UI.Buttons
 {
+    public class CloseAdvUnlockParkingSlotrButton : BaseButtonClickReader
+    {
+    }
 }

@@ -1,22 +1,25 @@
 using Leopotam.Ecs;
 using UnityEngine.SceneManagement;
 
-public class LevelInitSystem : IEcsInitSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsWorld _ecsWorld;
-
-    public void Init()
+    public class LevelInitSystem : IEcsInitSystem
     {
-        InitLevel();
-    }
+        private EcsWorld _ecsWorld;
 
-    private void InitLevel()
-    {
-        var currentLevelEntity = _ecsWorld.NewEntity();
+        public void Init()
+        {
+            InitLevel();
+        }
 
-        ref var levelComponent = ref currentLevelEntity.Get<LevelComponent>();
-        levelComponent.Entity = currentLevelEntity;
-        levelComponent.CurrentLevel = SceneManager.GetActiveScene().buildIndex;
-        levelComponent.IsLevelCompleted = false;
+        private void InitLevel()
+        {
+            var currentLevelEntity = _ecsWorld.NewEntity();
+
+            ref var levelComponent = ref currentLevelEntity.Get<LevelComponent>();
+            levelComponent.Entity = currentLevelEntity;
+            levelComponent.CurrentLevel = SceneManager.GetActiveScene().buildIndex;
+            levelComponent.IsLevelCompleted = false;
+        }
     }
 }

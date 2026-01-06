@@ -1,3 +1,6 @@
-public class PriceBuyingCarShuffleText : BaseText
+namespace CarParkingChaos.UI.Text
 {
+    public class PriceBuyingCarShuffleText : BaseText
+    {
+    }
 }

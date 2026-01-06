@@ -1,8 +1,12 @@
 using UnityEngine;
+using CarParkingChaos.UI.Buttons;
 
-public class LevelLossShower : MonoBehaviour
+namespace CarParkingChaos.UI.Markers
 {
-    [field: SerializeField] public CanvasGroup WindowGroup { get; private set; }
-    [field: SerializeField] public RestartButtonClickReader RestartButtonClickReader { get; private set; }
-    [field: SerializeField] public BlackBackground BlackBackground { get; private set; }
+    public class LevelLossShower : MonoBehaviour
+    {
+        [field: SerializeField] public CanvasGroup WindowGroup { get; private set; }
+        [field: SerializeField] public RestartButtonClickReader RestartButtonClickReader { get; private set; }
+        [field: SerializeField] public BlackBackground BlackBackground { get; private set; }
+    }
 }

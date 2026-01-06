@@ -1,52 +1,57 @@
 using System.Collections.Generic;
 using Leopotam.Ecs;
 using YG;
+using CarParkingChaos.ECS.Data;
+using CarParkingChaos.Markers;
 
-public class ParkingReservationInitSystem : IEcsInitSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsWorld _ecsWorld;
-
-    private List<ParkingSlot> _allParkingSlots;
-    private List<ParkingSlot> _unlockParkingSlots;
-    private SceneData _sceneData;
-
-    public ParkingReservationInitSystem(List<ParkingSlot> parkingSlots)
+    public class ParkingReservationInitSystem : IEcsInitSystem
     {
-        _allParkingSlots = parkingSlots;
-        _unlockParkingSlots = new List<ParkingSlot>();
-    }
+        private EcsWorld _ecsWorld;
 
-    public void Init()
-    {
-        InitParkingSlots();
-        InitParkingReservationComponent();
-    }
+        private List<ParkingSlot> _allParkingSlots;
+        private List<ParkingSlot> _unlockParkingSlots;
+        private SceneData _sceneData;
 
-    private void InitParkingSlots()
-    {
-        int parkingSlotsCount = _sceneData.UnlockParkingSlotsCount + YG2.saves.AdditionalRewardParkingSlotsCount;
-
-        for (int i = 0; i < parkingSlotsCount; i++)
+        public ParkingReservationInitSystem(List<ParkingSlot> parkingSlots)
         {
-            _allParkingSlots[i].GetComponentInChildren<OpenADVParkingSlotUnlock>().gameObject.SetActive(false);
-
-            var parkingSlotNewEntity = _ecsWorld.NewEntity();
-
-            ref var parkingComponent = ref parkingSlotNewEntity.Get<ParkingComponent>();
-            parkingComponent.Car = null;
-            parkingComponent.IsReserved = false;
-
-            _allParkingSlots[i].Entity = parkingSlotNewEntity;
-
-            _unlockParkingSlots.Add(_allParkingSlots[i]);
+            _allParkingSlots = parkingSlots;
+            _unlockParkingSlots = new List<ParkingSlot>();
         }
-    }
 
-    private void InitParkingReservationComponent()
-    {
-        var parkingReservationEntity = _ecsWorld.NewEntity();
+        public void Init()
+        {
+            InitParkingSlots();
+            InitParkingReservationComponent();
+        }
 
-        ref var parkingReservationComponent = ref parkingReservationEntity.Get<ParkingReservationComponent>();
-        parkingReservationComponent.ParkingSlots = _unlockParkingSlots;
+        private void InitParkingSlots()
+        {
+            int parkingSlotsCount = _sceneData.UnlockParkingSlotsCount + YG2.saves.AdditionalRewardParkingSlotsCount;
+
+            for (int i = 0; i < parkingSlotsCount; i++)
+            {
+                _allParkingSlots[i].GetComponentInChildren<OpenADVParkingSlotUnlock>().gameObject.SetActive(false);
+
+                var parkingSlotNewEntity = _ecsWorld.NewEntity();
+
+                ref var parkingComponent = ref parkingSlotNewEntity.Get<ParkingComponent>();
+                parkingComponent.Car = null;
+                parkingComponent.IsReserved = false;
+
+                _allParkingSlots[i].Entity = parkingSlotNewEntity;
+
+                _unlockParkingSlots.Add(_allParkingSlots[i]);
+            }
+        }
+
+        private void InitParkingReservationComponent()
+        {
+            var parkingReservationEntity = _ecsWorld.NewEntity();
+
+            ref var parkingReservationComponent = ref parkingReservationEntity.Get<ParkingReservationComponent>();
+            parkingReservationComponent.ParkingSlots = _unlockParkingSlots;
+        }
     }
 }

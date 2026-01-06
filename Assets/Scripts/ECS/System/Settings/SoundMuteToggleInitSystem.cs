@@ -1,42 +1,47 @@
 using Leopotam.Ecs;
 using YG;
+using CarParkingChaos.ECS.Data;
+using CarParkingChaos.UI.Markers;
 
-public class SoundMuteToggleInitSystem : IEcsInitSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private const string MasterVolume = "MasterVolume";
-
-    private EcsWorld _ecsWorld;
-    private StaticData _staticData;
-    private SoundMuteToggle _soundMuteToggle;
-
-    public SoundMuteToggleInitSystem(SoundMuteToggle soundMuteToggle)
+    public class SoundMuteToggleInitSystem : IEcsInitSystem
     {
-        _soundMuteToggle = soundMuteToggle;
-    }
+        private const string MasterVolume = "MasterVolume";
 
-    public void Init()
-    {
-        InitSettings();
-    }
+        private EcsWorld _ecsWorld;
+        private StaticData _staticData;
+        private SoundMuteToggle _soundMuteToggle;
 
-    private void InitSettings()
-    {
-        var settingsNewEntity = _ecsWorld.NewEntity();
-
-        ref var soundComponent = ref settingsNewEntity.Get<UIISoundToggleComponent>();
-        soundComponent.SoundMuteToggle = _soundMuteToggle;
-
-        if (YG2.saves.MasterSoundValue == 0 || YG2.saves.MasterSoundValue == _staticData.MaxMasterSoundValue)
+        public SoundMuteToggleInitSystem(SoundMuteToggle soundMuteToggle)
         {
-            soundComponent.SoundMuteToggle.AudioMixer.SetFloat(MasterVolume, _staticData.MaxMasterSoundValue);
-            soundComponent.SoundMuteToggle.MuteSoundButtonClickReader.gameObject.SetActive(true);
-            soundComponent.SoundMuteToggle.UnmuteSoundButtonClickReader.gameObject.SetActive(false);
+            _soundMuteToggle = soundMuteToggle;
         }
-        else
+
+        public void Init()
         {
-            soundComponent.SoundMuteToggle.AudioMixer.SetFloat(MasterVolume, _staticData.MinMasterSoundValue);
-            soundComponent.SoundMuteToggle.MuteSoundButtonClickReader.gameObject.SetActive(false);
-            soundComponent.SoundMuteToggle.UnmuteSoundButtonClickReader.gameObject.SetActive(true);
+            InitSettings();
+        }
+
+        private void InitSettings()
+        {
+            var settingsNewEntity = _ecsWorld.NewEntity();
+
+            ref var soundComponent = ref settingsNewEntity.Get<UIISoundToggleComponent>();
+            soundComponent.SoundMuteToggle = _soundMuteToggle;
+
+            if (YG2.saves.MasterSoundValue == 0 || YG2.saves.MasterSoundValue == _staticData.MaxMasterSoundValue)
+            {
+                soundComponent.SoundMuteToggle.AudioMixer.SetFloat(MasterVolume, _staticData.MaxMasterSoundValue);
+                soundComponent.SoundMuteToggle.MuteSoundButtonClickReader.gameObject.SetActive(true);
+                soundComponent.SoundMuteToggle.UnmuteSoundButtonClickReader.gameObject.SetActive(false);
+            }
+            else
+            {
+                soundComponent.SoundMuteToggle.AudioMixer.SetFloat(MasterVolume, _staticData.MinMasterSoundValue);
+                soundComponent.SoundMuteToggle.MuteSoundButtonClickReader.gameObject.SetActive(false);
+                soundComponent.SoundMuteToggle.UnmuteSoundButtonClickReader.gameObject.SetActive(true);
+            }
         }
     }
 }

@@ -1,20 +1,23 @@
 using Leopotam.Ecs;
 using UnityEngine;
 
-public class AnimatedPassengerSystem : IEcsRunSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private static readonly int IsWalking = Animator.StringToHash(nameof(IsWalking));
-
-    private EcsFilter<PassengerMovableComponent, PassengerAnimationComponent> _filter;
-
-    public void Run()
+    public class AnimatedPassengerSystem : IEcsRunSystem
     {
-        foreach (var entity in _filter)
-        {
-            ref var movabe = ref _filter.Get1(entity);
-            ref var animation = ref _filter.Get2(entity);
+        private static readonly int IsWalking = Animator.StringToHash(nameof(IsWalking));
 
-            animation.Animator.SetBool(IsWalking, movabe.IsMoving);
+        private EcsFilter<PassengerMovableComponent, PassengerAnimationComponent> _filter;
+
+        public void Run()
+        {
+            foreach (var entity in _filter)
+            {
+                ref var movabe = ref _filter.Get1(entity);
+                ref var animation = ref _filter.Get2(entity);
+
+                animation.Animator.SetBool(IsWalking, movabe.IsMoving);
+            }
         }
     }
 }

@@ -1,3 +1,6 @@
-public class CloseBuyingWindowPassengeSortingButton : BaseButtonClickReader
-{ 
+namespace CarParkingChaos.UI.Buttons
+{
+    public class CloseBuyingWindowPassengeSortingButton : BaseButtonClickReader
+    {
+    }
 }

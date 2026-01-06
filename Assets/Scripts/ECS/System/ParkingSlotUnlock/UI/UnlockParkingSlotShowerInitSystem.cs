@@ -1,24 +1,28 @@
 using Leopotam.Ecs;
+using CarParkingChaos.UI.Markers;
 
-public class UnlockParkingSlotShowerInitSystem : IEcsInitSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsWorld _ecsWorld;
-    private ADVUnlockParkingSlotShower _advUnlockParkingSlotShower;
-
-    public UnlockParkingSlotShowerInitSystem(ADVUnlockParkingSlotShower advUnlockParkingSlotShower)
+    public class UnlockParkingSlotShowerInitSystem : IEcsInitSystem
     {
-        _advUnlockParkingSlotShower = advUnlockParkingSlotShower;
-    }
+        private EcsWorld _ecsWorld;
+        private ADVUnlockParkingSlotShower _advUnlockParkingSlotShower;
 
-    public void Init()
-    {
-        var advUnlockParkingSlotNewEntity = _ecsWorld.NewEntity();
+        public UnlockParkingSlotShowerInitSystem(ADVUnlockParkingSlotShower advUnlockParkingSlotShower)
+        {
+            _advUnlockParkingSlotShower = advUnlockParkingSlotShower;
+        }
 
-        ref var unlockParkingSlotShowerComponent = ref advUnlockParkingSlotNewEntity.Get<ADVUnlockParkingSlotShowerComponent>();
-        unlockParkingSlotShowerComponent.AdvUnlockParkingSlotShower = _advUnlockParkingSlotShower;
+        public void Init()
+        {
+            var advUnlockParkingSlotNewEntity = _ecsWorld.NewEntity();
 
-        unlockParkingSlotShowerComponent.AdvUnlockParkingSlotShower.WindowGroup.alpha = 0f;
-        unlockParkingSlotShowerComponent.AdvUnlockParkingSlotShower.WindowGroup.interactable = false;
-        unlockParkingSlotShowerComponent.AdvUnlockParkingSlotShower.WindowGroup.blocksRaycasts = false;
+            ref var unlockParkingSlotShowerComponent = ref advUnlockParkingSlotNewEntity.Get<ADVUnlockParkingSlotShowerComponent>();
+            unlockParkingSlotShowerComponent.AdvUnlockParkingSlotShower = _advUnlockParkingSlotShower;
+
+            unlockParkingSlotShowerComponent.AdvUnlockParkingSlotShower.WindowGroup.alpha = 0f;
+            unlockParkingSlotShowerComponent.AdvUnlockParkingSlotShower.WindowGroup.interactable = false;
+            unlockParkingSlotShowerComponent.AdvUnlockParkingSlotShower.WindowGroup.blocksRaycasts = false;
+        }
     }
 }

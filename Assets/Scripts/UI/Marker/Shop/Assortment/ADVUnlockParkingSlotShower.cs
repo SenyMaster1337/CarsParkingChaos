@@ -1,8 +1,12 @@
 using UnityEngine;
+using CarParkingChaos.UI.Buttons;
 
-public class ADVUnlockParkingSlotShower : MonoBehaviour
+namespace CarParkingChaos.UI.Markers
 {
-    [field: SerializeField] public CanvasGroup WindowGroup { get; private set; }
-    [field: SerializeField] public ShowAdvUnclockParkingSlotButton ShowAdvUnclockParkingSlotButton { get; private set; }
-    [field: SerializeField] public CloseAdvUnlockParkingSlotrButton CloseAdvUnlockParkingSlotrButton { get; private set; }
+    public class ADVUnlockParkingSlotShower : MonoBehaviour
+    {
+        [field: SerializeField] public CanvasGroup WindowGroup { get; private set; }
+        [field: SerializeField] public ShowAdvUnclockParkingSlotButton ShowAdvUnclockParkingSlotButton { get; private set; }
+        [field: SerializeField] public CloseAdvUnlockParkingSlotrButton CloseAdvUnlockParkingSlotrButton { get; private set; }
+    }
 }

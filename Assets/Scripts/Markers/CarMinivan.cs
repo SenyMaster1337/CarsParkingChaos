@@ -1,5 +1,8 @@
 using UnityEngine;
 
-public class CarMinivan : MonoBehaviour
+namespace CarParkingChaos.Markers
 {
+    public class CarMinivan : MonoBehaviour
+    {
+    }
 }

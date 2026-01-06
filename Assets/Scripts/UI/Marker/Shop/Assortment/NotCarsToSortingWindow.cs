@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class NotCarsToSortingWindow : MonoBehaviour
+namespace CarParkingChaos.UI.Markers
 {
-    [field: SerializeField] public CanvasGroup WindowGroup { get; private set; }
+    public class NotCarsToSortingWindow : MonoBehaviour
+    {
+        [field: SerializeField] public CanvasGroup WindowGroup { get; private set; }
+    }
 }

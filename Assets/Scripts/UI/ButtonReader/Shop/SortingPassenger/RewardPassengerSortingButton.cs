@@ -1,3 +1,6 @@
-public class RewardPassengerSortingButton : BaseButtonClickReader
+namespace CarParkingChaos.UI.Buttons
 {
+    public class RewardPassengerSortingButton : BaseButtonClickReader
+    {
+    }
 }

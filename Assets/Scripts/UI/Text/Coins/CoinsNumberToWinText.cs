@@ -1,3 +1,6 @@
-public class CoinsNumberToWinText : BaseText
+namespace CarParkingChaos.UI.Text
 {
+    public class CoinsNumberToWinText : BaseText
+    {
+    }
 }

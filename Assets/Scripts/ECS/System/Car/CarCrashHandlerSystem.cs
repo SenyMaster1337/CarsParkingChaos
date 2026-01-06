@@ -1,54 +1,59 @@
 using System.Collections.Generic;
 using Leopotam.Ecs;
+using CarParkingChaos.Handler;
+using CarParkingChaos.Markers;
 
-public class CarCrashHandlerSystem : IEcsInitSystem, IEcsDestroySystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsWorld _ecsWorld;
-    private List<Vehicle> _cars;
-
-    public CarCrashHandlerSystem(List<Vehicle> cars)
+    public class CarCrashHandlerSystem : IEcsInitSystem, IEcsDestroySystem
     {
-        _cars = cars;
-    }
+        private EcsWorld _ecsWorld;
+        private List<Vehicle> _cars;
 
-    public void Init()
-    {
-        for (int i = 0; i < _cars.Count; i++)
+        public CarCrashHandlerSystem(List<Vehicle> cars)
         {
-            _cars[i].GetComponentInChildren<CrashHandler>().OnCollisionCar += ProcessCrash;
+            _cars = cars;
         }
-    }
 
-    public void Destroy()
-    {
-        for (int i = 0; i < _cars.Count; i++)
+        public void Init()
         {
-            if (_cars[i] != null)
-                _cars[i].GetComponentInChildren<CrashHandler>().OnCollisionCar -= ProcessCrash;
+            for (int i = 0; i < _cars.Count; i++)
+            {
+                _cars[i].GetComponentInChildren<CrashHandler>().OnCollisionCar += ProcessCrash;
+            }
         }
-    }
 
-    private void ProcessCrash(Vehicle crashHandlerCar, Vehicle carCrashed)
-    {
-        ref var componentcrashHandlerCar = ref crashHandlerCar.Entity.Get<CarComponent>();
-        ref var componentCarCrashed = ref carCrashed.Entity.Get<CarComponent>();
-
-        if (componentCarCrashed.CanCrashed == true && componentcrashHandlerCar.CanCrashed == true)
+        public void Destroy()
         {
-            componentcrashHandlerCar.IsCrashed = true;
-
-            StartCancelParkingReserverEvent(componentcrashHandlerCar.ParkingReservedSlot);
-
-            ref var movableCrashHandlerCar = ref crashHandlerCar.Entity.Get<CarMovableComponent>();
-            movableCrashHandlerCar.IsReverseDirectionEnable = true;
+            for (int i = 0; i < _cars.Count; i++)
+            {
+                if (_cars[i] != null)
+                    _cars[i].GetComponentInChildren<CrashHandler>().OnCollisionCar -= ProcessCrash;
+            }
         }
-    }
 
-    private void StartCancelParkingReserverEvent(ParkingSlot slot)
-    {
-        _ecsWorld.NewEntity().Get<ParkingCancelReservationEvent>() = new ParkingCancelReservationEvent
+        private void ProcessCrash(Vehicle crashHandlerCar, Vehicle carCrashed)
         {
-            ParkingSlot = slot,
-        };
+            ref var componentcrashHandlerCar = ref crashHandlerCar.Entity.Get<CarComponent>();
+            ref var componentCarCrashed = ref carCrashed.Entity.Get<CarComponent>();
+
+            if (componentCarCrashed.CanCrashed == true && componentcrashHandlerCar.CanCrashed == true)
+            {
+                componentcrashHandlerCar.IsCrashed = true;
+
+                StartCancelParkingReserverEvent(componentcrashHandlerCar.ParkingReservedSlot);
+
+                ref var movableCrashHandlerCar = ref crashHandlerCar.Entity.Get<CarMovableComponent>();
+                movableCrashHandlerCar.IsReverseDirectionEnable = true;
+            }
+        }
+
+        private void StartCancelParkingReserverEvent(ParkingSlot slot)
+        {
+            _ecsWorld.NewEntity().Get<ParkingCancelReservationEvent>() = new ParkingCancelReservationEvent
+            {
+                ParkingSlot = slot,
+            };
+        }
     }
 }

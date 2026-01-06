@@ -1,25 +1,30 @@
 using System.Collections.Generic;
 using Leopotam.Ecs;
+using CarParkingChaos.Markers;
+using CarParkingChaos.UI.Text;
 
-public class PassengersCountShowerInitSystem : IEcsInitSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsWorld _ecsWorld;
-
-    private List<Passenger> _passengers;
-    private PassengersCountText _passengersCountText;
-
-    public PassengersCountShowerInitSystem(PassengersCountText currentPassengersCount)
+    public class PassengersCountShowerInitSystem : IEcsInitSystem
     {
-        _passengersCountText = currentPassengersCount;
-    }
+        private EcsWorld _ecsWorld;
 
-    public void Init()
-    {
-        var passengersCountShowerNewEntity = _ecsWorld.NewEntity();
+        private List<Passenger> _passengers;
+        private PassengersCountText _passengersCountText;
 
-        ref var passengersCountShowerComponent = ref passengersCountShowerNewEntity.Get<PassengersCountShowerComponent>();
-        passengersCountShowerComponent.PassengersCountText = _passengersCountText;
+        public PassengersCountShowerInitSystem(PassengersCountText currentPassengersCount)
+        {
+            _passengersCountText = currentPassengersCount;
+        }
 
-        passengersCountShowerComponent.PassengersCountText.Value.SetText($"{_passengers.Count}");
+        public void Init()
+        {
+            var passengersCountShowerNewEntity = _ecsWorld.NewEntity();
+
+            ref var passengersCountShowerComponent = ref passengersCountShowerNewEntity.Get<PassengersCountShowerComponent>();
+            passengersCountShowerComponent.PassengersCountText = _passengersCountText;
+
+            passengersCountShowerComponent.PassengersCountText.Value.SetText($"{_passengers.Count}");
+        }
     }
 }

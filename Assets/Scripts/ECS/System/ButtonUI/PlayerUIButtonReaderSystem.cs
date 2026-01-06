@@ -1,121 +1,126 @@
 using Leopotam.Ecs;
+using CarParkingChaos.UI.Buttons;
+using CarParkingChaos.UI.Markers;
 
-public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsWorld _ecsWorld;
-    private EcsFilter<EnableButtonsEvent> _enableFilter;
-    private EcsFilter<DisableButtonsEvent> _disableFilter;
-
-    private SoundMuteToggle _soundMueToggle;
-    private RestartButtonClickReader _restartButtonClickReader;
-    private LeaderboradShower _leaderboradShower;
-    private ShopShower _shopShower;
-
-    public PlayerUIButtonReaderSystem(SoundMuteToggle soundMuteToggle, RestartButtonClickReader restartButtonClickReader, LeaderboradShower leaderboradShower, ShopShower shopShower)
+    public class PlayerUIButtonReaderSystem : IEcsInitSystem, IEcsDestroySystem, IEcsRunSystem
     {
-        _soundMueToggle = soundMuteToggle;
-        _restartButtonClickReader = restartButtonClickReader;
-        _leaderboradShower = leaderboradShower;
-        _shopShower = shopShower;
-    }
+        private EcsWorld _ecsWorld;
+        private EcsFilter<EnableButtonsEvent> _enableFilter;
+        private EcsFilter<DisableButtonsEvent> _disableFilter;
 
-    public void Init()
-    {
-        _soundMueToggle.MuteSoundButtonClickReader.OnButtonClicked += OnButtonClickMuteSound;
-        _soundMueToggle.UnmuteSoundButtonClickReader.OnButtonClicked += OnButtonClickUnmuteSound;
+        private SoundMuteToggle _soundMueToggle;
+        private RestartButtonClickReader _restartButtonClickReader;
+        private LeaderboradShower _leaderboradShower;
+        private ShopShower _shopShower;
 
-        _restartButtonClickReader.OnButtonClicked += OnButtonClickRestart;
-
-        _leaderboradShower.LeaderboradOpenButtonClick.OnButtonClicked += OnButtonClickOpenLeaderboard;
-        _leaderboradShower.LeaderboradCloseButtonClick.OnButtonClicked += OnButtonClickCloseLeaderboard;
-
-        _shopShower.OpenShopButtonClickReader.OnButtonClicked += OnButtonClickOpenShop;
-        _shopShower.CloseShopButtonClickReader.OnButtonClicked += OnButtonClickCloseShop;
-    }
-
-    public void Destroy()
-    {
-        _soundMueToggle.MuteSoundButtonClickReader.OnButtonClicked -= OnButtonClickMuteSound;
-        _soundMueToggle.UnmuteSoundButtonClickReader.OnButtonClicked -= OnButtonClickUnmuteSound;
-
-        _restartButtonClickReader.OnButtonClicked -= OnButtonClickRestart;
-
-        _leaderboradShower.LeaderboradOpenButtonClick.OnButtonClicked -= OnButtonClickOpenLeaderboard;
-        _leaderboradShower.LeaderboradCloseButtonClick.OnButtonClicked -= OnButtonClickCloseLeaderboard;
-
-        _shopShower.OpenShopButtonClickReader.OnButtonClicked -= OnButtonClickOpenShop;
-        _shopShower.CloseShopButtonClickReader.OnButtonClicked -= OnButtonClickCloseShop;
-    }
-
-    public void Run()
-    {
-        foreach (var enableEntity in _enableFilter)
+        public PlayerUIButtonReaderSystem(SoundMuteToggle soundMuteToggle, RestartButtonClickReader restartButtonClickReader, LeaderboradShower leaderboradShower, ShopShower shopShower)
         {
-            EnableButtons();
-            _enableFilter.GetEntity(enableEntity).Del<EnableButtonsEvent>();
+            _soundMueToggle = soundMuteToggle;
+            _restartButtonClickReader = restartButtonClickReader;
+            _leaderboradShower = leaderboradShower;
+            _shopShower = shopShower;
         }
 
-        foreach (var disableEntity in _disableFilter)
+        public void Init()
         {
+            _soundMueToggle.MuteSoundButtonClickReader.OnButtonClicked += OnButtonClickMuteSound;
+            _soundMueToggle.UnmuteSoundButtonClickReader.OnButtonClicked += OnButtonClickUnmuteSound;
+
+            _restartButtonClickReader.OnButtonClicked += OnButtonClickRestart;
+
+            _leaderboradShower.LeaderboradOpenButtonClick.OnButtonClicked += OnButtonClickOpenLeaderboard;
+            _leaderboradShower.LeaderboradCloseButtonClick.OnButtonClicked += OnButtonClickCloseLeaderboard;
+
+            _shopShower.OpenShopButtonClickReader.OnButtonClicked += OnButtonClickOpenShop;
+            _shopShower.CloseShopButtonClickReader.OnButtonClicked += OnButtonClickCloseShop;
+        }
+
+        public void Destroy()
+        {
+            _soundMueToggle.MuteSoundButtonClickReader.OnButtonClicked -= OnButtonClickMuteSound;
+            _soundMueToggle.UnmuteSoundButtonClickReader.OnButtonClicked -= OnButtonClickUnmuteSound;
+
+            _restartButtonClickReader.OnButtonClicked -= OnButtonClickRestart;
+
+            _leaderboradShower.LeaderboradOpenButtonClick.OnButtonClicked -= OnButtonClickOpenLeaderboard;
+            _leaderboradShower.LeaderboradCloseButtonClick.OnButtonClicked -= OnButtonClickCloseLeaderboard;
+
+            _shopShower.OpenShopButtonClickReader.OnButtonClicked -= OnButtonClickOpenShop;
+            _shopShower.CloseShopButtonClickReader.OnButtonClicked -= OnButtonClickCloseShop;
+        }
+
+        public void Run()
+        {
+            foreach (var enableEntity in _enableFilter)
+            {
+                EnableButtons();
+                _enableFilter.GetEntity(enableEntity).Del<EnableButtonsEvent>();
+            }
+
+            foreach (var disableEntity in _disableFilter)
+            {
+                DisableButtons();
+                _disableFilter.GetEntity(disableEntity).Del<DisableButtonsEvent>();
+            }
+        }
+
+        private void OnButtonClickMuteSound()
+        {
+            _ecsWorld.NewEntity().Get<MuteSoundEvent>();
+        }
+
+        private void OnButtonClickUnmuteSound()
+        {
+            _ecsWorld.NewEntity().Get<UnmuteSoundEvent>();
+        }
+
+        private void OnButtonClickRestart()
+        {
+            _ecsWorld.NewEntity().Get<RestartLevelEvent>();
+        }
+
+        private void OnButtonClickOpenLeaderboard()
+        {
+            _ecsWorld.NewEntity().Get<OpenLeaderboardEvent>();
+            _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
             DisableButtons();
-            _disableFilter.GetEntity(disableEntity).Del<DisableButtonsEvent>();
         }
-    }
 
-    private void OnButtonClickMuteSound()
-    {
-        _ecsWorld.NewEntity().Get<MuteSoundEvent>();
-    }
+        private void OnButtonClickCloseLeaderboard()
+        {
+            _ecsWorld.NewEntity().Get<CloseLeaderboardEvent>();
+            _ecsWorld.NewEntity().Get<EnableRaycastReaderEvent>();
+            EnableButtons();
+        }
 
-    private void OnButtonClickUnmuteSound()
-    {
-        _ecsWorld.NewEntity().Get<UnmuteSoundEvent>();
-    }
+        private void OnButtonClickOpenShop()
+        {
+            _ecsWorld.NewEntity().Get<OpenShopEvent>();
+            _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
+            DisableButtons();
+        }
 
-    private void OnButtonClickRestart()
-    {
-        _ecsWorld.NewEntity().Get<RestartLevelEvent>();
-    }
+        private void OnButtonClickCloseShop()
+        {
+            _ecsWorld.NewEntity().Get<CloseShopEvent>();
+            _ecsWorld.NewEntity().Get<EnableRaycastReaderEvent>();
+            EnableButtons();
+        }
 
-    private void OnButtonClickOpenLeaderboard()
-    {
-        _ecsWorld.NewEntity().Get<OpenLeaderboardEvent>();
-        _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
-        DisableButtons();
-    }
+        private void EnableButtons()
+        {
+            _restartButtonClickReader.Button.interactable = true;
+            _leaderboradShower.LeaderboradOpenButtonClick.Button.interactable = true;
+            _shopShower.OpenShopButtonClickReader.Button.interactable = true;
+        }
 
-    private void OnButtonClickCloseLeaderboard()
-    {
-        _ecsWorld.NewEntity().Get<CloseLeaderboardEvent>();
-        _ecsWorld.NewEntity().Get<EnableRaycastReaderEvent>();
-        EnableButtons();
-    }
-
-    private void OnButtonClickOpenShop()
-    {
-        _ecsWorld.NewEntity().Get<OpenShopEvent>();
-        _ecsWorld.NewEntity().Get<RaycastReaderDisableEvent>();
-        DisableButtons();
-    }
-
-    private void OnButtonClickCloseShop()
-    {
-        _ecsWorld.NewEntity().Get<CloseShopEvent>();
-        _ecsWorld.NewEntity().Get<EnableRaycastReaderEvent>();
-        EnableButtons();
-    }
-
-    private void EnableButtons()
-    {
-        _restartButtonClickReader.Button.interactable = true;
-        _leaderboradShower.LeaderboradOpenButtonClick.Button.interactable = true;
-        _shopShower.OpenShopButtonClickReader.Button.interactable = true;
-    }
-
-    private void DisableButtons()
-    {
-        _restartButtonClickReader.Button.interactable = false;
-        _leaderboradShower.LeaderboradOpenButtonClick.Button.interactable = false;
-        _shopShower.OpenShopButtonClickReader.Button.interactable = false;
+        private void DisableButtons()
+        {
+            _restartButtonClickReader.Button.interactable = false;
+            _leaderboradShower.LeaderboradOpenButtonClick.Button.interactable = false;
+            _shopShower.OpenShopButtonClickReader.Button.interactable = false;
+        }
     }
 }

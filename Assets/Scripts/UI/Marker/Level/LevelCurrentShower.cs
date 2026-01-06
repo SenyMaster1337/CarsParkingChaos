@@ -1,6 +1,10 @@
 using UnityEngine;
+using CarParkingChaos.UI.Text;
 
-public class LevelCurrentShower : MonoBehaviour
+namespace CarParkingChaos.UI.Markers
 {
-    [field: SerializeField] public CurrentLevelNumberText CurrentLevelNumberText { get; private set; }
+    public class LevelCurrentShower : MonoBehaviour
+    {
+        [field: SerializeField] public CurrentLevelNumberText CurrentLevelNumberText { get; private set; }
+    }
 }

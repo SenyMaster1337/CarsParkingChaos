@@ -1,146 +1,152 @@
 using Leopotam.Ecs;
 using UnityEngine;
+using CarParkingChaos.ECS.Data;
+using CarParkingChaos.Markers;
+using CarParkingChaos.Utils;
 
-public class CarMoveSystem : IEcsRunSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsWorld _ecsWorld;
-    private EcsFilter<CarMovableComponent, CarComponent> _filter;
-    private EcsFilter<ActivateCarMovableEvent> _activateCarMovableFilter;
-    private EcsFilter<CarParkingEvent> _carParkingFilter;
-
-    private StaticData _staticData;
-    private float _stopCarSqrDistance;
-
-    public CarMoveSystem()
+    public class CarMoveSystem : IEcsRunSystem
     {
-        _stopCarSqrDistance = 0.05f;
-    }
+        private EcsWorld _ecsWorld;
+        private EcsFilter<CarMovableComponent, CarComponent> _filter;
+        private EcsFilter<ActivateCarMovableEvent> _activateCarMovableFilter;
+        private EcsFilter<CarParkingEvent> _carParkingFilter;
 
-    public void Run()
-    {
-        foreach (var entity in _filter)
+        private StaticData _staticData;
+        private float _stopCarSqrDistance;
+
+        public CarMoveSystem()
         {
-            ref var movable = ref _filter.Get1(entity);
-            ref var component = ref _filter.Get2(entity);
+            _stopCarSqrDistance = 0.05f;
+        }
 
-            foreach (var activateCarMovableEntity in _activateCarMovableFilter)
+        public void Run()
+        {
+            foreach (var entity in _filter)
             {
-                TryMovableActivated(entity, ref movable, ref component);
-            }
+                ref var movable = ref _filter.Get1(entity);
+                ref var component = ref _filter.Get2(entity);
 
-            foreach (var parkingEntity in _carParkingFilter)
-            {
-                TryPark(entity, ref movable, ref component);
-            }
-
-            if (movable.IsMoving)
-            {
-                if (movable.IsReverseDirectionEnable == true)
+                foreach (var activateCarMovableEntity in _activateCarMovableFilter)
                 {
-                    MoveToStartPointWithoutPhysics(ref movable);
+                    TryMovableActivated(entity, ref movable, ref component);
+                }
 
-                    if (movable.Rigidbody.position.SqrDistance(movable.SpawnPosition) < _stopCarSqrDistance)
+                foreach (var parkingEntity in _carParkingFilter)
+                {
+                    TryPark(entity, ref movable, ref component);
+                }
+
+                if (movable.IsMoving)
+                {
+                    if (movable.IsReverseDirectionEnable == true)
                     {
-                        movable.Rigidbody.interpolation = RigidbodyInterpolation.None;
-                        movable.Rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
+                        MoveToStartPointWithoutPhysics(ref movable);
 
-                        movable.Rigidbody.velocity = Vector3.zero;
+                        if (movable.Rigidbody.position.SqrDistance(movable.SpawnPosition) < _stopCarSqrDistance)
+                        {
+                            movable.Rigidbody.interpolation = RigidbodyInterpolation.None;
+                            movable.Rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
+
+                            movable.Rigidbody.velocity = Vector3.zero;
+                            movable.Rigidbody.angularVelocity = Vector3.zero;
+
+                            StartCancelParkingReserverEvent(component.ParkingReservedSlot);
+                            component.IsCrashed = false;
+                            movable.IsMoving = false;
+                            movable.IsReverseDirectionEnable = false;
+                            component.CanClickable = true;
+                        }
+                    }
+                    else
+                    {
+                        MoveForwardPhysics(ref movable);
+                        TryDisableCrashHandler(ref movable, ref component);
+                        TrySpeedUp(ref movable, ref component);
+                    }
+
+                    if (movable.TargetPoint != Vector3.zero)
+                    {
+                        movable.Rigidbody.rotation = Quaternion.LookRotation((movable.TargetPoint - movable.Rigidbody.position).normalized);
                         movable.Rigidbody.angularVelocity = Vector3.zero;
-
-                        StartCancelParkingReserverEvent(component.ParkingReservedSlot);
-                        component.IsCrashed = false;
-                        movable.IsMoving = false;
-                        movable.IsReverseDirectionEnable = false;
-                        component.CanClickable = true;
+                        movable.TargetPoint = Vector3.zero;
                     }
                 }
-                else
-                {
-                    MoveForwardPhysics(ref movable);
-                    TryDisableCrashHandler(ref movable, ref component);
-                    TrySpeedUp(ref movable, ref component);
-                }
-
-                if (movable.TargetPoint != Vector3.zero)
-                {
-                    movable.Rigidbody.rotation = Quaternion.LookRotation((movable.TargetPoint - movable.Rigidbody.position).normalized);
-                    movable.Rigidbody.angularVelocity = Vector3.zero;
-                    movable.TargetPoint = Vector3.zero;
-                }
             }
         }
-    }
 
-    private void MoveForwardPhysics(ref CarMovableComponent movable)
-    {
-        movable.Rigidbody.velocity = movable.Transform.forward * movable.MoveSpeed;
-    }
-
-    private void MoveToStartPointWithoutPhysics(ref CarMovableComponent movable)
-    {
-        movable.Rigidbody.MovePosition(movable.Rigidbody.position - movable.Transform.forward * (movable.MoveSpeed * Time.fixedDeltaTime));
-    }
-
-    private void TryMovableActivated(int entity, ref CarMovableComponent movable, ref CarComponent carComponent)
-    {
-        var entityMovableEvent = _filter.GetEntity(entity);
-
-        if (entityMovableEvent.Has<ActivateCarMovableEvent>())
+        private void MoveForwardPhysics(ref CarMovableComponent movable)
         {
-            movable.Rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
-            movable.Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            carComponent.CanClickable = false;
-            movable.IsMoving = true;
-            entityMovableEvent.Del<ActivateCarMovableEvent>();
+            movable.Rigidbody.velocity = movable.Transform.forward * movable.MoveSpeed;
         }
-    }
 
-    private void TryPark(int entity, ref CarMovableComponent movable, ref CarComponent component)
-    {
-        var entityParkingEvent = _filter.GetEntity(entity);
-
-        if (entityParkingEvent.Has<CarParkingEvent>())
+        private void MoveToStartPointWithoutPhysics(ref CarMovableComponent movable)
         {
-            movable.Rigidbody.interpolation = RigidbodyInterpolation.None;
-            movable.Rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
-
-            movable.Rigidbody.velocity = Vector3.zero;
-            movable.Rigidbody.angularVelocity = Vector3.zero;
-
-            movable.IsMoving = false;
-            movable.TargetPoint = Vector3.zero;
-            movable.Rigidbody.position = component.ParkingReservedSlot.transform.position;
-            movable.Rigidbody.rotation = component.RorationCarInParking;
-            component.IsParked = true;
-            entityParkingEvent.Del<CarParkingEvent>();
+            movable.Rigidbody.MovePosition(movable.Rigidbody.position - movable.Transform.forward * (movable.MoveSpeed * Time.fixedDeltaTime));
         }
-    }
 
-    private void TrySpeedUp(ref CarMovableComponent movable, ref CarComponent component)
-    {
-        if (movable.MoveSpeed < _staticData.MaxCarSpeed && component.CanCrashed == false)
+        private void TryMovableActivated(int entity, ref CarMovableComponent movable, ref CarComponent carComponent)
         {
-            movable.MoveSpeed += _staticData.LinerCarSpeedUp * Time.fixedDeltaTime;
-            movable.MoveSpeed = Mathf.Min(movable.MoveSpeed, _staticData.MaxCarSpeed);
+            var entityMovableEvent = _filter.GetEntity(entity);
+
+            if (entityMovableEvent.Has<ActivateCarMovableEvent>())
+            {
+                movable.Rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+                movable.Rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+                carComponent.CanClickable = false;
+                movable.IsMoving = true;
+                entityMovableEvent.Del<ActivateCarMovableEvent>();
+            }
         }
-    }
 
-    private void TryDisableCrashHandler(ref CarMovableComponent movable, ref CarComponent component)
-    {
-        if (movable.Rigidbody.position.SqrDistance(movable.SpawnPosition) > component.DistanceToDisableCrashHandler && component.CanCrashed == true)
+        private void TryPark(int entity, ref CarMovableComponent movable, ref CarComponent component)
         {
-            component.CanCrashed = false;
-            component.CrashHandler.enabled = false;
-            component.CrashHandler.DisableBoxCollider();
-            component.IsParked = false;
+            var entityParkingEvent = _filter.GetEntity(entity);
+
+            if (entityParkingEvent.Has<CarParkingEvent>())
+            {
+                movable.Rigidbody.interpolation = RigidbodyInterpolation.None;
+                movable.Rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
+
+                movable.Rigidbody.velocity = Vector3.zero;
+                movable.Rigidbody.angularVelocity = Vector3.zero;
+
+                movable.IsMoving = false;
+                movable.TargetPoint = Vector3.zero;
+                movable.Rigidbody.position = component.ParkingReservedSlot.transform.position;
+                movable.Rigidbody.rotation = component.RorationCarInParking;
+                component.IsParked = true;
+                entityParkingEvent.Del<CarParkingEvent>();
+            }
         }
-    }
 
-    private void StartCancelParkingReserverEvent(ParkingSlot slot)
-    {
-        _ecsWorld.NewEntity().Get<ParkingCancelReservationEvent>() = new ParkingCancelReservationEvent
+        private void TrySpeedUp(ref CarMovableComponent movable, ref CarComponent component)
         {
-            ParkingSlot = slot,
-        };
+            if (movable.MoveSpeed < _staticData.MaxCarSpeed && component.CanCrashed == false)
+            {
+                movable.MoveSpeed += _staticData.LinerCarSpeedUp * Time.fixedDeltaTime;
+                movable.MoveSpeed = Mathf.Min(movable.MoveSpeed, _staticData.MaxCarSpeed);
+            }
+        }
+
+        private void TryDisableCrashHandler(ref CarMovableComponent movable, ref CarComponent component)
+        {
+            if (movable.Rigidbody.position.SqrDistance(movable.SpawnPosition) > component.DistanceToDisableCrashHandler && component.CanCrashed == true)
+            {
+                component.CanCrashed = false;
+                component.CrashHandler.enabled = false;
+                component.CrashHandler.DisableBoxCollider();
+                component.IsParked = false;
+            }
+        }
+
+        private void StartCancelParkingReserverEvent(ParkingSlot slot)
+        {
+            _ecsWorld.NewEntity().Get<ParkingCancelReservationEvent>() = new ParkingCancelReservationEvent
+            {
+                ParkingSlot = slot,
+            };
+        }
     }
 }

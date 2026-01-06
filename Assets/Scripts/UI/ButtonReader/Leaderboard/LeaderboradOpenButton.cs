@@ -1,3 +1,6 @@
-public class LeaderboradOpenButton : BaseButtonClickReader
+namespace CarParkingChaos.UI.Buttons
 {
+    public class LeaderboradOpenButton : BaseButtonClickReader
+    {
+    }
 }

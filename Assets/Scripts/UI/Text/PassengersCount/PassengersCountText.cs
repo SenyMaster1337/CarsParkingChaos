@@ -1,3 +1,6 @@
-public class PassengersCountText : BaseText
+namespace CarParkingChaos.UI.Text
 {
+    public class PassengersCountText : BaseText
+    {
+    }
 }

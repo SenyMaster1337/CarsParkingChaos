@@ -1,21 +1,25 @@
 using System.Collections.Generic;
 using Leopotam.Ecs;
+using CarParkingChaos.Markers;
 
-public class CarsRandomMaterialInitSystem : IEcsInitSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsWorld _ecsWorld;
-    private List<Vehicle> _cars;
-
-    public CarsRandomMaterialInitSystem(List<Vehicle> cars)
+    public class CarsRandomMaterialInitSystem : IEcsInitSystem
     {
-        _cars = cars;
-    }
+        private EcsWorld _ecsWorld;
+        private List<Vehicle> _cars;
 
-    public void Init()
-    {
-        var carsRandomColorNewEntity = _ecsWorld.NewEntity();
+        public CarsRandomMaterialInitSystem(List<Vehicle> cars)
+        {
+            _cars = cars;
+        }
 
-        ref var carsRandomColorComponent = ref carsRandomColorNewEntity.Get<CarsRandomColorComponent>();
-        carsRandomColorComponent.Cars = _cars;
+        public void Init()
+        {
+            var carsRandomColorNewEntity = _ecsWorld.NewEntity();
+
+            ref var carsRandomColorComponent = ref carsRandomColorNewEntity.Get<CarsRandomColorComponent>();
+            carsRandomColorComponent.Cars = _cars;
+        }
     }
 }

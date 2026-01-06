@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class EndGameShower : MonoBehaviour
+namespace CarParkingChaos.UI.Markers
 {
-    [field: SerializeField] public CanvasGroup WindowGroup { get; private set; }
+    public class EndGameShower : MonoBehaviour
+    {
+        [field: SerializeField] public CanvasGroup WindowGroup { get; private set; }
+    }
 }

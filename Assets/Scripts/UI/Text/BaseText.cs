@@ -1,7 +1,10 @@
 using TMPro;
 using UnityEngine;
 
-public class BaseText : MonoBehaviour
+namespace CarParkingChaos.UI.Text
 {
-    [field: SerializeField] public TMP_Text Value { get; private set; }
+    public class BaseText : MonoBehaviour
+    {
+        [field: SerializeField] public TMP_Text Value { get; private set; }
+    }
 }

@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class BlackBackground : MonoBehaviour
+namespace CarParkingChaos.UI.Markers
 {
-    [field: SerializeField] public CanvasGroup WindowGroup { get; private set; }
+    public class BlackBackground : MonoBehaviour
+    {
+        [field: SerializeField] public CanvasGroup WindowGroup { get; private set; }
+    }
 }

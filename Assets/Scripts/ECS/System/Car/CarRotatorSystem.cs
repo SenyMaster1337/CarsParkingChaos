@@ -1,39 +1,43 @@
 using System.Collections.Generic;
 using Leopotam.Ecs;
+using CarParkingChaos.Markers;
 
-public class CarRotatorSystem : IEcsInitSystem, IEcsDestroySystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private List<Vehicle> _cars;
-
-    public CarRotatorSystem(List<Vehicle> cars)
+    public class CarRotatorSystem : IEcsInitSystem, IEcsDestroySystem
     {
-        _cars = cars;
-    }
+        private List<Vehicle> _cars;
 
-    public void Init()
-    {
-        for (int i = 0; i < _cars.Count; i++)
+        public CarRotatorSystem(List<Vehicle> cars)
         {
-            _cars[i].OnTriggerCar += RotateCar;
+            _cars = cars;
         }
-    }
 
-    public void Destroy()
-    {
-        for (int i = 0; i < _cars.Count; i++)
+        public void Init()
         {
-            _cars[i].OnTriggerCar -= RotateCar;
+            for (int i = 0; i < _cars.Count; i++)
+            {
+                _cars[i].OnTriggerCar += RotateCar;
+            }
         }
-    }
 
-    private void RotateCar(CarRotate carRotate, Vehicle car)
-    {
-        ref var movable = ref car.Entity.Get<CarMovableComponent>();
-
-        if (movable.CarRotates.Contains(carRotate) == false)
+        public void Destroy()
         {
-            movable.CarRotates.Add(carRotate);
-            movable.Rigidbody.MoveRotation(carRotate.transform.rotation);
+            for (int i = 0; i < _cars.Count; i++)
+            {
+                _cars[i].OnTriggerCar -= RotateCar;
+            }
+        }
+
+        private void RotateCar(CarRotate carRotate, Vehicle car)
+        {
+            ref var movable = ref car.Entity.Get<CarMovableComponent>();
+
+            if (movable.CarRotates.Contains(carRotate) == false)
+            {
+                movable.CarRotates.Add(carRotate);
+                movable.Rigidbody.MoveRotation(carRotate.transform.rotation);
+            }
         }
     }
 }

@@ -1,29 +1,34 @@
 using Leopotam.Ecs;
+using CarParkingChaos.ECS.Data;
+using CarParkingChaos.UI.Markers;
 
-public class CarShuffleShowerInitSystem : IEcsInitSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsWorld _ecsWorld;
-
-    private CarShuffleShower _buyPassengerShuffle;
-    private StaticData _staticData;
-
-    public CarShuffleShowerInitSystem(CarShuffleShower buyPassengerShuffleShower)
+    public class CarShuffleShowerInitSystem : IEcsInitSystem
     {
-        _buyPassengerShuffle = buyPassengerShuffleShower;
-    }
+        private EcsWorld _ecsWorld;
 
-    public void Init()
-    {
-        var sortingPassengerNewEntity = _ecsWorld.NewEntity();
+        private CarShuffleShower _buyPassengerShuffle;
+        private StaticData _staticData;
 
-        ref var sortingPassengerComponent = ref sortingPassengerNewEntity.Get<PassengerShuffleShowerComponent>();
-        sortingPassengerComponent.BuyPassengerShuffleShower = _buyPassengerShuffle;
+        public CarShuffleShowerInitSystem(CarShuffleShower buyPassengerShuffleShower)
+        {
+            _buyPassengerShuffle = buyPassengerShuffleShower;
+        }
 
-        sortingPassengerComponent.BuyPassengerShuffleShower.WindowGroup.alpha = 0f;
-        sortingPassengerComponent.BuyPassengerShuffleShower.WindowGroup.interactable = false;
-        sortingPassengerComponent.BuyPassengerShuffleShower.WindowGroup.blocksRaycasts = false;
+        public void Init()
+        {
+            var sortingPassengerNewEntity = _ecsWorld.NewEntity();
 
-        sortingPassengerComponent.BuyPassengerShuffleShower.PriceBuyingCarShuffleText.Value.SetText($"{_staticData.PriceShufflePassengers}");
-        sortingPassengerComponent.BuyPassengerShuffleShower.PriceBuyingCarShuffleShopAsssortmentMenuText.Value.SetText($"{_staticData.PriceShufflePassengers}");
+            ref var sortingPassengerComponent = ref sortingPassengerNewEntity.Get<PassengerShuffleShowerComponent>();
+            sortingPassengerComponent.BuyPassengerShuffleShower = _buyPassengerShuffle;
+
+            sortingPassengerComponent.BuyPassengerShuffleShower.WindowGroup.alpha = 0f;
+            sortingPassengerComponent.BuyPassengerShuffleShower.WindowGroup.interactable = false;
+            sortingPassengerComponent.BuyPassengerShuffleShower.WindowGroup.blocksRaycasts = false;
+
+            sortingPassengerComponent.BuyPassengerShuffleShower.PriceBuyingCarShuffleText.Value.SetText($"{_staticData.PriceShufflePassengers}");
+            sortingPassengerComponent.BuyPassengerShuffleShower.PriceBuyingCarShuffleShopAsssortmentMenuText.Value.SetText($"{_staticData.PriceShufflePassengers}");
+        }
     }
 }

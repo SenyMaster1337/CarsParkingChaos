@@ -1,3 +1,6 @@
-public class CloseBuyingWindowCarShuffleButton : BaseButtonClickReader
+namespace CarParkingChaos.UI.Buttons
 {
+    public class CloseBuyingWindowCarShuffleButton : BaseButtonClickReader
+    {
+    }
 }

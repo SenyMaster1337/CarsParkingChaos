@@ -1,38 +1,43 @@
 using System.Collections.Generic;
 using Leopotam.Ecs;
+using CarParkingChaos.Markers;
+using CarParkingChaos.UI.Markers;
 
-public class TutorialInitSystem : IEcsInitSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private List<Vehicle> _cars;
-
-    public TutorialInitSystem(List<Vehicle> cars)
+    public class TutorialInitSystem : IEcsInitSystem
     {
-        _cars = cars;
-    }
+        private List<Vehicle> _cars;
 
-    public void Init()
-    {
-        InitHandsTutorial();
-    }
-
-    private void InitHandsTutorial()
-    {
-        for (int i = 0; i < _cars.Count; i++)
+        public TutorialInitSystem(List<Vehicle> cars)
         {
-            ref var carTutorialComponent = ref _cars[i].Entity.Get<TutorialComponent>();
-            carTutorialComponent.WindowGroup = _cars[i].GetComponentInChildren<HandToturialShower>().WindowGroup;
+            _cars = cars;
+        }
 
-            if (i == 0)
+        public void Init()
+        {
+            InitHandsTutorial();
+        }
+
+        private void InitHandsTutorial()
+        {
+            for (int i = 0; i < _cars.Count; i++)
             {
-                carTutorialComponent.WindowGroup.alpha = 1f;
-                carTutorialComponent.WindowGroup.interactable = true;
-                carTutorialComponent.WindowGroup.blocksRaycasts = true;
-            }
-            else
-            {
-                carTutorialComponent.WindowGroup.alpha = 0f;
-                carTutorialComponent.WindowGroup.interactable = false;
-                carTutorialComponent.WindowGroup.blocksRaycasts = false;
+                ref var carTutorialComponent = ref _cars[i].Entity.Get<TutorialComponent>();
+                carTutorialComponent.WindowGroup = _cars[i].GetComponentInChildren<HandToturialShower>().WindowGroup;
+
+                if (i == 0)
+                {
+                    carTutorialComponent.WindowGroup.alpha = 1f;
+                    carTutorialComponent.WindowGroup.interactable = true;
+                    carTutorialComponent.WindowGroup.blocksRaycasts = true;
+                }
+                else
+                {
+                    carTutorialComponent.WindowGroup.alpha = 0f;
+                    carTutorialComponent.WindowGroup.interactable = false;
+                    carTutorialComponent.WindowGroup.blocksRaycasts = false;
+                }
             }
         }
     }

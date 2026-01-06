@@ -1,5 +1,8 @@
 using UnityEngine;
 
-public class StartQueuePoint : MonoBehaviour
+namespace CarParkingChaos.Markers
 {
+    public class StartQueuePoint : MonoBehaviour
+    {
+    }
 }

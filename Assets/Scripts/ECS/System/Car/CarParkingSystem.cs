@@ -1,35 +1,39 @@
 using System.Collections.Generic;
 using Leopotam.Ecs;
+using CarParkingChaos.Markers;
 
-public class CarParkingSystem : IEcsInitSystem, IEcsDestroySystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private List<Vehicle> _cars;
-
-    public CarParkingSystem(List<Vehicle> cars)
+    public class CarParkingSystem : IEcsInitSystem, IEcsDestroySystem
     {
-        _cars = cars;
-    }
+        private List<Vehicle> _cars;
 
-    public void Init()
-    {
-        for (int i = 0; i < _cars.Count; i++)
+        public CarParkingSystem(List<Vehicle> cars)
         {
-            _cars[i].OnCollisionCar += ParkCar;
+            _cars = cars;
         }
-    }
 
-    public void Destroy()
-    {
-        for (int i = 0; i < _cars.Count; i++)
+        public void Init()
         {
-            _cars[i].OnCollisionCar -= ParkCar;
+            for (int i = 0; i < _cars.Count; i++)
+            {
+                _cars[i].OnCollisionCar += ParkCar;
+            }
         }
-    }
 
-    private void ParkCar(CarParkingDirection caeEnter, Vehicle car)
-    {
-        ref var movable = ref car.Entity.Get<CarMovableComponent>();
-        ref var component = ref car.Entity.Get<CarComponent>();
-        movable.TargetPoint = component.ParkingReservedSlot.transform.position;
+        public void Destroy()
+        {
+            for (int i = 0; i < _cars.Count; i++)
+            {
+                _cars[i].OnCollisionCar -= ParkCar;
+            }
+        }
+
+        private void ParkCar(CarParkingDirection caeEnter, Vehicle car)
+        {
+            ref var movable = ref car.Entity.Get<CarMovableComponent>();
+            ref var component = ref car.Entity.Get<CarComponent>();
+            movable.TargetPoint = component.ParkingReservedSlot.transform.position;
+        }
     }
 }

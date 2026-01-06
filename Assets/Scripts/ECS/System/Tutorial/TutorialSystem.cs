@@ -1,48 +1,52 @@
 using System.Collections.Generic;
 using Leopotam.Ecs;
+using CarParkingChaos.Markers;
 
-public class TutorialSystem : IEcsRunSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsFilter<TutorialHideHandEvent> _handTutorialHide;
-    private List<Vehicle> _cars;
-
-    public TutorialSystem(List<Vehicle> cars)
+    public class TutorialSystem : IEcsRunSystem
     {
-        _cars = cars;
-    }
+        private EcsFilter<TutorialHideHandEvent> _handTutorialHide;
+        private List<Vehicle> _cars;
 
-    public void Run()
-    {
-        foreach (var handTutorialEntity in _handTutorialHide)
+        public TutorialSystem(List<Vehicle> cars)
         {
-            ref var handHideEvent = ref _handTutorialHide.Get1(handTutorialEntity);
-
-            HideHand(handHideEvent.EcsEntity);
-            ShowHand();
-            _handTutorialHide.GetEntity(handTutorialEntity).Del<TutorialHideHandEvent>();
+            _cars = cars;
         }
-    }
 
-    private void HideHand(EcsEntity carEcsEntity)
-    {
-        ref var carTutorialComponent = ref carEcsEntity.Get<TutorialComponent>();
-        carTutorialComponent.WindowGroup.alpha = 0f;
-        carTutorialComponent.WindowGroup.interactable = false;
-        carTutorialComponent.WindowGroup.blocksRaycasts = false;
-        carEcsEntity.Del<TutorialComponent>();
-    }
-
-    private void ShowHand()
-    {
-        foreach (var car in _cars)
+        public void Run()
         {
-            if (car.Entity.IsAlive() && car.Entity.Has<TutorialComponent>())
+            foreach (var handTutorialEntity in _handTutorialHide)
             {
-                ref var tutorialComponent = ref car.Entity.Get<TutorialComponent>();
-                tutorialComponent.WindowGroup.alpha = 1f;
-                tutorialComponent.WindowGroup.interactable = true;
-                tutorialComponent.WindowGroup.blocksRaycasts = true;
-                return;
+                ref var handHideEvent = ref _handTutorialHide.Get1(handTutorialEntity);
+
+                HideHand(handHideEvent.EcsEntity);
+                ShowHand();
+                _handTutorialHide.GetEntity(handTutorialEntity).Del<TutorialHideHandEvent>();
+            }
+        }
+
+        private void HideHand(EcsEntity carEcsEntity)
+        {
+            ref var carTutorialComponent = ref carEcsEntity.Get<TutorialComponent>();
+            carTutorialComponent.WindowGroup.alpha = 0f;
+            carTutorialComponent.WindowGroup.interactable = false;
+            carTutorialComponent.WindowGroup.blocksRaycasts = false;
+            carEcsEntity.Del<TutorialComponent>();
+        }
+
+        private void ShowHand()
+        {
+            foreach (var car in _cars)
+            {
+                if (car.Entity.IsAlive() && car.Entity.Has<TutorialComponent>())
+                {
+                    ref var tutorialComponent = ref car.Entity.Get<TutorialComponent>();
+                    tutorialComponent.WindowGroup.alpha = 1f;
+                    tutorialComponent.WindowGroup.interactable = true;
+                    tutorialComponent.WindowGroup.blocksRaycasts = true;
+                    return;
+                }
             }
         }
     }

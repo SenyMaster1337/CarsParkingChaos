@@ -1,20 +1,24 @@
 using Leopotam.Ecs;
+using CarParkingChaos.UI.Text;
 
-public class CurrencyShowInitSystem : IEcsInitSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsWorld _ecsWorld;
-    private CurrentCoinCountText _coinCountText;
-
-    public CurrencyShowInitSystem(CurrentCoinCountText coinCountText)
+    public class CurrencyShowInitSystem : IEcsInitSystem
     {
-        _coinCountText = coinCountText;
-    }
+        private EcsWorld _ecsWorld;
+        private CurrentCoinCountText _coinCountText;
 
-    public void Init()
-    {
-        var newCointTextEntity = _ecsWorld.NewEntity();
+        public CurrencyShowInitSystem(CurrentCoinCountText coinCountText)
+        {
+            _coinCountText = coinCountText;
+        }
 
-        ref var currencyComponent = ref newCointTextEntity.Get<CurrencyShowComponent>();
-        currencyComponent.CoinCountText = _coinCountText;
+        public void Init()
+        {
+            var newCointTextEntity = _ecsWorld.NewEntity();
+
+            ref var currencyComponent = ref newCointTextEntity.Get<CurrencyShowComponent>();
+            currencyComponent.CoinCountText = _coinCountText;
+        }
     }
 }

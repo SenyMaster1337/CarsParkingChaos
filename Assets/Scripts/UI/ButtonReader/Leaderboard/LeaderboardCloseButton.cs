@@ -1,3 +1,6 @@
-public class LeaderboardCloseButton : BaseButtonClickReader
+namespace CarParkingChaos.UI.Buttons
 {
+    public class LeaderboardCloseButton : BaseButtonClickReader
+    {
+    }
 }

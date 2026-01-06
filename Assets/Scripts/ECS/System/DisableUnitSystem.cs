@@ -1,31 +1,34 @@
 using Leopotam.Ecs;
 
-public class DisableUnitSystem : IEcsRunSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsFilter<DisableUnitsEvent> _filter;
-
-    public void Run()
+    public class DisableUnitSystem : IEcsRunSystem
     {
-        foreach (var entity in _filter)
+        private EcsFilter<DisableUnitsEvent> _filter;
+
+        public void Run()
         {
-            var entityDisableComponent = _filter.GetEntity(entity);
-
-            if (entityDisableComponent.IsAlive() && entityDisableComponent.Has<CarComponent>())
+            foreach (var entity in _filter)
             {
-                ref var carComponent = ref entityDisableComponent.Get<CarComponent>();
+                var entityDisableComponent = _filter.GetEntity(entity);
 
-                entityDisableComponent.Del<DisableUnitsEvent>();
-                carComponent.Car.gameObject.SetActive(false);
-                carComponent.Car.Entity.Destroy();
-            }
+                if (entityDisableComponent.IsAlive() && entityDisableComponent.Has<CarComponent>())
+                {
+                    ref var carComponent = ref entityDisableComponent.Get<CarComponent>();
 
-            if (entityDisableComponent.IsAlive() && entityDisableComponent.Has<PassengerComponent>())
-            {
-                ref var passengerComponent = ref entityDisableComponent.Get<PassengerComponent>();
+                    entityDisableComponent.Del<DisableUnitsEvent>();
+                    carComponent.Car.gameObject.SetActive(false);
+                    carComponent.Car.Entity.Destroy();
+                }
 
-                entityDisableComponent.Del<DisableUnitsEvent>();
-                passengerComponent.Passenger.gameObject.SetActive(false);
-                passengerComponent.Passenger.Entity.Destroy();
+                if (entityDisableComponent.IsAlive() && entityDisableComponent.Has<PassengerComponent>())
+                {
+                    ref var passengerComponent = ref entityDisableComponent.Get<PassengerComponent>();
+
+                    entityDisableComponent.Del<DisableUnitsEvent>();
+                    passengerComponent.Passenger.gameObject.SetActive(false);
+                    passengerComponent.Passenger.Entity.Destroy();
+                }
             }
         }
     }

@@ -1,3 +1,5 @@
+using CarParkingChaos.Sounds;
+
 public struct CarAudioComponent
 {
     public CarDriveSound DriveSound;

@@ -1,24 +1,28 @@
 using Leopotam.Ecs;
+using CarParkingChaos.UI.Markers;
 
-public class EndGameShowerInitSystem : IEcsInitSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsWorld _ecsWorld;
-    private EndGameShower _endGameShower;
-
-    public EndGameShowerInitSystem(EndGameShower endGameShower)
+    public class EndGameShowerInitSystem : IEcsInitSystem
     {
-        _endGameShower = endGameShower;
-    }
+        private EcsWorld _ecsWorld;
+        private EndGameShower _endGameShower;
 
-    public void Init()
-    {
-        var endGameShowerNewEntity = _ecsWorld.NewEntity();
+        public EndGameShowerInitSystem(EndGameShower endGameShower)
+        {
+            _endGameShower = endGameShower;
+        }
 
-        ref var endGameShowerComponent = ref endGameShowerNewEntity.Get<EndGameShowerComponent>();
-        endGameShowerComponent.EndGameShower = _endGameShower;
+        public void Init()
+        {
+            var endGameShowerNewEntity = _ecsWorld.NewEntity();
 
-        endGameShowerComponent.EndGameShower.WindowGroup.alpha = 0f;
-        endGameShowerComponent.EndGameShower.WindowGroup.interactable = false;
-        endGameShowerComponent.EndGameShower.WindowGroup.blocksRaycasts = false;
+            ref var endGameShowerComponent = ref endGameShowerNewEntity.Get<EndGameShowerComponent>();
+            endGameShowerComponent.EndGameShower = _endGameShower;
+
+            endGameShowerComponent.EndGameShower.WindowGroup.alpha = 0f;
+            endGameShowerComponent.EndGameShower.WindowGroup.interactable = false;
+            endGameShowerComponent.EndGameShower.WindowGroup.blocksRaycasts = false;
+        }
     }
 }

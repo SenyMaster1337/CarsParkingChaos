@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class PassengerRenderer : MonoBehaviour
+namespace CarParkingChaos.Markers
 {
-    [field: SerializeField] public Renderer Renderer { get; private set; }
+    public class PassengerRenderer : MonoBehaviour
+    {
+        [field: SerializeField] public Renderer Renderer { get; private set; }
+    }
 }

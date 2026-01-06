@@ -1,3 +1,6 @@
-public class NextLevelButtonClickReader : BaseButtonClickReader
+namespace CarParkingChaos.UI.Buttons
 {
+    public class NextLevelButtonClickReader : BaseButtonClickReader
+    {
+    }
 }

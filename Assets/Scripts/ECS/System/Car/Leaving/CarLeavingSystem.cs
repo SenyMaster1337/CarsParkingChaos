@@ -1,53 +1,58 @@
 using Leopotam.Ecs;
+using CarParkingChaos.ECS.Data;
+using CarParkingChaos.Markers;
 
-public class CarLeavingSystem : IEcsRunSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsWorld _ecsWorld;
-    private EcsFilter<CarLeavingComponent> _carLeavingFilter;
-    private EcsFilter<CarComponent> _carComponentFilter;
-
-    private StaticData _staticData;
-
-    public void Run()
+    public class CarLeavingSystem : IEcsRunSystem
     {
-        foreach (var leavingEntity in _carLeavingFilter)
+        private EcsWorld _ecsWorld;
+        private EcsFilter<CarLeavingComponent> _carLeavingFilter;
+        private EcsFilter<CarComponent> _carComponentFilter;
+
+        private StaticData _staticData;
+
+        public void Run()
         {
-            foreach (var carEntity in _carComponentFilter)
+            foreach (var leavingEntity in _carLeavingFilter)
             {
-                ref var component = ref _carComponentFilter.Get1(carEntity);
-
-                if (component.ReservedSeats.Count == component.MaxPassengersSlots && component.IsNotEmptySeats == false)
+                foreach (var carEntity in _carComponentFilter)
                 {
-                    component.IsNotEmptySeats = true;
-                    StartCancelParkingReserverEvent(component.ParkingReservedSlot);
+                    ref var component = ref _carComponentFilter.Get1(carEntity);
 
-                    ref var leavingComponent = ref _carLeavingFilter.Get1(leavingEntity);
-                    leavingComponent.Cars.Remove(component.Car);
-                }
+                    if (component.ReservedSeats.Count == component.MaxPassengersSlots && component.IsNotEmptySeats == false)
+                    {
+                        component.IsNotEmptySeats = true;
+                        StartCancelParkingReserverEvent(component.ParkingReservedSlot);
 
-                if (component.Passengers.Count == component.MaxPassengersSlots && component.IsAllPassengersBoarded == false)
-                {
-                    component.IsAllPassengersBoarded = true;
-                    StartTimer(carEntity, _staticData.TimeDisableCarInScene);
+                        ref var leavingComponent = ref _carLeavingFilter.Get1(leavingEntity);
+                        leavingComponent.Cars.Remove(component.Car);
+                    }
+
+                    if (component.Passengers.Count == component.MaxPassengersSlots && component.IsAllPassengersBoarded == false)
+                    {
+                        component.IsAllPassengersBoarded = true;
+                        StartTimer(carEntity, _staticData.TimeDisableCarInScene);
+                    }
                 }
             }
         }
-    }
 
-    private void StartTimer(int entity, float duration)
-    {
-        _carComponentFilter.GetEntity(entity).Get<TimerComponent>() = new TimerComponent
+        private void StartTimer(int entity, float duration)
         {
-            TimeLeft = duration,
-            IsActive = true,
-        };
-    }
+            _carComponentFilter.GetEntity(entity).Get<TimerComponent>() = new TimerComponent
+            {
+                TimeLeft = duration,
+                IsActive = true,
+            };
+        }
 
-    private void StartCancelParkingReserverEvent(ParkingSlot slot)
-    {
-        _ecsWorld.NewEntity().Get<ParkingCancelReservationEvent>() = new ParkingCancelReservationEvent
+        private void StartCancelParkingReserverEvent(ParkingSlot slot)
         {
-            ParkingSlot = slot,
-        };
+            _ecsWorld.NewEntity().Get<ParkingCancelReservationEvent>() = new ParkingCancelReservationEvent
+            {
+                ParkingSlot = slot,
+            };
+        }
     }
 }

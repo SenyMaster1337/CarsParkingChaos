@@ -1,3 +1,6 @@
-public class ShowAdvUnclockParkingSlotButton : BaseButtonClickReader
+namespace CarParkingChaos.UI.Buttons
 {
+    public class ShowAdvUnclockParkingSlotButton : BaseButtonClickReader
+    {
+    }
 }

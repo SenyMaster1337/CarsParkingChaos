@@ -1,29 +1,33 @@
 using Leopotam.Ecs;
+using CarParkingChaos.UI.Markers;
 
-public class YGLeaderboardShowInitSystem : IEcsInitSystem
+namespace CarParkingChaos.ECS.Systems
 {
-    private EcsWorld _ecsWorld;
-    private LeaderboradShower _leaderboradShower;
-
-    public YGLeaderboardShowInitSystem(LeaderboradShower leaderboradShower)
+    public class YGLeaderboardShowInitSystem : IEcsInitSystem
     {
-        _leaderboradShower = leaderboradShower;
-    }
+        private EcsWorld _ecsWorld;
+        private LeaderboradShower _leaderboradShower;
 
-    public void Init()
-    {
-        InitLeaderboard();
-    }
+        public YGLeaderboardShowInitSystem(LeaderboradShower leaderboradShower)
+        {
+            _leaderboradShower = leaderboradShower;
+        }
 
-    private void InitLeaderboard()
-    {
-        var leaderboardEntity = _ecsWorld.NewEntity();
+        public void Init()
+        {
+            InitLeaderboard();
+        }
 
-        ref var leaderboradComponent = ref leaderboardEntity.Get<UILeaderboardComponent>();
+        private void InitLeaderboard()
+        {
+            var leaderboardEntity = _ecsWorld.NewEntity();
 
-        leaderboradComponent.LeaderboardShower = _leaderboradShower;
-        leaderboradComponent.LeaderboardShower.WindowGroup.alpha = 0f;
-        leaderboradComponent.LeaderboardShower.WindowGroup.interactable = false;
-        leaderboradComponent.LeaderboardShower.WindowGroup.blocksRaycasts = false;
+            ref var leaderboradComponent = ref leaderboardEntity.Get<UILeaderboardComponent>();
+
+            leaderboradComponent.LeaderboardShower = _leaderboradShower;
+            leaderboradComponent.LeaderboardShower.WindowGroup.alpha = 0f;
+            leaderboradComponent.LeaderboardShower.WindowGroup.interactable = false;
+            leaderboradComponent.LeaderboardShower.WindowGroup.blocksRaycasts = false;
+        }
     }
 }
