@@ -1,5 +1,3 @@
-
 public class RestartButtonClickReader : BaseButtonClickReader
 {
-    
 }

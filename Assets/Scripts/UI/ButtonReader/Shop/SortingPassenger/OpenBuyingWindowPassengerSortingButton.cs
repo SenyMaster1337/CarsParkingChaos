@@ -1,5 +1,3 @@
-
 public class OpenBuyingWindowPassengerSortingButton : BaseButtonClickReader
 {
-    
 }

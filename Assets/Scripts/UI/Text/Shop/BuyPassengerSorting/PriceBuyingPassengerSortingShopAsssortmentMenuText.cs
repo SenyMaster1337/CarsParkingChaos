@@ -1,5 +1,3 @@
-
 public class PriceBuyingPassengerSortingShopAsssortmentMenuText : BaseText
 {
-    
 }

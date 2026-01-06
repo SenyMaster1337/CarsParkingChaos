@@ -4,8 +4,9 @@ using YG;
 
 public class YGPlayerLoader : MonoBehaviour
 {
-    [SerializeField] private Camera _mainCamera;
     private const string SceneName = "Level";
+
+    [SerializeField] private Camera _mainCamera;
 
     private void Start()
     {
@@ -32,6 +33,6 @@ public class YGPlayerLoader : MonoBehaviour
 
     private void LoadSavePlayerScene()
     {
-        SceneManager.LoadScene(SceneName + YG2.saves.level);
+        SceneManager.LoadScene(SceneName + YG2.saves.Level);
     }
 }

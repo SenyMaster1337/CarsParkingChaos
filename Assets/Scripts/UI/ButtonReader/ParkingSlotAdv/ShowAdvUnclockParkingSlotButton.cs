@@ -1,5 +1,3 @@
-
 public class ShowAdvUnclockParkingSlotButton : BaseButtonClickReader
 {
-    
 }

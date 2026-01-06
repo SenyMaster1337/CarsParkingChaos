@@ -2,5 +2,5 @@ using UnityEngine;
 
 public class LevelCurrentShower : MonoBehaviour
 {
-    [field: SerializeField] public CurrentLevelNumberText CurrentLevelNumberText;
+    [field: SerializeField] public CurrentLevelNumberText CurrentLevelNumberText { get; private set; }
 }

@@ -1,0 +1,25 @@
+using System.Collections.Generic;
+using Leopotam.Ecs;
+
+public class PassengersCountShowerInitSystem : IEcsInitSystem
+{
+    private EcsWorld _ecsWorld;
+
+    private List<Passenger> _passengers;
+    private PassengersCountText _passengersCountText;
+
+    public PassengersCountShowerInitSystem(PassengersCountText currentPassengersCount)
+    {
+        _passengersCountText = currentPassengersCount;
+    }
+
+    public void Init()
+    {
+        var passengersCountShowerNewEntity = _ecsWorld.NewEntity();
+
+        ref var passengersCountShowerComponent = ref passengersCountShowerNewEntity.Get<PassengersCountShowerComponent>();
+        passengersCountShowerComponent.PassengersCountText = _passengersCountText;
+
+        passengersCountShowerComponent.PassengersCountText.Value.SetText($"{_passengers.Count}");
+    }
+}

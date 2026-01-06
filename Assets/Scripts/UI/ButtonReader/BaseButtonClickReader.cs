@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public abstract class BaseButtonClickReader : MonoBehaviour
 {
-    [field: SerializeField] public Button Button;
+    [field: SerializeField] public Button Button { get; private set; }
 
     public event Action OnButtonClicked;
 

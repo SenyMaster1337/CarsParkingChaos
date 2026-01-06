@@ -2,26 +2,10 @@ namespace YG
 {
     public partial class SavesYG
     {
-        public int level = 1;
-    }
-
-    public partial class SavesYG
-    {
-        public int coins = 175;
-    }
-
-    public partial class SavesYG
-    {
-        public int leaderboardScore = 0;
-    }
-
-    public partial class SavesYG
-    {
-        public float masterSoundValue = 0;
-    }
-
-    public partial class SavesYG
-    {
-        public int additionalRewardParkingSlotsCount = 0;
+        public int Level = 1;
+        public int Coins = 175;
+        public int LeaderboardScore = 0;
+        public float MasterSoundValue = 0;
+        public int AdditionalRewardParkingSlotsCount = 0;
     }
 }

@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class CrashHandler : MonoBehaviour
 {
-    public event Action<Vehicle, Vehicle> OnCollisionCar;
-
     private BoxCollider _boxCollider;
     private Vehicle _currentCar;
+
+    public event Action<Vehicle, Vehicle> OnCollisionCar;
 
     private void Awake()
     {
