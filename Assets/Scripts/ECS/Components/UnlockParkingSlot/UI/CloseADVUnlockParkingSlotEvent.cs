@@ -1,3 +1,6 @@
-public struct CloseADVUnlockParkingSlotEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct CloseADVUnlockParkingSlotEvent
+    {
+    }
 }

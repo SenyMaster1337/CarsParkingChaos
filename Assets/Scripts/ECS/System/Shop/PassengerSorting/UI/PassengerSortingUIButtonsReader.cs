@@ -1,5 +1,6 @@
 using Leopotam.Ecs;
 using CarParkingChaos.UI.Markers;
+using CarParkingChaos.ECS.Components;
 
 namespace CarParkingChaos.ECS.Systems
 {

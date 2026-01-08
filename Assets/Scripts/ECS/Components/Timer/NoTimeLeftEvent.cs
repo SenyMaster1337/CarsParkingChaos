@@ -1,3 +1,6 @@
-public struct NoTimeLeftEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct NoTimeLeftEvent
+    {
+    }
 }

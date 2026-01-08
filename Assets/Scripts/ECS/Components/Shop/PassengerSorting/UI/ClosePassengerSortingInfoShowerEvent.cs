@@ -1,3 +1,6 @@
-public struct ClosePassengerSortingInfoShowerEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct ClosePassengerSortingInfoShowerEvent
+    {
+    }
 }

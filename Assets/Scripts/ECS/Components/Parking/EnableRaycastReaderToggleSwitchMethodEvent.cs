@@ -1,3 +1,6 @@
-public struct EnableRaycastReaderToggleSwitchMethodEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct EnableRaycastReaderToggleSwitchMethodEvent
+    {
+    }
 }

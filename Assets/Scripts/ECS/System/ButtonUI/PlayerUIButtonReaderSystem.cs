@@ -1,6 +1,7 @@
 using Leopotam.Ecs;
 using CarParkingChaos.UI.Buttons;
 using CarParkingChaos.UI.Markers;
+using CarParkingChaos.ECS.Components;
 
 namespace CarParkingChaos.ECS.Systems
 {
@@ -15,7 +16,11 @@ namespace CarParkingChaos.ECS.Systems
         private LeaderboradShower _leaderboradShower;
         private ShopShower _shopShower;
 
-        public PlayerUIButtonReaderSystem(SoundMuteToggle soundMuteToggle, RestartButtonClickReader restartButtonClickReader, LeaderboradShower leaderboradShower, ShopShower shopShower)
+        public PlayerUIButtonReaderSystem(
+            SoundMuteToggle soundMuteToggle,
+            RestartButtonClickReader restartButtonClickReader,
+            LeaderboradShower leaderboradShower,
+            ShopShower shopShower)
         {
             _soundMueToggle = soundMuteToggle;
             _restartButtonClickReader = restartButtonClickReader;
@@ -25,30 +30,44 @@ namespace CarParkingChaos.ECS.Systems
 
         public void Init()
         {
-            _soundMueToggle.MuteSoundButtonClickReader.OnButtonClicked += OnButtonClickMuteSound;
-            _soundMueToggle.UnmuteSoundButtonClickReader.OnButtonClicked += OnButtonClickUnmuteSound;
+            _soundMueToggle.MuteSoundButtonClickReader.OnButtonClicked
+                += OnButtonClickMuteSound;
+            _soundMueToggle.UnmuteSoundButtonClickReader.OnButtonClicked
+                += OnButtonClickUnmuteSound;
 
-            _restartButtonClickReader.OnButtonClicked += OnButtonClickRestart;
+            _restartButtonClickReader.OnButtonClicked
+                += OnButtonClickRestart;
 
-            _leaderboradShower.LeaderboradOpenButtonClick.OnButtonClicked += OnButtonClickOpenLeaderboard;
-            _leaderboradShower.LeaderboradCloseButtonClick.OnButtonClicked += OnButtonClickCloseLeaderboard;
+            _leaderboradShower.LeaderboradOpenButtonClick.OnButtonClicked
+                += OnButtonClickOpenLeaderboard;
+            _leaderboradShower.LeaderboradCloseButtonClick.OnButtonClicked
+                += OnButtonClickCloseLeaderboard;
 
-            _shopShower.OpenShopButtonClickReader.OnButtonClicked += OnButtonClickOpenShop;
-            _shopShower.CloseShopButtonClickReader.OnButtonClicked += OnButtonClickCloseShop;
+            _shopShower.OpenShopButtonClickReader.OnButtonClicked
+                += OnButtonClickOpenShop;
+            _shopShower.CloseShopButtonClickReader.OnButtonClicked
+                += OnButtonClickCloseShop;
         }
 
         public void Destroy()
         {
-            _soundMueToggle.MuteSoundButtonClickReader.OnButtonClicked -= OnButtonClickMuteSound;
-            _soundMueToggle.UnmuteSoundButtonClickReader.OnButtonClicked -= OnButtonClickUnmuteSound;
+            _soundMueToggle.MuteSoundButtonClickReader.OnButtonClicked
+                -= OnButtonClickMuteSound;
+            _soundMueToggle.UnmuteSoundButtonClickReader.OnButtonClicked
+                -= OnButtonClickUnmuteSound;
 
-            _restartButtonClickReader.OnButtonClicked -= OnButtonClickRestart;
+            _restartButtonClickReader.OnButtonClicked
+                -= OnButtonClickRestart;
 
-            _leaderboradShower.LeaderboradOpenButtonClick.OnButtonClicked -= OnButtonClickOpenLeaderboard;
-            _leaderboradShower.LeaderboradCloseButtonClick.OnButtonClicked -= OnButtonClickCloseLeaderboard;
+            _leaderboradShower.LeaderboradOpenButtonClick.OnButtonClicked
+                -= OnButtonClickOpenLeaderboard;
+            _leaderboradShower.LeaderboradCloseButtonClick.OnButtonClicked
+                -= OnButtonClickCloseLeaderboard;
 
-            _shopShower.OpenShopButtonClickReader.OnButtonClicked -= OnButtonClickOpenShop;
-            _shopShower.CloseShopButtonClickReader.OnButtonClicked -= OnButtonClickCloseShop;
+            _shopShower.OpenShopButtonClickReader.OnButtonClicked
+                -= OnButtonClickOpenShop;
+            _shopShower.CloseShopButtonClickReader.OnButtonClicked
+                -= OnButtonClickCloseShop;
         }
 
         public void Run()

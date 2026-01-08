@@ -1,6 +1,7 @@
 using DG.Tweening;
 using Leopotam.Ecs;
 using UnityEngine;
+using CarParkingChaos.ECS.Components;
 
 namespace CarParkingChaos.ECS.Systems
 {

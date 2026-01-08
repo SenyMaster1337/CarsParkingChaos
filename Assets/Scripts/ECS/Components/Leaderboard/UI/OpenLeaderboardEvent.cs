@@ -1,3 +1,6 @@
-public struct OpenLeaderboardEvent
-{ 
+namespace CarParkingChaos.ECS.Components
+{
+    public struct OpenLeaderboardEvent
+    { 
+    }
 }

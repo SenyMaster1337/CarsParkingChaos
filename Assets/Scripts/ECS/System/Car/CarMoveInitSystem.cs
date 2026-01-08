@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Leopotam.Ecs;
 using UnityEngine;
 using CarParkingChaos.ECS.Data;
+using CarParkingChaos.ECS.Components;
 using CarParkingChaos.Markers;
 
 namespace CarParkingChaos.ECS.Systems
@@ -21,7 +22,6 @@ namespace CarParkingChaos.ECS.Systems
             for (int i = 0; i < _cars.Count; i++)
             {
                 ref var carMovable = ref _cars[i].Entity.Get<CarMovableComponent>();
-                carMovable.Car = _cars[i];
                 carMovable.Transform = _cars[i].gameObject.transform;
                 carMovable.SpawnPosition = _cars[i].gameObject.transform.position;
                 carMovable.TargetPoint = Vector3.zero;

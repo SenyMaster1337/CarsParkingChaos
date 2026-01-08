@@ -10,7 +10,7 @@ namespace CarParkingChaos.CarsLevelColorData
         public List<Material> CarsMaterial;
 
 #if UNITY_EDITOR
-        void OnValidate()
+        public void OnValidate()
         {
             if (!EditorApplication.isPlaying && !EditorApplication.isCompiling)
             {

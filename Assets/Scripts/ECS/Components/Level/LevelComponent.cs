@@ -1,12 +1,11 @@
 using Leopotam.Ecs;
 
-public struct LevelComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public EcsEntity Entity;
-
-    public int CurrentLevel;
-    public int TotalLevels;
-
-    public bool IsLevelCompleted;
-    public float LevelRestartTime;
+    public struct LevelComponent
+    {
+        public EcsEntity Entity;
+        public int CurrentLevel;
+        public bool IsLevelCompleted;
+    }
 }

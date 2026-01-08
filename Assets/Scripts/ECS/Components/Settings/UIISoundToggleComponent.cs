@@ -1,6 +1,9 @@
 using CarParkingChaos.UI.Markers;
 
-public struct UIISoundToggleComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public SoundMuteToggle SoundMuteToggle;
+    public struct UIISoundToggleComponent
+    {
+        public SoundMuteToggle SoundMuteToggle;
+    }
 }

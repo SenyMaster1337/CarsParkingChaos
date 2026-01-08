@@ -1,6 +1,9 @@
 using CarParkingChaos.Markers;
 
-public struct ParkingCancelReservationEvent
+namespace CarParkingChaos.ECS.Components
 {
-    public ParkingSlot ParkingSlot;
+    public struct ParkingCancelReservationEvent
+    {
+        public ParkingSlot ParkingSlot;
+    }
 }

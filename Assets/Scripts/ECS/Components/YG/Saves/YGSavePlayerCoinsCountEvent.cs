@@ -1,3 +1,6 @@
-public struct YGSavePlayerCoinsCountEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct YGSavePlayerCoinsCountEvent
+    {
+    }
 }

@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using CarParkingChaos.Markers;
 
-public struct ParkingReservationComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public List<ParkingSlot> ParkingSlots;
+    public struct ParkingReservationComponent
+    {
+        public List<ParkingSlot> ParkingSlots;
+    }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Leopotam.Ecs;
 using CarParkingChaos.ECS.Data;
+using CarParkingChaos.ECS.Components;
 using CarParkingChaos.Markers;
 
 namespace CarParkingChaos.ECS.Systems

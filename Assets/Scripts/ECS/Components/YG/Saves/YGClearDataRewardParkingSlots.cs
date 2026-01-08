@@ -1,3 +1,6 @@
-public struct YGClearDataRewardParkingSlots
+namespace CarParkingChaos.ECS.Components
 {
+    public struct YGClearDataRewardParkingSlots
+    {
+    }
 }

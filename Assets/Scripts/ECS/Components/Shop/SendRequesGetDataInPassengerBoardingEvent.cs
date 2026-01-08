@@ -1,3 +1,6 @@
-public struct SendRequesGetDataInPassengerBoardingEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct SendRequesGetDataInPassengerBoardingEvent
+    {
+    }
 }

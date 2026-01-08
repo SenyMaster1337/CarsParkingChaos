@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using CarParkingChaos.Markers;
 
-public struct CarsRandomColorComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public List<Vehicle> Cars;
+    public struct CarsRandomColorComponent
+    {
+        public List<Vehicle> Cars;
+    }
 }

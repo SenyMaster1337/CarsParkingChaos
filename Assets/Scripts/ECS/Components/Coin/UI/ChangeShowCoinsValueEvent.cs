@@ -1,4 +1,7 @@
-public struct ChangeShowCoinsValueEvent
+namespace CarParkingChaos.ECS.Components
 {
-    public int CurrentCoinsValue;
+    public struct ChangeShowCoinsValueEvent
+    {
+        public int CurrentCoinsValue;
+    }
 }

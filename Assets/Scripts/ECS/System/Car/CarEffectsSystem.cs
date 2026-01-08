@@ -1,4 +1,5 @@
 using Leopotam.Ecs;
+using CarParkingChaos.ECS.Components;
 
 namespace CarParkingChaos.ECS.Systems
 {
@@ -19,42 +20,55 @@ namespace CarParkingChaos.ECS.Systems
             }
         }
 
-        private void ToggleSwitchDriveEffect(CarComponent carComponent, CarMovableComponent carMovableComponent, ref CarEffectsComponent carEffectComponent)
+        private void ToggleSwitchDriveEffect(
+            CarComponent carComponent,
+            CarMovableComponent carMovableComponent,
+            ref CarEffectsComponent carEffectComponent)
         {
-            if (carMovableComponent.IsMoving && carEffectComponent.IsDriveEffectActive == false && carComponent.CanCrashed == false)
+            if (carMovableComponent.IsMoving &&
+                carEffectComponent.IsDriveEffectActive == false &&
+                carComponent.CanCrashed == false)
             {
                 carEffectComponent.CarDriveEffect.ParticleSystem.Play();
                 carEffectComponent.IsDriveEffectActive = true;
             }
 
-            if (carMovableComponent.IsMoving == false && carEffectComponent.IsDriveEffectActive == true && carComponent.IsAllPassengersBoarded == false)
+            if (carMovableComponent.IsMoving == false &&
+                carEffectComponent.IsDriveEffectActive == true &&
+                carComponent.IsAllPassengersBoarded == false)
             {
                 carEffectComponent.CarDriveEffect.ParticleSystem.Stop();
                 carEffectComponent.IsDriveEffectActive = false;
             }
 
-            if (carComponent.IsAllPassengersBoarded && carEffectComponent.IsDriveEffectActive == false)
+            if (carComponent.IsAllPassengersBoarded &&
+                carEffectComponent.IsDriveEffectActive == false)
             {
                 carEffectComponent.CarDriveEffect.ParticleSystem.Play();
                 carEffectComponent.IsDriveEffectActive = true;
             }
         }
 
-        private void ToggleSwitchCrashEffect(CarComponent carComponent, ref CarEffectsComponent carEffectComponent)
+        private void ToggleSwitchCrashEffect(
+            CarComponent carComponent,
+            ref CarEffectsComponent carEffectComponent)
         {
-            if (carComponent.IsAllPassengersBoarded && carEffectComponent.IsFilledPassengersEffectActive == false)
+            if (carComponent.IsAllPassengersBoarded &&
+                carEffectComponent.IsFilledPassengersEffectActive == false)
             {
                 carEffectComponent.CarEffectFilledPassengers.ParticleSystem.Play();
                 carEffectComponent.IsFilledPassengersEffectActive = true;
             }
 
-            if (carComponent.IsCrashed && carEffectComponent.IsCrashEffectActive == false)
+            if (carComponent.IsCrashed &&
+                carEffectComponent.IsCrashEffectActive == false)
             {
                 carEffectComponent.CarCrashEffect.ParticleSystem.Play();
                 carEffectComponent.IsCrashEffectActive = true;
             }
 
-            if (carComponent.IsCrashed == false && carEffectComponent.IsCrashEffectActive == true)
+            if (carComponent.IsCrashed == false &&
+                carEffectComponent.IsCrashEffectActive == true)
             {
                 carEffectComponent.IsCrashEffectActive = false;
             }

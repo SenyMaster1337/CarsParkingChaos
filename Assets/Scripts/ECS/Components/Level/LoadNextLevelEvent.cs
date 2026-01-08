@@ -1,3 +1,6 @@
-public struct LoadNextLevelEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct LoadNextLevelEvent
+    {
+    }
 }

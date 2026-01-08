@@ -1,5 +1,8 @@
-public struct TimerComponent 
+namespace CarParkingChaos.ECS.Components
 {
-    public float TimeLeft;
-    public bool IsActive;
+    public struct TimerComponent 
+    {
+        public float TimeLeft;
+        public bool IsActive;
+    }
 }

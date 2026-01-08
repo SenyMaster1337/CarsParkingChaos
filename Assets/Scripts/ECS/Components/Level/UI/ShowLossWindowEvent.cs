@@ -1,3 +1,6 @@
-public struct ShowLossWindowEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct ShowLossWindowEvent
+    {
+    }
 }

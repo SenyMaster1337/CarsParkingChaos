@@ -1,3 +1,6 @@
-public struct ActivateCarMovableEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct ActivateCarMovableEvent
+    {
+    }
 }

@@ -1,4 +1,7 @@
-public struct CooldownEvent
+namespace CarParkingChaos.ECS.Components
 {
-    public float RemainingTime;
+    public struct CooldownEvent
+    {
+        public float RemainingTime;
+    }
 }

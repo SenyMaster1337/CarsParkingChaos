@@ -1,3 +1,6 @@
-public struct CloseShopEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct CloseShopEvent
+    {
+    }
 }

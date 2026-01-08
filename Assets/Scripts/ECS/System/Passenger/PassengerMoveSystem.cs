@@ -1,6 +1,7 @@
 using Leopotam.Ecs;
 using UnityEngine;
 using CarParkingChaos.Utils;
+using CarParkingChaos.ECS.Components;
 
 namespace CarParkingChaos.ECS.Systems
 {
@@ -15,7 +16,8 @@ namespace CarParkingChaos.ECS.Systems
                 ref var component = ref _filter.Get2(entity);
                 ref var movable = ref _filter.Get1(entity);
 
-                TryMoveToStartPointQueue(component, ref movable, _filter.GetEntity(entity));
+                TryMoveToStartPointQueue(component, ref movable,
+                    _filter.GetEntity(entity));
                 TryMoveToNewQueuePoint(ref movable, _filter.GetEntity(entity));
 
                 if (movable.IsMoving)
@@ -24,7 +26,8 @@ namespace CarParkingChaos.ECS.Systems
                     {
                         MoveToPosition(movable, movable.TargetCarPosition);
 
-                        if (movable.CurrentTransform.position.IsEnoughClose(movable.TargetCarPosition, 6f))
+                        if (movable.CurrentTransform.position
+                            .IsEnoughClose(movable.TargetCarPosition, 6f))
                         {
                             component.CarComponent.Passengers.Add(component);
 
@@ -34,22 +37,26 @@ namespace CarParkingChaos.ECS.Systems
                         }
                     }
 
-                    if (movable.StartQueuePosition != Vector3.zero && movable.IsPositionStartQueuePosition == false)
+                    if (movable.StartQueuePosition != Vector3.zero &&
+                        movable.IsPositionStartQueuePosition == false)
                     {
                         MoveToPosition(movable, movable.StartQueuePosition);
 
-                        if (movable.CurrentTransform.position == movable.StartQueuePosition)
+                        if (movable.CurrentTransform.position ==
+                            movable.StartQueuePosition)
                         {
                             movable.IsPositionStartQueuePosition = true;
                             movable.IsMoving = false;
                         }
                     }
 
-                    if (movable.QueuePointPosition != Vector3.zero && movable.IsNeedShiftQueue == true)
+                    if (movable.QueuePointPosition != Vector3.zero &&
+                        movable.IsNeedShiftQueue == true)
                     {
                         MoveToPosition(movable, movable.QueuePointPosition);
 
-                        if (movable.CurrentTransform.position == movable.QueuePointPosition)
+                        if (movable.CurrentTransform.position ==
+                            movable.QueuePointPosition)
                         {
                             movable.IsNeedShiftQueue = false;
                             movable.IsMoving = false;
@@ -59,11 +66,14 @@ namespace CarParkingChaos.ECS.Systems
             }
         }
 
-        private void TryMoveToNewQueuePoint(ref PassengerMovableComponent movable, EcsEntity entityEvent)
+        private void TryMoveToNewQueuePoint(
+            ref PassengerMovableComponent movable,
+            EcsEntity entityEvent)
         {
             if (entityEvent.Has<PassengerMoveInQueuePointEvent>())
             {
-                ref var moveQueueEvent = ref entityEvent.Get<PassengerMoveInQueuePointEvent>();
+                ref var moveQueueEvent =
+                    ref entityEvent.Get<PassengerMoveInQueuePointEvent>();
 
                 movable.IsMoving = true;
                 movable.IsNeedShiftQueue = true;
@@ -72,7 +82,10 @@ namespace CarParkingChaos.ECS.Systems
             }
         }
 
-        private void TryMoveToStartPointQueue(PassengerComponent component, ref PassengerMovableComponent movable, EcsEntity entityEvent)
+        private void TryMoveToStartPointQueue(
+            PassengerComponent component,
+            ref PassengerMovableComponent movable,
+            EcsEntity entityEvent)
         {
             if (entityEvent.Has<PassengerMoveStartQueuePointEvent>())
             {
@@ -82,10 +95,16 @@ namespace CarParkingChaos.ECS.Systems
             }
         }
 
-        private void MoveToPosition(PassengerMovableComponent movable, Vector3 targetPosition)
+        private void MoveToPosition(
+            PassengerMovableComponent movable,
+            Vector3 targetPosition)
         {
             movable.CurrentTransform.LookAt(targetPosition);
-            movable.CurrentTransform.position = Vector3.MoveTowards(movable.CurrentTransform.position, targetPosition, movable.MoveSpeed * Time.deltaTime);
+            movable.CurrentTransform.position =
+                Vector3.MoveTowards(
+                    movable.CurrentTransform.position,
+                    targetPosition,
+                    movable.MoveSpeed * Time.deltaTime);
         }
 
         private void AddDisableComponent(int entity)

@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using CarParkingChaos.Markers;
 
-public struct GetUnitsDataEvent
+namespace CarParkingChaos.ECS.Components
 {
-    public List<Vehicle> AllCarsInLevel;
-    public List<Vehicle> CarsOnlyParkingZoneList;
-    public List<Passenger> AllPassengersInLevel;
+    public struct GetUnitsDataEvent
+    {
+        public List<Vehicle> CarsOnlyParkingZoneList;
+        public List<Passenger> AllPassengersInLevel;
+    }
 }

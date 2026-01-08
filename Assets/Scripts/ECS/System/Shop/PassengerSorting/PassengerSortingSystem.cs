@@ -1,6 +1,7 @@
 using Leopotam.Ecs;
 using UnityEngine;
 using YG;
+using CarParkingChaos.ECS.Components;
 
 namespace CarParkingChaos.ECS.Systems
 {

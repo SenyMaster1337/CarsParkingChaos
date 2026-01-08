@@ -1,3 +1,6 @@
-public struct UnmuteSoundEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct UnmuteSoundEvent
+    {
+    }
 }

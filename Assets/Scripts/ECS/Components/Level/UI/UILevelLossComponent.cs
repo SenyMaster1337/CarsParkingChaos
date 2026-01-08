@@ -1,6 +1,9 @@
 using CarParkingChaos.UI.Markers;
 
-public struct UILevelLossComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public LevelLossShower LevelLossShower;
+    public struct UILevelLossComponent
+    {
+        public LevelLossShower LevelLossShower;
+    }
 }

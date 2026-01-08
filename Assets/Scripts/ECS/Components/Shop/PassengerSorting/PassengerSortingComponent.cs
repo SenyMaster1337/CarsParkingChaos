@@ -1,4 +1,6 @@
-public struct PassengerSortingComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public int Price;
+    public struct PassengerSortingComponent
+    {
+    }
 }

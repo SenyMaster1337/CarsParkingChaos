@@ -1,4 +1,5 @@
 using Leopotam.Ecs;
+using CarParkingChaos.ECS.Components;
 
 namespace CarParkingChaos.ECS.Systems
 {

@@ -15,8 +15,6 @@ namespace CarParkingChaos.ECS.Data
         [field: SerializeField] public int CoopeCarSlots { get; private set; } = 2;
         [field: SerializeField] public Quaternion RotationCarInParking { get; private set; } = Quaternion.Euler(0, -30, 0);
         [field: SerializeField] public float DistanceToDisableCrashHandler { get; private set; } = 16f;
-        [field: SerializeField] public float DesktopFieldSizeCamera { get; private set; } = 50;
-        [field: SerializeField] public float MobileFieldSizeCamera { get; private set; } = 70;
         [field: SerializeField] public float CooldownInputReaderToCar { get; private set; } = 0.7f;
         [field: SerializeField] public float MinMasterSoundValue { get; private set; } = -80;
         [field: SerializeField] public float MaxMasterSoundValue { get; private set; } = -20;

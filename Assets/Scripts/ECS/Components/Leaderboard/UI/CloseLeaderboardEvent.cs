@@ -1,3 +1,6 @@
-public struct CloseLeaderboardEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct CloseLeaderboardEvent
+    {
+    }
 }

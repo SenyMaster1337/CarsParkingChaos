@@ -2,19 +2,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using CarParkingChaos.Markers;
 
-public struct CarMovableComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public Vehicle Car;
-    public Rigidbody Rigidbody;
-    public Transform Transform;
-
-    public Vector3 SpawnPosition;
-    public Vector3 TargetPoint;
-
-    public float MoveSpeed;
-
-    public bool IsMoving;
-    public bool IsReverseDirectionEnable;
-
-    public List<CarRotate> CarRotates;
+    public struct CarMovableComponent
+    {
+        public Rigidbody Rigidbody;
+        public Transform Transform;
+        public Vector3 SpawnPosition;
+        public Vector3 TargetPoint;
+        public float MoveSpeed;
+        public bool IsMoving;
+        public bool IsReverseDirectionEnable;
+        public List<CarRotate> CarRotates;
+    }
 }

@@ -1,6 +1,9 @@
 using Leopotam.Ecs;
 
-public struct ReservedParkingSlotEvent
+namespace CarParkingChaos.ECS.Components
 {
-    public EcsEntity CarEntity;
+    public struct ReservedParkingSlotEvent
+    {
+        public EcsEntity CarEntity;
+    }
 }

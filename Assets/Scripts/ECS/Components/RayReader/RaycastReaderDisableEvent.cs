@@ -1,3 +1,6 @@
-public struct RaycastReaderDisableEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct RaycastReaderDisableEvent
+    {
+    }
 }

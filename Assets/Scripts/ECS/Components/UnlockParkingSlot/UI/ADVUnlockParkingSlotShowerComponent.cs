@@ -1,6 +1,9 @@
 using CarParkingChaos.UI.Markers;
 
-public struct ADVUnlockParkingSlotShowerComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public ADVUnlockParkingSlotShower AdvUnlockParkingSlotShower;
+    public struct ADVUnlockParkingSlotShowerComponent
+    {
+        public ADVUnlockParkingSlotShower AdvUnlockParkingSlotShower;
+    }
 }

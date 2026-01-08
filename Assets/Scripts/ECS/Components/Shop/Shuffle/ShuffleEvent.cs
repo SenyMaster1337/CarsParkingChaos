@@ -1,3 +1,6 @@
-public struct ShuffleEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct ShuffleEvent
+    {
+    }
 }

@@ -1,3 +1,6 @@
-public struct DisableButtonsEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct DisableButtonsEvent
+    {
+    }
 }

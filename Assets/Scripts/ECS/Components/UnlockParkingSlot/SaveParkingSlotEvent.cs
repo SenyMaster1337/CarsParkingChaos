@@ -1,7 +1,10 @@
 using CarParkingChaos.Markers;
 
-public struct SaveParkingSlotEvent
+namespace CarParkingChaos.ECS.Components
 {
-    public ParkingSlot ParkingSlot;
-    public OpenADVParkingSlotUnlock OpenADVParkingSlotUnlock;
+    public struct SaveParkingSlotEvent
+    {
+        public ParkingSlot ParkingSlot;
+        public OpenADVParkingSlotUnlock OpenADVParkingSlotUnlock;
+    }
 }

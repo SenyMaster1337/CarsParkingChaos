@@ -1,6 +1,9 @@
 using CarParkingChaos.UI.Markers;
 
-public struct PassengerSortingShowerComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public PassengerSortingShower BuyPassengerSortingShower;
+    public struct PassengerSortingShowerComponent
+    {
+        public PassengerSortingShower BuyPassengerSortingShower;
+    }
 }

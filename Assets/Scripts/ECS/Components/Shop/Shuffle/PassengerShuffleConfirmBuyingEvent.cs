@@ -1,3 +1,6 @@
-public struct PassengerShuffleConfirmBuyingEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct PassengerShuffleConfirmBuyingEvent
+    {
+    }
 }

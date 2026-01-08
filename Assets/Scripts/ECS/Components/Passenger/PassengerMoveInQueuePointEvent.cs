@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public struct PassengerMoveInQueuePointEvent
+namespace CarParkingChaos.ECS.Components
 {
-    public Vector3 QueuePointPosition;
+    public struct PassengerMoveInQueuePointEvent
+    {
+        public Vector3 QueuePointPosition;
+    }
 }

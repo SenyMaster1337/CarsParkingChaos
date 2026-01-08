@@ -1,6 +1,9 @@
 using CarParkingChaos.UI.Markers;
 
-public struct UICompleteLevelComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public LevelCompleteShower LevelCompleteShower;
+    public struct UICompleteLevelComponent
+    {
+        public LevelCompleteShower LevelCompleteShower;
+    }
 }

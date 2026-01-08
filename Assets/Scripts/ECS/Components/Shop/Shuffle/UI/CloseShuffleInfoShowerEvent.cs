@@ -1,3 +1,6 @@
-public struct CloseShuffleInfoShowerEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct CloseShuffleInfoShowerEvent
+    {
+    }
 }

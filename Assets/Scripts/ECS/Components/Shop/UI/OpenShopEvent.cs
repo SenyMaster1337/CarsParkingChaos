@@ -1,3 +1,6 @@
-public struct OpenShopEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct OpenShopEvent
+    {
+    }
 }

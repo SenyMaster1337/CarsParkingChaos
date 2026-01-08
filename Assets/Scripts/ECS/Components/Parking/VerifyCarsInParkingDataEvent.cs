@@ -1,3 +1,6 @@
-public struct VerifyCarsInParkingDataEvent
-{  
+namespace CarParkingChaos.ECS.Components
+{
+    public struct VerifyCarsInParkingDataEvent
+    {  
+    }
 }

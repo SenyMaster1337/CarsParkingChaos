@@ -1,13 +1,13 @@
 using UnityEngine;
 using CarParkingChaos.Markers;
 
-public struct PassengerComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public Renderer Renderer;
-    public Passenger Passenger;
-    public CarComponent CarComponent;
-
-    public Vector3 StartQueuePosition;
-
-    public bool IsSorted;
+    public struct PassengerComponent
+    {
+        public Renderer Renderer;
+        public Passenger Passenger;
+        public CarComponent CarComponent;
+        public Vector3 StartQueuePosition;
+    }
 }

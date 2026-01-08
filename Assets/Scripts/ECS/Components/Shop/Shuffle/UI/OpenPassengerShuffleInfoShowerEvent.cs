@@ -1,3 +1,6 @@
-public struct OpenPassengerShuffleInfoShowerEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct OpenPassengerShuffleInfoShowerEvent
+    {
+    }
 }

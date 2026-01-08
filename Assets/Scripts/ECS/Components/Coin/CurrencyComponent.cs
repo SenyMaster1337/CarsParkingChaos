@@ -1,4 +1,7 @@
-public struct CurrencyComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public int PlayerCoins;
+    public struct CurrencyComponent
+    {
+        public int PlayerCoins;
+    }
 }

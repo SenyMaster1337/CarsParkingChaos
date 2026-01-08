@@ -1,6 +1,9 @@
 using Leopotam.Ecs;
 
-public struct TutorialHideHandEvent
+namespace CarParkingChaos.ECS.Components
 {
-    public EcsEntity EcsEntity;
+    public struct TutorialHideHandEvent
+    {
+        public EcsEntity EcsEntity;
+    }
 }

@@ -1,5 +1,6 @@
 using Leopotam.Ecs;
 using UnityEngine.InputSystem;
+using CarParkingChaos.ECS.Components;
 
 namespace CarParkingChaos.ECS.Systems
 {

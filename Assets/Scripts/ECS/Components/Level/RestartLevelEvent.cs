@@ -1,3 +1,6 @@
-public struct RestartLevelEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct RestartLevelEvent
+    {
+    }
 }

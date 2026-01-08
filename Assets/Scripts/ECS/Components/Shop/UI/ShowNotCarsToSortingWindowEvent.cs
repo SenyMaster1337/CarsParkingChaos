@@ -1,3 +1,6 @@
-public struct ShowNotCarsToSortingWindowEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct ShowNotCarsToSortingWindowEvent
+    {
+    }
 }

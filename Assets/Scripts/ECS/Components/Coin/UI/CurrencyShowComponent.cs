@@ -1,6 +1,9 @@
 using CarParkingChaos.UI.Text;
 
-public struct CurrencyShowComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public CurrentCoinCountText CoinCountText;
+    public struct CurrencyShowComponent
+    {
+        public CurrentCoinCountText CoinCountText;
+    }
 }

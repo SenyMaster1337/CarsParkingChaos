@@ -1,7 +1,10 @@
 using CarParkingChaos.Sounds;
 
-public struct GameAudioComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public WinSound WinSound;
-    public bool IsWinSoundEnable;
+    public struct GameAudioComponent
+    {
+        public WinSound WinSound;
+        public bool IsWinSoundEnable;
+    }
 }

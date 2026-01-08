@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public struct TutorialComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public CanvasGroup WindowGroup;
+    public struct TutorialComponent
+    {
+        public CanvasGroup WindowGroup;
+    }
 }

@@ -1,7 +1,9 @@
 using CarParkingChaos.Markers;
 
-public struct ParkingComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public Vehicle Car;
-    public bool IsReserved;
+    public struct ParkingComponent
+    {
+        public bool IsReserved;
+    }
 }

@@ -1,6 +1,9 @@
 using CarParkingChaos.Markers;
 
-public struct OpenADVUnlockParkingSlotEvent
+namespace CarParkingChaos.ECS.Components
 {
-    public ParkingSlot ParkingSlot;
+    public struct OpenADVUnlockParkingSlotEvent
+    {
+        public ParkingSlot ParkingSlot;
+    }
 }

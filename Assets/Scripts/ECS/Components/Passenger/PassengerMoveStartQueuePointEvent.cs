@@ -1,3 +1,6 @@
-public struct PassengerMoveStartQueuePointEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct PassengerMoveStartQueuePointEvent
+    {
+    }
 }

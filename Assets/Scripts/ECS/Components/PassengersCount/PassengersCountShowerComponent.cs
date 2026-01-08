@@ -1,6 +1,9 @@
 using CarParkingChaos.UI.Text;
 
-public struct PassengersCountShowerComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public PassengersCountText PassengersCountText;
+    public struct PassengersCountShowerComponent
+    {
+        public PassengersCountText PassengersCountText;
+    }
 }

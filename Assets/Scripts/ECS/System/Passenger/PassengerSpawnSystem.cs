@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Leopotam.Ecs;
 using UnityEngine;
 using CarParkingChaos.Markers;
+using CarParkingChaos.ECS.Components;
 
 namespace CarParkingChaos.ECS.Systems
 {

@@ -1,5 +1,6 @@
 using Leopotam.Ecs;
 using CarParkingChaos.UI.Text;
+using CarParkingChaos.ECS.Components;
 
 namespace CarParkingChaos.ECS.Systems
 {

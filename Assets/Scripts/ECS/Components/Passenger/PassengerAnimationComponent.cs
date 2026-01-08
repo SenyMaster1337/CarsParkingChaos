@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public struct PassengerAnimationComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public Animator Animator;
+    public struct PassengerAnimationComponent
+    {
+        public Animator Animator;
+    }
 }

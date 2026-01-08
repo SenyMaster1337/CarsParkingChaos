@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using CarParkingChaos.Markers;
 
-public struct CarLeavingComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public List<Vehicle> Cars;
+    public struct CarLeavingComponent
+    {
+        public List<Vehicle> Cars;
+    }
 }

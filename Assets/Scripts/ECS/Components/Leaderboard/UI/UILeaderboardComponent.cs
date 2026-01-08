@@ -1,6 +1,9 @@
 using CarParkingChaos.UI.Markers;
 
-public struct UILeaderboardComponent
+namespace CarParkingChaos.ECS.Components
 {
-    public LeaderboradShower LeaderboardShower;
+    public struct UILeaderboardComponent
+    {
+        public LeaderboradShower LeaderboardShower;
+    }
 }

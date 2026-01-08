@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Leopotam.Ecs;
 using UnityEngine;
 using CarParkingChaos.ECS.Data;
+using CarParkingChaos.ECS.Components;
 using CarParkingChaos.Markers;
 
 namespace CarParkingChaos.ECS.Systems
@@ -36,7 +37,6 @@ namespace CarParkingChaos.ECS.Systems
                 passengerComponent.Passenger = _passengers[i];
                 passengerComponent.Renderer = _passengers[i].gameObject.GetComponentInChildren<PassengerRenderer>().Renderer;
                 passengerComponent.StartQueuePosition = _startQueuePoint.transform.position;
-                passengerComponent.IsSorted = false;
 
                 ref var passengerMovable = ref passengerNewEntity.Get<PassengerMovableComponent>();
                 passengerMovable.CurrentTransform = _passengers[i].gameObject.transform;

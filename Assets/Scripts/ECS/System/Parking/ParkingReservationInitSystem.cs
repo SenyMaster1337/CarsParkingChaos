@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Leopotam.Ecs;
 using YG;
 using CarParkingChaos.ECS.Data;
+using CarParkingChaos.ECS.Components;
 using CarParkingChaos.Markers;
 
 namespace CarParkingChaos.ECS.Systems
@@ -37,7 +38,6 @@ namespace CarParkingChaos.ECS.Systems
                 var parkingSlotNewEntity = _ecsWorld.NewEntity();
 
                 ref var parkingComponent = ref parkingSlotNewEntity.Get<ParkingComponent>();
-                parkingComponent.Car = null;
                 parkingComponent.IsReserved = false;
 
                 _allParkingSlots[i].Entity = parkingSlotNewEntity;

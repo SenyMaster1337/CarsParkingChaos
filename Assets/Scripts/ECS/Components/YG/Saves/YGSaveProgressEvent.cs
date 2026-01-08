@@ -1,3 +1,6 @@
-public struct YGSaveProgressEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct YGSaveProgressEvent
+    {
+    }
 }

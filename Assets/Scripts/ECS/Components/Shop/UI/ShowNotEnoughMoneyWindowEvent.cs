@@ -1,3 +1,6 @@
-public struct ShowNotEnoughMoneyWindowEvent
-{ 
+namespace CarParkingChaos.ECS.Components
+{
+    public struct ShowNotEnoughMoneyWindowEvent
+    { 
+    }
 }

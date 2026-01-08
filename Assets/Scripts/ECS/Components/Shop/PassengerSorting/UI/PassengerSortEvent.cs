@@ -1,3 +1,6 @@
-public struct PassengerSortEvent
+namespace CarParkingChaos.ECS.Components
 {
+    public struct PassengerSortEvent
+    {
+    }
 }

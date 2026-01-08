@@ -1,4 +1,7 @@
-public struct ChangePassengersCountToShowerEvent
+namespace CarParkingChaos.ECS.Components
 {
-    public int NewCurrentCount;
+    public struct ChangePassengersCountToShowerEvent
+    {
+        public int NewCurrentCount;
+    }
 }
